@@ -1,0 +1,57 @@
+$color-primary:#252934;
+$color-primary-dark: #000;
+
+$color-blue: #04C2C9;
+$color-secondary: #04C2C9;
+
+$color-font-header-1: #494B4E;
+$color-font-header-2: #626262;
+$color-font-text: #858585;
+
+
+$color-grey-light-1: #faf9f9;
+$color-grey-light-2: #f4f2f2;
+$color-grey-light-3: #f0eeee;
+$color-grey-light-4: #ccc;
+$color-grey-dark-1: #333;
+$color-grey-dark-2: #777;
+$color-grey-dark-3: #999;
+
+$color-white: #fff;
+$color-black: #000;
+$color-pink:#E91E63;
+$color-form-input: #1E242C;
+$color-green: #43A047;
+$color-react: #61DAFB;
+
+$color-skills-red: #D32F2F;
+$color-skills-orange: #FF9800;
+$color-skills-yellow: #FFEB3B;
+$color-skills-blue-2: $color-react;
+// $color-skills-blue-2: #3498DB;
+$color-skills-violet: #7B1FA2;
+$color-skills-pink: #E91E63;
+$color-skills-indigo: #3F51B5;
+$color-skills-teal: #00897B;
+$color-skills-green: $color-green;
+$color-skills-android: #A4C639;
+$color-skills-lime: #827717;
+$color-skills-brown: #795548;
+$color-skills-grey: #616161;
+
+$font-display: 'Roboto', sans-serif;
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit; //inherit from html
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%; // so that 1rem = 10px  10px/16px=62.5%
+
+
+}
