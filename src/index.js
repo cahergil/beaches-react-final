@@ -1,10 +1,42 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createMuiTheme } from '@material-ui/core/styles';
+import  ThemeProvider from '@material-ui/styles/ThemeProvider'
+import pink from '@material-ui/core/colors/pink';
+import { BrowserRouter } from 'react-router-dom';
+
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const theme = createMuiTheme({
+  palette: {
+    primary: { 500: '#2196F3'},
+    secondary: pink,
+    text: {
+      primary: '#000',
+      secondary: pink
+
+    },
+    action: { 500: '#fff'}
+  },
+  typography: {
+    htmlFontSize: 10,
+    useNextVariants: true
+  }
+});
+
+
+ReactDOM.render(
+  // <BrowserRouter basename="/playas-react" > apply this in production(gh-pages)
+    <BrowserRouter>
+    <ThemeProvider theme={theme} >
+      <App />
+    </ThemeProvider>
+  </BrowserRouter>
+
+ 
+  , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
