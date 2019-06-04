@@ -1,6 +1,6 @@
 import React from 'react';
 import { Hidden, Drawer, makeStyles } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 
 const drawerWidth = 150;
@@ -51,19 +51,23 @@ const SideDrawer = (props) => {
               <li
                 key={index}
                 className={classes.liStyle}>
-                <Link
+                <NavLink
                   key={index}
+                  exact
                   to={{
-                    pathname: '/'
+                    pathname: '/' + (section === 'map' ? '' : section)
                   }}
                   className={classes.linkStyle}
-                  
+                  activeStyle={{
+                    color: '#E91E63',
+                    fontWeight: 'bold'
+                  }}
                 >
                   {
                     section.toUpperCase() 
                   }
                   
-                </Link>
+                </NavLink>
               </li>
 
             )

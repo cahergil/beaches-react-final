@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   white: {
@@ -52,6 +52,7 @@ const useStyles = makeStyles(theme => ({
 const Navbar = (props) => {
   const { sections, burgerClicked } = props;
   const classes = useStyles();
+ 
 
   const toolbarSections = (
     <nav>
@@ -60,11 +61,16 @@ const Navbar = (props) => {
           sections.map((section, index) => {
             return (
               <li key={index} className={classes.liStyle}>
-                <Link
+                <NavLink
                   // activeClass(NavLink) only works with this form of 'to'
+                  exact
                   to={{
-                    pathname: '/'+ section
+                    pathname: '/'+ (section === 'map' ? '': section)
 
+                  }}
+                  activeStyle={{
+                    color: '#E91E63',
+                    fontWeight: 'bold'
                   }}
                   // pressing Link causes a render, we can caputre props.location.hash
                   // with onClick this is not necessary
@@ -74,7 +80,7 @@ const Navbar = (props) => {
                     }`}
                 >
                   {section.toUpperCase()}
-                </Link>
+                </NavLink>
               </li>
             );
           })
