@@ -1,0 +1,1 @@
+Access a json file with axios: https://github.com/nuxt/nuxt.js/issues/2006

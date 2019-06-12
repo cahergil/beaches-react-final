@@ -92,7 +92,7 @@ const Navbar = (props) => {
   );
 
   return (
-    <AppBar position="fixed">
+    <AppBar position="sticky">
       <Toolbar>
         
         <IconButton className={`${classes.white} ${classes.iconBreakPoint}`} onClick={burgerClicked}>
