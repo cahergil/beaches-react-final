@@ -1,6 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 const initialState = {
-  beaches: [],
+  beachesList: [],
+  regionBeachesList: [],
   error: false
 };
 
@@ -14,9 +15,11 @@ const reducer = (state = initialState, action) => {
       }
 
     case actionTypes.SET_COUNTRY_BEACHES_SUCCEED:
+      console.log('inside set beaches success');
       return {
         ...state,
-        beaches: [...action.payload],
+        beachesList: [...action.payload],
+        // beaches: action.payload,
         error: false
       }
     case actionTypes.SET_COUNTRY_BEACHES_FAILED:
@@ -24,7 +27,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         error: true
       }
-
+    case actionTypes.SET_REGION_BEACHES:
+      return {
+        ...state,
+        regionBeachesList: [...action.payload],
+        
+      }
     default:
       return state;
   }

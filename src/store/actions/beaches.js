@@ -10,6 +10,7 @@ export const setCountryBeachesStart = () => {
 
 
 export const setCountryBeachesSucceed = (beachesList) => {
+  
   return {
     type: actionTypes.SET_COUNTRY_BEACHES_SUCCEED,
     payload: beachesList
@@ -40,4 +41,11 @@ export const setCountryBeaches = () => {
 
     }
 
+}
+
+export const setRegionBeaches =(regionList) => {
+  return {
+    type: actionTypes.SET_REGION_BEACHES,
+    payload: regionList
+  }
 }

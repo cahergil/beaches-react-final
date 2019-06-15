@@ -32,7 +32,7 @@ const theme = createMuiTheme({
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  beachesList: beachesReducer
+  beaches: beachesReducer
 });
 
 
