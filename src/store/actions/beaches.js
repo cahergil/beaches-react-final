@@ -30,7 +30,7 @@ export const setCountryBeaches = () => {
     dispatch(setCountryBeachesStart());
     axios.get('./playas.json')
       .then(response => {
-        console.log(response)
+        // console.log(response)
         dispatch(setCountryBeachesSucceed(response.data))
       }
     ).catch(err => {

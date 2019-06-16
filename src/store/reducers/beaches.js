@@ -15,7 +15,6 @@ const reducer = (state = initialState, action) => {
       }
 
     case actionTypes.SET_COUNTRY_BEACHES_SUCCEED:
-      console.log('inside set beaches success');
       return {
         ...state,
         beachesList: [...action.payload],

@@ -17,13 +17,13 @@ const useStyles = makeStyles({
 })
 
 const MapResults = (props) => {
-  console.log(props);
+  
   const classes = useStyles()
   const temp = props.match.url.split('/');
   const region = temp[temp.length - 1];
   const beachesRegionList = props.beachesList.filter(beach => beach.comunidad_autonoma === region);
   return (
-    <div className={classes.root}>
+    <div id="results" className={classes.root}>
       <ResultsFilter count={beachesRegionList.length} region={region}/>
       <ResultsContent beachesRegionList={beachesRegionList}/>
     </div>
