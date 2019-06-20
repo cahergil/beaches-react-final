@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import InfiniteScroll from 'react-infinite-scroller';
-// import InfiniteScroll from 'react-infinite-scroll-component';
 import ResultsContentItem from './ResultsContentItem/ResultsContentItem';
+import scrollIntoView from 'scroll-into-view';
+
 
 const useStyles = makeStyles({
   root: {
@@ -21,63 +21,105 @@ const useStyles = makeStyles({
   }
 })
 
+const initialState = {
+  offset: 6,
+  loading: false,
+  hasMoreItems: true
+}
+
 const ResultsContent = (props) => {
   const { beachesRegionList } = props;
   const [beaches, setBeaches] = useState([]);
-  const [offset, setOffset] = useState(0);
-  const [hasMoreItems, setHasMoreItems] = useState(true);
-  const classes = useStyles()
-  const step = 12;
- 
-  useEffect(() => {
-   
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    items = [];
-    setBeaches([]);
-    setOffset(0);
-    setHasMoreItems(true);
-    beaches.map((beach, index) => {
-      return items.push(<ResultsContentItem key={index} beach={beach} />)
-    });
-    setTimeout(() => {
-      
-      // const element = document.getElementById('content');
-      // console.log(element);
-      // // element.scrollIntoView(true);
-      // window.scrollBy(0,2000);
-    }, 1500);
 
-    // window.scrollBy(0, 300);
-    // loadFunc();
-  },[beachesRegionList]);
-  const loadFunc = ()=> {
-    const tempArray = beachesRegionList.slice(0, offset + step);
-    setBeaches(tempArray);
-    setOffset(offset + step);
-    if (offset + step >= beachesRegionList.length) {
-      setHasMoreItems(false);
-    }
+  const [state, dispatch] = useReducer(reducer, initialState)
+ 
+  function reducer(state, action) {
+    switch (action.type) {
+      case 'CHANGE_OFFSET':
+        return {
+          ...state,
+          offset: action.payload
+        }
+      case 'CHANGE_LOADING':
+        return {
+          ...state,
+          loading: action.payload
+        }
+      case 'CHANGE_HAS_MORE_ITEMS':
+        return {
+          ...state,
+          hasMoreItems: action.payload
+        }
+      default: return state
+      }
+
+
   }
-  
-  let items = [];
-  beaches.map((beach, index) => {
-      return items.push(<ResultsContentItem key={index} beach={beach} />)
-  });
+  const classes = useStyles()
+  const step = 6;
+ 
+ 
+
+  useEffect(() => {
+    setBeaches(beachesRegionList.slice(0, step));
+    dispatch({ type: 'CHANGE_LOADING', payload: false });
+    dispatch({ type: 'CHANGE_HAS_MORE_ITEMS', payload: true })
+    dispatch({ type: 'CHANGE_OFFSET', payload: 6 })
+
+    setTimeout(() => {
+      const element = document.getElementById('filter');
+      if (element) {
+          scrollIntoView(element, {
+            time: 500,
+            align: {
+              top: 0.2
+            }
+          })
+        }
+        
+    }, 500);
+   
+    
+  },[beachesRegionList]);
+
+  useEffect(() => {
+    const loadItems = () => {
+      if (state.loading || !state.hasMoreItems) {
+        return;
+      }
+      dispatch({ type: 'CHANGE_LOADING', payload: true });
+      setBeaches(beachesRegionList.slice(0, state.offset + step));
+      dispatch({ type: 'CHANGE_HAS_MORE_ITEMS', payload: (state.offset + step) >= beachesRegionList.length ? false : true })
+      dispatch({ type: 'CHANGE_OFFSET', payload: state.offset + step });
+      dispatch({ type: 'CHANGE_LOADING', payload: false });
+    }
+    const handleScroll = (event) => {
+
+      if (
+        window.innerHeight + document.documentElement.scrollTop
+        === document.documentElement.offsetHeight
+      ) {
+        loadItems();
+      }
+
+    }
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    }
+
+  }, [beachesRegionList,state.loading, state.offset, state.hasMoreItems]);
+ 
   
   return (
-   
-
-       <InfiniteScroll
-        pageStart={0}
-        loadMore={loadFunc}
-        hasMore={hasMoreItems}
-        initialLoad={true}
-        loader={<div className={classes.loader} key={0}>Loading ...</div>}
-      >
-        <div id="content" className={classes.root}>
-        {items}
+  
+    <div id="content" className={classes.root}>
+      {
+        beaches.map((beach, index) => {
+            return <ResultsContentItem key={index} beach={beach} />
+        })}
       </div>
-      </InfiniteScroll>
+    
       
     
   );

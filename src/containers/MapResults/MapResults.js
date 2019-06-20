@@ -23,7 +23,7 @@ const MapResults = (props) => {
   const region = temp[temp.length - 1];
   const beachesRegionList = props.beachesList.filter(beach => beach.comunidad_autonoma === region);
   return (
-    <div id="results" className={classes.root}>
+    <div  className={classes.root}>
       <ResultsFilter count={beachesRegionList.length} region={region}/>
       <ResultsContent beachesRegionList={beachesRegionList}/>
     </div>

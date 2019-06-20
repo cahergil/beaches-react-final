@@ -43,7 +43,7 @@ const ResultsFilter = (props) => {
     setSelectValue(e.target.value);
   }
   return (
-    <section className={classes.root}>
+    <section id="filter" className={classes.root}>
       <div className={classes.resultsHeader}>
         <span className={classes.resultsHeaderNumber}>{count}</span>
         <span> beaches in </span>
