@@ -15,7 +15,7 @@ const LandingPage = (props) => {
   }, []);
 
   const handleMapClick = (region) => {
-    console.log('mapClicked', region);
+    // console.log('mapClicked', region);
     props.history.push({ pathname: '/spain-map/' + region });
   }
   return (

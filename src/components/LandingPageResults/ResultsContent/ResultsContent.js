@@ -14,10 +14,16 @@ const useStyles = makeStyles({
     gridRowGap: '2rem'
     
   },
-  loader: {
-    fontSize: '2rem',
-    color: '#fff',
-    backgroundColor: '#777'
+  // loader: {
+  //   fontSize: '2rem',
+  //   color: '#fff',
+  //   backgroundColor: '#777'
+  // },
+  showing: {
+    alignContent: 'center',
+    fontSize: '1.5rem',
+    margin: '2rem',
+    color: '#777'
   }
 })
 
@@ -61,9 +67,10 @@ const ResultsContent = (props) => {
  
 
   useEffect(() => {
-    setBeaches(beachesRegionList.slice(0, step));
+    const hasMoreItems = beachesRegionList.length > step;
+    setBeaches(beachesRegionList.slice(0, hasMoreItems ? step: beachesRegionList.length));
     dispatch({ type: 'CHANGE_LOADING', payload: false });
-    dispatch({ type: 'CHANGE_HAS_MORE_ITEMS', payload: true })
+    dispatch({ type: 'CHANGE_HAS_MORE_ITEMS', payload: hasMoreItems ? true : false })
     dispatch({ type: 'CHANGE_OFFSET', payload: 6 })
 
     setTimeout(() => {
@@ -110,17 +117,19 @@ const ResultsContent = (props) => {
 
   }, [beachesRegionList,state.loading, state.offset, state.hasMoreItems]);
  
+ 
   
   return (
-  
-    <div id="content" className={classes.root}>
-      {
-        beaches.map((beach, index) => {
-            return <ResultsContentItem key={index} beach={beach} />
-        })}
+    <React.Fragment>
+      <div className={classes.showing}>Showing {beaches.length} beach(es) of {beachesRegionList.length}</div>
+      <div id="content" className={classes.root}>
+        {
+          beaches.map((beach, index) => {
+              return <ResultsContentItem key={index} beach={beach} />
+          })}
       </div>
     
-      
+    </React.Fragment>
     
   );
 }

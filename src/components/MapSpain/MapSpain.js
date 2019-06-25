@@ -68,7 +68,7 @@ const MapSpain = React.memo((props) => {
     ]
   };
   const handleRegionClick = (e) => {
-    console.log(e.mapObject.id);
+    // console.log(e.mapObject.id);
     const region = mapComunidades.get(e.mapObject.id);
     onMapClicked(region);
 
