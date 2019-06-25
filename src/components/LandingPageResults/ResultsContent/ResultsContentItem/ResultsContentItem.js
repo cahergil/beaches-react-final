@@ -5,9 +5,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import { Typography, IconButton } from '@material-ui/core';
+import { Typography,Button } from '@material-ui/core';
 import ReactImageFallback from "react-image-fallback";
 import banderaAzul from '../../../../assets/images/blue_flag_mini.png'
 import normalBeach from '../../../../assets/images/normal_beach.png'
@@ -35,6 +33,11 @@ const useStyles = makeStyles({
   subheader: {
     color: '#777',
     textAlign: 'left'
+  },
+  cardContent: {
+    height: '13.2rem',
+    overflowY: 'auto'
+
   }
 });
 
@@ -82,18 +85,19 @@ const ResultsContentItem = (props) => {
         title={`beach ${beach.nombre}`}
     />  */}
     
-    <CardContent>
+    <CardContent
+        classes={{
+        root: classes.cardContent
+      }}
+      >
       <Typography align="left" variant="body2" color="textSecondary" component="p">
         {beach.descripcion}
       </Typography>
     </CardContent>
     <CardActions disableSpacing>
-      <IconButton aria-label="Add to favorites">
-        <FavoriteIcon />
-      </IconButton>
-      <IconButton aria-label="Share">
-        <ShareIcon />
-      </IconButton>
+        <Button variant="outlined" color="primary">
+          Details
+        </Button>
     </CardActions>
     </Card > 
   );
