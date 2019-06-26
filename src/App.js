@@ -1,11 +1,14 @@
 import React, { useEffect} from 'react';
-import { Route,Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './App.scss';
 import NavDrawer from './components/Navigation/NavDrawer';
 import Graphics from './components/Graphics/Graphics';
 import Search from './components/Search/Search';
 import LandingPage from './containers/LandingPage/LandingPage';
+import BeachDetails from './containers/BeachDetails/BeachDetails';
+import * as actions from './store/actions/beaches';
 
 
 
@@ -14,6 +17,7 @@ const  App = props => {
   useEffect(() => {
     // load jsofile and set state
     // props.onSetCountryBeaches();
+    // props.history.push({ pathname: '/spain-map' });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -23,7 +27,8 @@ const  App = props => {
       <NavDrawer />
       <Switch>
         <Route path="/spain-map"  component={LandingPage} />
-        <Route path="/search"  component={Search}/>
+        <Route path="/search" component={Search} />
+        <Route path="/details/:id" component={BeachDetails} />
         <Route path="/graphics" component={Graphics} />
         <Redirect to="/spain-map"  />
       </Switch>
@@ -31,13 +36,13 @@ const  App = props => {
   );
 }
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     onSetCountryBeaches: () => dispatch(actions.setCountryBeaches())
-//   }
-// }
+const mapDispatchToProps = dispatch => {
+  return {
+    onSetCountryBeaches: () => dispatch(actions.setCountryBeaches())
+  }
+}
 
 
-//  export default connect(null, mapDispatchToProps)(App);
- export default App;
+ export default connect(null, mapDispatchToProps)(App);
+//  export default App;
 

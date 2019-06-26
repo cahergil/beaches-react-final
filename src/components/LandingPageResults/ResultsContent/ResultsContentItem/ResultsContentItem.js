@@ -1,4 +1,6 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+
 import { makeStyles } from '@material-ui/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -7,6 +9,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import { Typography,Button } from '@material-ui/core';
 import ReactImageFallback from "react-image-fallback";
+
 import banderaAzul from '../../../../assets/images/blue_flag_mini.png'
 import normalBeach from '../../../../assets/images/normal_beach.png'
 import errorImage from '../../../../assets/images/image_na.png'
@@ -47,7 +50,12 @@ const ResultsContentItem = (props) => {
   const imagesArray = beach.images.split(',');
   const image = imagesArray[imagesArray.length - 1];
 
-  
+  const handleButtonClick = (e) => {
+    console.log('click');
+    props.history.push({
+      pathname: '/details/' + beach.id
+    });
+  }
 
 
   return (
@@ -95,7 +103,7 @@ const ResultsContentItem = (props) => {
       </Typography>
     </CardContent>
     <CardActions disableSpacing>
-        <Button variant="outlined" color="primary">
+        <Button variant="outlined" color="primary" onClick={handleButtonClick}>
           Details
         </Button>
     </CardActions>
@@ -103,4 +111,4 @@ const ResultsContentItem = (props) => {
   );
 }
 
-export default ResultsContentItem;
+export default withRouter(ResultsContentItem);

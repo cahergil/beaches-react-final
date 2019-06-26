@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ResultsContentItem from './ResultsContentItem/ResultsContentItem';
 import scrollIntoView from 'scroll-into-view';
@@ -14,11 +14,6 @@ const useStyles = makeStyles({
     gridRowGap: '2rem'
     
   },
-  // loader: {
-  //   fontSize: '2rem',
-  //   color: '#fff',
-  //   backgroundColor: '#777'
-  // },
   showing: {
     alignContent: 'center',
     fontSize: '1.5rem',
@@ -30,49 +25,57 @@ const useStyles = makeStyles({
 const initialState = {
   offset: 6,
   loading: false,
-  hasMoreItems: true
+  hasMoreItems: true,
+  beaches: []
 }
+function reducer(state, action) {
+  switch (action.type) {
+    case 'CHANGE_OFFSET':
+      return {
+        ...state,
+        offset: action.payload
+      }
+    case 'CHANGE_LOADING':
+      return {
+        ...state,
+        loading: action.payload
+      }
+    case 'CHANGE_HAS_MORE_ITEMS':
+      return {
+        ...state,
+        hasMoreItems: action.payload
+      }
+    case 'SET_BEACHES':
+      return {
+        ...state,
+        beaches: action.payload
+      }
+    default: return state
+  }
 
+
+}
 const ResultsContent = (props) => {
   const { beachesRegionList } = props;
-  const [beaches, setBeaches] = useState([]);
-
   const [state, dispatch] = useReducer(reducer, initialState)
  
-  function reducer(state, action) {
-    switch (action.type) {
-      case 'CHANGE_OFFSET':
-        return {
-          ...state,
-          offset: action.payload
-        }
-      case 'CHANGE_LOADING':
-        return {
-          ...state,
-          loading: action.payload
-        }
-      case 'CHANGE_HAS_MORE_ITEMS':
-        return {
-          ...state,
-          hasMoreItems: action.payload
-        }
-      default: return state
-      }
-
-
-  }
+  
   const classes = useStyles()
   const step = 6;
- 
- 
-
+  
   useEffect(() => {
+  
+    
     const hasMoreItems = beachesRegionList.length > step;
-    setBeaches(beachesRegionList.slice(0, hasMoreItems ? step: beachesRegionList.length));
+ 
+    const tempBeaches = beachesRegionList.slice(0, hasMoreItems ? step : beachesRegionList.length);
+   
     dispatch({ type: 'CHANGE_LOADING', payload: false });
-    dispatch({ type: 'CHANGE_HAS_MORE_ITEMS', payload: hasMoreItems ? true : false })
-    dispatch({ type: 'CHANGE_OFFSET', payload: 6 })
+    dispatch({ type: 'CHANGE_HAS_MORE_ITEMS', payload: hasMoreItems ? true : false });
+    dispatch({ type: 'CHANGE_OFFSET', payload: 6 });
+    dispatch({ type: 'SET_BEACHES', payload: tempBeaches });
 
+    
     setTimeout(() => {
       const element = document.getElementById('filter');
       if (element) {
@@ -91,12 +94,14 @@ const ResultsContent = (props) => {
 
   useEffect(() => {
     const loadItems = () => {
-      if (state.loading || !state.hasMoreItems) {
+      // beachesRegionList.length ===0 conditon for coming back from details
+      if (state.loading || !state.hasMoreItems || beachesRegionList.length ===0) {
         return;
       }
+      
       dispatch({ type: 'CHANGE_LOADING', payload: true });
-      setBeaches(beachesRegionList.slice(0, state.offset + step));
-      dispatch({ type: 'CHANGE_HAS_MORE_ITEMS', payload: (state.offset + step) >= beachesRegionList.length ? false : true })
+      dispatch({ type: 'SET_BEACHES', payload: beachesRegionList.slice(0, state.offset + step) });
+      dispatch({ type: 'CHANGE_HAS_MORE_ITEMS', payload: (state.offset + step) >= beachesRegionList.length ? false : true });
       dispatch({ type: 'CHANGE_OFFSET', payload: state.offset + step });
       dispatch({ type: 'CHANGE_LOADING', payload: false });
     }
@@ -121,10 +126,10 @@ const ResultsContent = (props) => {
   
   return (
     <React.Fragment>
-      <div className={classes.showing}>Showing {beaches.length} beach(es) of {beachesRegionList.length}</div>
+      <div className={classes.showing}>Showing {state.beaches.length} beach(es) of {beachesRegionList.length}</div>
       <div id="content" className={classes.root}>
         {
-          beaches.map((beach, index) => {
+          state.beaches.map((beach, index) => {
               return <ResultsContentItem key={index} beach={beach} />
           })}
       </div>

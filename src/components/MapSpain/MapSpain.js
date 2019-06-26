@@ -33,6 +33,9 @@ const MapSpain = React.memo((props) => {
   const classes = useStyles();
   const mapComunidades = new Map();
 
+  
+  
+
   useEffect(() => {
     
     mapComunidades.set('ES-AN', regionMap.ANDALUCIA);
@@ -68,7 +71,7 @@ const MapSpain = React.memo((props) => {
     ]
   };
   const handleRegionClick = (e) => {
-    // console.log(e.mapObject.id);
+  
     const region = mapComunidades.get(e.mapObject.id);
     onMapClicked(region);
 

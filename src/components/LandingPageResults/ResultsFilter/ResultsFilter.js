@@ -50,6 +50,7 @@ const ResultsFilter = (props) => {
   const debouncedInput = useCallback(debounce(onSearched, 1000), []);
   const classes = useStyles();
  
+
   useEffect(() => {
  
     setInputValue('');

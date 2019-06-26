@@ -8,6 +8,8 @@ import * as actions from '../../store/actions/beaches';
 
 const LandingPage = (props) => {
   
+    
+  
   useEffect(() => {
     props.onSetCountryBeaches();
     props.history.push({ pathname: '/spain-map' })
@@ -15,7 +17,7 @@ const LandingPage = (props) => {
   }, []);
 
   const handleMapClick = (region) => {
-    // console.log('mapClicked', region);
+    
     props.history.push({ pathname: '/spain-map/' + region });
   }
   return (

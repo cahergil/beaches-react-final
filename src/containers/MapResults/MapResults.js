@@ -23,7 +23,9 @@ const MapResults = (props) => {
   let refBeachesRegionList = useRef(beachesRegionList);
   let refRegion = useRef(region);
 
+ 
   useEffect(() => {
+   
     refBeachesRegionList.current = beachesRegionList;
     refRegion.current = region;
   });
@@ -31,10 +33,11 @@ const MapResults = (props) => {
   const classes = useStyles()
 
   useEffect(() => {
-  
+ 
     const temp = props.match.url.split('/');
     const region = temp[temp.length - 1];
     const regionList = beachesList.filter(beach => beach.comunidad_autonoma === region);
+   
     setBeachesRegionList(regionList);
     setFilteredRegionList(regionList);
     setRegion(region)
