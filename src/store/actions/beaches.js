@@ -25,10 +25,11 @@ export const setCountryBeachesFailed = (error) => {
   }
 }
 
-export const setCountryBeaches = () => {
+export const setCountryBeaches = (route) => {
   return dispatch => {
     dispatch(setCountryBeachesStart());
-    axios.get('./playas.json')
+    // axios.get('./playas.json')
+    axios.get(route)
       .then(response => {
         // console.log(response)
         dispatch(setCountryBeachesSucceed(response.data))

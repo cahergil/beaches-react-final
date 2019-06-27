@@ -5,6 +5,7 @@ import {makeStyles} from '@material-ui/styles'
 
 import ResultsFilter from '../../components/LandingPageResults/ResultsFilter/ResultsFilter';
 import ResultsContent from '../../components/LandingPageResults/ResultsContent/ResultsContent';
+import * as actions from '../../store/actions/beaches';
 
 const useStyles = makeStyles({
   root: {
@@ -15,29 +16,28 @@ const useStyles = makeStyles({
 });
 
 const MapResults = (props) => {
-  const { beachesList } = props;
+  const { beachesList, onSetCountryBeaches} = props;
   const [ beachesRegionList, setBeachesRegionList] = useState([]);
   const [ filteredRegionList, setFilteredRegionList] = useState([]);
   const [region, setRegion] = useState([]);
-
+  
+  const classes = useStyles();
   let refBeachesRegionList = useRef(beachesRegionList);
   let refRegion = useRef(region);
-
  
   useEffect(() => {
-   
     refBeachesRegionList.current = beachesRegionList;
     refRegion.current = region;
   });
 
-  const classes = useStyles()
+  useEffect(() => {
+    onSetCountryBeaches('../../playas.json');
+  }, [onSetCountryBeaches]);
 
   useEffect(() => {
- 
     const temp = props.match.url.split('/');
     const region = temp[temp.length - 1];
     const regionList = beachesList.filter(beach => beach.comunidad_autonoma === region);
-   
     setBeachesRegionList(regionList);
     setFilteredRegionList(regionList);
     setRegion(region)
@@ -56,13 +56,23 @@ const MapResults = (props) => {
    
   }
 
+  let content = null;
+  if (beachesRegionList.length > 0) {
+    content = (
+      <React.Fragment >
+        <ResultsFilter
+          onSearched={(select, value) => searchHandler(select, value)}
+          count={beachesRegionList.length}
+          region={region} />
+        <ResultsContent
+            beachesRegionList={filteredRegionList} />
+      </React.Fragment>
+    ) 
+  }
+
   return (
-    <div  className={classes.root}>
-      <ResultsFilter
-        onSearched={(select, value) => searchHandler(select, value)}
-        count={beachesRegionList.length}
-        region={region} />
-      <ResultsContent beachesRegionList={filteredRegionList}/>
+    <div className={classes.root}>
+      {content}  
     </div>
   );
 }
@@ -71,6 +81,10 @@ const mapStateToProps = state => {
     beachesList: state.beaches.beachesList
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    onSetCountryBeaches: (route) => dispatch(actions.setCountryBeaches(route))
+  }
+}
 
-
-export default withRouter(connect(mapStateToProps,null)(MapResults));
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(MapResults));

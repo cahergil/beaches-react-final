@@ -28,7 +28,7 @@ const  App = props => {
       <Switch>
         <Route path="/spain-map"  component={LandingPage} />
         <Route path="/search" component={Search} />
-        <Route path="/details/:id" component={BeachDetails} />
+        <Route path="/details/beach/" component={BeachDetails} />
         <Route path="/graphics" component={Graphics} />
         <Redirect to="/spain-map"  />
       </Switch>

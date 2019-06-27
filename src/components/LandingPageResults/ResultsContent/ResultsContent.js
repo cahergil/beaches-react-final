@@ -14,6 +14,12 @@ const useStyles = makeStyles({
     gridRowGap: '2rem'
     
   },
+  loading: {
+    alignContent: 'center',
+    fontSize: '2rem',
+    backgroundColor: '#777',
+    color: '#fff'
+  },
   showing: {
     alignContent: 'center',
     fontSize: '1.5rem',
@@ -132,6 +138,10 @@ const ResultsContent = (props) => {
           state.beaches.map((beach, index) => {
               return <ResultsContentItem key={index} beach={beach} />
           })}
+        {/* {state.loading && 
+          <div className={classes.loading}>Loading...</div>
+
+        } */}
       </div>
     
     </React.Fragment>

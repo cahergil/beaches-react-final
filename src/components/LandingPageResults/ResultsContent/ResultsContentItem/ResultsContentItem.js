@@ -53,7 +53,8 @@ const ResultsContentItem = (props) => {
   const handleButtonClick = (e) => {
     console.log('click');
     props.history.push({
-      pathname: '/details/' + beach.id
+      pathname: '/details/beach',
+      search: `?id=${beach.id}`
     });
   }
 
