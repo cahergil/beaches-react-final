@@ -38,6 +38,10 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+const LooseNavLink = props => (
+  <NavLink {...props} isActive={(match, location) => location.pathname.startsWith(props.to.pathname)} />
+)
+
 const SideDrawer = (props) => {
   const { sections, drawerOpen, onClose} = props;
   const classes = useStyles();
@@ -52,7 +56,7 @@ const SideDrawer = (props) => {
               <li
                 key={index}
                 className={classes.liStyle}>
-                <NavLink
+                <LooseNavLink
                   key={index}
                   // 
                   exact
@@ -69,7 +73,7 @@ const SideDrawer = (props) => {
                     section.toUpperCase() 
                   }
                   
-                </NavLink>
+                </LooseNavLink>
               </li>
 
             )

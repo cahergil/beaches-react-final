@@ -49,6 +49,9 @@ const useStyles = makeStyles(theme => ({
 })
 )
 
+ const LooseNavLink = props => (
+  <NavLink {...props} isActive={(match, location) => location.pathname.startsWith(props.to.pathname)} />
+)
 
 const Navbar = (props) => {
   const { sections, burgerClicked } = props;
@@ -62,7 +65,7 @@ const Navbar = (props) => {
           sections.map((section, index) => {
             return (
               <li key={index} className={classes.liStyle}>
-                <NavLink
+                <LooseNavLink
                   // activeClass(NavLink) only works with this form of 'to'
                   exact
                   to={{
@@ -81,7 +84,7 @@ const Navbar = (props) => {
                     }`}
                 >
                   {section.toUpperCase()}
-                </NavLink>
+                </LooseNavLink>
               </li>
             );
           })
