@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/styles';
 import AmCharts from "@amcharts/amcharts3-react";
 
@@ -29,7 +29,8 @@ const useStyles = makeStyles({
 
 
 const MapSpain = React.memo((props) => {
-  const { onMapClicked } = props;
+  const { onMapClicked, onSetMapArea, preSelectedArea } = props;
+  const [mapObject, setMapObject] = useState(null);
   const classes = useStyles();
   const mapComunidades = new Map();
 
@@ -70,12 +71,35 @@ const MapSpain = React.memo((props) => {
       { id: 'ES-VC', color: areaColor }
     ]
   };
-  const handleRegionClick = (e) => {
-  
-    const region = mapComunidades.get(e.mapObject.id);
-    onMapClicked(region);
 
+  // 
+  const handleRegionClick = (e) => {
+    const areaId = e.mapObject.id;
+    const region = mapComunidades.get(areaId);
+    onMapClicked(region);
+    // unselect previous area
+    const area = mapObject.getObjectById(preSelectedArea);
+    if(area) {
+      area.showAsSelected = false;
+      mapObject.returnInitialColor(area)
+
+    }
+    console.log(areaId);
+    onSetMapArea(areaId)
      
+  }
+
+  const handlePreSelect = (e) => {
+    console.log(preSelectedArea);
+    const map = e.chart;
+    // get map instance to use it in handleRegionClick
+    setMapObject(map);
+    const area = map.getObjectById(preSelectedArea);
+    if(area) {
+      area.showAsSelected = true
+      map.returnInitialColor(area)
+
+    }
   }
   return (
     <section id="map">
@@ -96,18 +120,25 @@ const MapSpain = React.memo((props) => {
               "outlineAlpha": 1,
               "outlineThickness": 1,
               "autoZoom": false,
-              "selectedColor": '#E91E63',
+              "selectedColor": '#D4AC16',
+              // "selectedColor": '#E91E63',
               // "selectedOutlineColor": '#33fddd',
               // "selectedOutlineThickness": 1,
               "selectable": true,
-              rollOverColor: '#009ce0'
+              rollOverColor: '#D4AC16'
+              // rollOverColor: '#009ce0'
               // "rollOverColor": '#fff'
             },
-            "listeners":
-              [{
+            "listeners": [
+              {
                 "event": "clickMapObject",
                 "method": (e) => { handleRegionClick(e) }
-              }]
+              },
+              {
+                "event": "init",
+                "method": (e) => { handlePreSelect(e)}
+              }  
+            ]
             
           }} // options
         />

@@ -7,6 +7,8 @@ import { InputLabel } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import _ from 'lodash';
 
+
+
 const useStyles = makeStyles({
   root: {
     width: '100%',
@@ -43,26 +45,34 @@ const useStyles = makeStyles({
 
 
 const ResultsFilter = (props) => {
-  const { count, region,onSearched } = props;
-  const [selectValue, setSelectValue] = useState('termino_municipal');
-  const [inputValue, setInputValue] = useState('');
+  const { count, region, onSearched, onMapResultsSelectChange, selectValue, inputValue, isReturn, onSetReturnFromDetails } = props;
+  // to synchronize the input
+  const [input, setInput] = useState(inputValue);
   const { debounce } = _;
   const debouncedInput = useCallback(debounce(onSearched, 1000), []);
   const classes = useStyles();
  
 
   useEffect(() => {
- 
-    setInputValue('');
-  }, [count]);
   
-  const handleSelectChange = (e) =>{
-    setSelectValue(e.target.value);
-    setInputValue('');
+    if (!isReturn) {
+      setInput('');
+      onMapResultsSelectChange('termino_municipal');
+      
+    } else {
+      // onSetReturnFromDetails(false);
+    }
+  
+    
+  }, [count,setInput, isReturn, onSetReturnFromDetails, onMapResultsSelectChange]);
+  
+  const handleSelectChange = (e) => {
+    onMapResultsSelectChange(e.target.value);
+    setInput('');
   }
   const handleInputChange = (e) => {
     const value = e.target.value;
-    setInputValue(value);
+    setInput(value);
     debouncedInput(selectValue, value);
   }
   return (
@@ -100,7 +110,7 @@ const ResultsFilter = (props) => {
             id="standard-search"
             label="search"
             type="search"
-            value={inputValue}
+            value={input}
             style={{ marginLeft: '2rem' }}
             onChange={handleInputChange}
             margin="none"

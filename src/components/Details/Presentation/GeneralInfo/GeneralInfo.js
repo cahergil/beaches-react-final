@@ -5,7 +5,6 @@ const useStyles = makeStyles({
   root: {
     width: '100%',
     display: 'grid',
-    // gridTemplateColumns: 'repeat(2, 1fr)',
     gridTemplateColumns: '35% 65%',
     gridTemplateRows: 'repeat(7, 3rem)',
     justifyItems: 'start',
@@ -23,8 +22,7 @@ const useStyles = makeStyles({
 const GeneralInfo = props => {
    const { generalInfo } = props;
   const classes = useStyles();
-  
-  console.log(generalInfo.termino_municipal);
+
   return (
     <section >
       <div className={classes.root}>

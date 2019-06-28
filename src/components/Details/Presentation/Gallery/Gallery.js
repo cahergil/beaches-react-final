@@ -21,7 +21,7 @@ const Gallery = props => {
   img.forEach(element => {
     imagesArray.push({original: element, thumbnail: element })
   });
-  console.log(imagesArray);
+
   return (
     <section className={`${classes.root}`}>
     

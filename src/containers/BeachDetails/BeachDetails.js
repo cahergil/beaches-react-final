@@ -7,7 +7,8 @@ import Header from './../../components/Details/Header/Header';
 import Presentation from './../../components/Details/Presentation/Presentation';
 import Facilities from './../../components/Details/Facilities/Facilities';
 import Location from './../../components/Details/Location/Location';
-import * as actions from '../../store/actions/beaches';
+import * as actionsBeaches from '../../store/actions/beaches';
+import * as actionsMapFilters from '../../store/actions/mapFilters';
 
 const useStyles = makeStyles({
   root: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles({
 });
 
 const BeachDetails = props => {
-  const { beachesList, onSetCountryBeaches } = props;
+  const { beachesList, onSetCountryBeaches, onSetReturnFromDetails } = props;
   const [beach, setBeach] = useState(null);
   const [generalInfo, setGeneralInfo] = useState(null);
   const classes = useStyles();
@@ -28,6 +29,13 @@ const BeachDetails = props => {
   useEffect(()=> {
     onSetCountryBeaches('../playas.json');
   }, [onSetCountryBeaches]);
+
+  useEffect(() => {
+    return () => {
+   
+      onSetReturnFromDetails(true);
+    }
+  }, [onSetReturnFromDetails]);
 
   useEffect(() => {
     const id = queryString.parse(props.location.search).id;
@@ -53,8 +61,7 @@ const BeachDetails = props => {
     
 
   }, [beachesList, props.location.search]);
-  console.log(beach);
-  console.log(generalInfo);
+
   let content = null;
   if (beach) {
     if (generalInfo) {
@@ -82,7 +89,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onSetCountryBeaches: (route) => dispatch(actions.setCountryBeaches(route))
+    onSetCountryBeaches: (route) => dispatch(actionsBeaches.setCountryBeaches(route)),
+    onSetReturnFromDetails: (value) => dispatch(actionsMapFilters.setReturnFromDetails(value))
   }
 };
 

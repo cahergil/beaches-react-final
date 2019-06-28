@@ -5,7 +5,8 @@ import {makeStyles} from '@material-ui/styles'
 
 import ResultsFilter from '../../components/LandingPageResults/ResultsFilter/ResultsFilter';
 import ResultsContent from '../../components/LandingPageResults/ResultsContent/ResultsContent';
-import * as actions from '../../store/actions/beaches';
+import * as actionsBeaches from '../../store/actions/beaches';
+import * as actionsMapFilters from '../../store/actions/mapFilters'
 
 const useStyles = makeStyles({
   root: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles({
 });
 
 const MapResults = (props) => {
-  const { beachesList, onSetCountryBeaches} = props;
+  const { beachesList, onSetCountryBeaches, onMapResultsSelectChange, onMapResultsInputChange, selectValue, inputValue, isReturn, onSetReturnFromDetails} = props;
   const [ beachesRegionList, setBeachesRegionList] = useState([]);
   const [ filteredRegionList, setFilteredRegionList] = useState([]);
   const [region, setRegion] = useState([]);
@@ -43,16 +44,18 @@ const MapResults = (props) => {
     setRegion(region)
   }, [beachesList, props.match.url])
 
-  
+ 
   const searchHandler = (select, value) => {
     const regex = new RegExp("" + value + "", "i");
     let results;
     if (!value) {
       setFilteredRegionList(refBeachesRegionList.current);
+      onMapResultsInputChange(value);
       return;
     }
     results = refBeachesRegionList.current.filter(beach => beach[`${select}`].match(regex));
     setFilteredRegionList(results);
+    onMapResultsInputChange(value)
    
   }
 
@@ -63,7 +66,13 @@ const MapResults = (props) => {
         <ResultsFilter
           onSearched={(select, value) => searchHandler(select, value)}
           count={beachesRegionList.length}
-          region={region} />
+          region={region}
+          onMapResultsSelectChange={onMapResultsSelectChange}
+          selectValue={selectValue}
+          inputValue={inputValue}
+          isReturn={isReturn}
+          onSetReturnFromDetails={onSetReturnFromDetails}
+        />
         <ResultsContent
             beachesRegionList={filteredRegionList} />
       </React.Fragment>
@@ -78,12 +87,18 @@ const MapResults = (props) => {
 }
 const mapStateToProps = state => {
   return {
-    beachesList: state.beaches.beachesList
+    beachesList: state.beaches.beachesList,
+    selectValue: state.mapResultsFilters.select,
+    inputValue: state.mapResultsFilters.input,
+    isReturn: state.mapResultsFilters.return
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-    onSetCountryBeaches: (route) => dispatch(actions.setCountryBeaches(route))
+    onSetCountryBeaches: (route) => dispatch(actionsBeaches.setCountryBeaches(route)),
+    onMapResultsSelectChange: (value) => dispatch(actionsMapFilters.setMapResultsSelect(value)),
+    onMapResultsInputChange: (value) => dispatch(actionsMapFilters.setMapResultsInput(value)),
+    onSetReturnFromDetails: (value) => dispatch(actionsMapFilters.setReturnFromDetails(value))
   }
 }
 
