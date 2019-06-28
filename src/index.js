@@ -1,26 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
+import { createStore,  compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk';
-import beachesReducer from './store/reducers/beaches';
 import { createMuiTheme } from '@material-ui/core/styles';
 import  ThemeProvider from '@material-ui/styles/ThemeProvider'
-import pink from '@material-ui/core/colors/pink';
-import { BrowserRouter } from 'react-router-dom';
+// import pink from '@material-ui/core/colors/pink';
 
 
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import rootReducer from './store/reducers/index';
 
 const theme = createMuiTheme({
   palette: {
-    primary: { 500: '#2196F3'},
-    secondary: pink,
+    // primary: { 500: '#2196F3'},
+    primary: {
+   
+      main: '#2196F3',
+     
+    },
+    secondary: {
+      main: '#D4AC16'
+    },
     text: {
       primary: '#000',
-      secondary: pink
+      secondary: '#D4AC16'
 
     }
   },
@@ -31,11 +38,6 @@ const theme = createMuiTheme({
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const rootReducer = combineReducers({
-  beaches: beachesReducer
-});
-
 
 const store = createStore(rootReducer,
   composeEnhancers(applyMiddleware(thunk))
