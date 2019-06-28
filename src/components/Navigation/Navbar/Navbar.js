@@ -24,7 +24,8 @@ const useStyles = makeStyles(theme => ({
       color: '#fff'
     },
     '&:hover,&:active': {
-      color: '#E91E63'
+      // color: '#E91E63'
+      color: theme.palette.secondary.main
     },
     fontSize: '1.5rem',
     transition: '200ms color'
@@ -65,11 +66,11 @@ const Navbar = (props) => {
                   // activeClass(NavLink) only works with this form of 'to'
                   exact
                   to={{
-                    pathname: '/'+ (section === 'map' ? '': section)
+                    pathname: '/'+ (section === section[0] ? 'spain-map': section)
 
                   }}
                   activeStyle={{
-                    color: '#E91E63',
+                    color: '#D4AC16',
                     fontWeight: 'bold'
                   }}
                   // pressing Link causes a render, we can caputre props.location.hash

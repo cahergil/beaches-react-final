@@ -24,7 +24,8 @@ const useStyles = makeStyles(theme => ({
       color: '#fff'
     },
     '&:hover,&:active': {
-      color: '#E91E63'
+      // color: '#E91E63'
+      color: theme.palette.secondary.main
       
      
     },
@@ -53,13 +54,14 @@ const SideDrawer = (props) => {
                 className={classes.liStyle}>
                 <NavLink
                   key={index}
+                  // 
                   exact
                   to={{
-                    pathname: '/' + (section === 'map' ? '' : section)
+                    pathname: '/' + (section === section[0] ? 'spain-map' : section)
                   }}
                   className={classes.linkStyle}
                   activeStyle={{
-                    color: '#E91E63',
+                    color: '#D4AC16',
                     fontWeight: 'bold'
                   }}
                 >
