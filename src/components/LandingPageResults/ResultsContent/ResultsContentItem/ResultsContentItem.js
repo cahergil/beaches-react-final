@@ -15,9 +15,11 @@ import normalBeach from '../../../../assets/images/normal_beach.png'
 import errorImage from '../../../../assets/images/image_na.png'
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme=>({
   root: {
-
+  },
+  headerRoot: {
+    backgroundColor: props => props.beach.bandera_azul !== 'Sí' ? theme.palette.secondary.light : theme.palette.primary.dark
   },
   card: {
     width: '35rem'
@@ -34,19 +36,18 @@ const useStyles = makeStyles({
 
   },
   subheader: {
-    color: '#777',
+    color: props => props.beach.bandera_azul !=='Sí'? theme.palette.secondary.dark: theme.palette.primary.light,
     textAlign: 'left'
   },
   cardContent: {
     height: '13.2rem',
-    overflowY: 'auto'
-
+    overflowY: 'auto',
   }
-});
+}));
 
 const ResultsContentItem = (props) => {
   const { beach } = props;
-  const classes = useStyles();
+  const classes = useStyles(props);
   const imagesArray = beach.images.split(',');
   const image = imagesArray[imagesArray.length - 1];
 
@@ -60,16 +61,21 @@ const ResultsContentItem = (props) => {
 
 
   return (
-    <Card className={classes.card}>
+    <Card
+      className={classes.card}
+      classes={{
+        root: classes.root
+      }}
+    >
 
       <CardHeader
         avatar={
           <Avatar alt="bandera azul" src={beach.bandera_azul !== 'Sí' ? normalBeach : banderaAzul} className={classes.avatar}>
-
           </Avatar>
         }
         classes={
           {
+            root: classes.headerRoot,
             subheader: classes.subheader,
             title: classes.title
           }
@@ -78,13 +84,10 @@ const ResultsContentItem = (props) => {
         title={beach.nombre}
         subheader={beach.termino_municipal}
       />
-   
-
        <ReactImageFallback
          src={image}
          fallbackImage={errorImage}
          alt="cool image should be here"
-
          className={classes.media} />
     
       {/* <img src={image} alt="prueba" className={classes.media}/> */}
@@ -95,16 +98,18 @@ const ResultsContentItem = (props) => {
     />  */}
     
     <CardContent
-        classes={{
+      classes={{
         root: classes.cardContent
-      }}
+        }}
       >
-      <Typography align="left" variant="body2" color="textSecondary" component="p">
+
+        {/* color="textPrimary" */}
+      <Typography align="left" variant="body2" component="p">
         {beach.descripcion}
       </Typography>
     </CardContent>
-    <CardActions disableSpacing>
-        <Button variant="outlined" color="primary" onClick={handleButtonClick}>
+    <CardActions >
+        <Button variant="outlined" color={beach.bandera_azul !== 'Sí' ? 'secondary': 'primary'} onClick={handleButtonClick}>
           Details
         </Button>
     </CardActions>
