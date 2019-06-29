@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useRef, useEffect, useCallback} from 'react';
 import { makeStyles } from '@material-ui/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -47,34 +47,48 @@ const useStyles = makeStyles({
 const ResultsFilter = (props) => {
   const { count, region, onSearched, onMapResultsSelectChange, selectValue, inputValue, isReturn, onSetReturnFromDetails } = props;
   // to synchronize the input
-  const [input, setInput] = useState(inputValue);
+  const [inputText, setInputText] = useState(inputValue);
   const { debounce } = _;
   const debouncedInput = useCallback(debounce(onSearched, 1000), []);
-  const classes = useStyles();
  
+  const classes = useStyles();
+
+  const handleSelectChange = (e) => {
+    onMapResultsSelectChange(e.target.value);
+    setInputText('');
+  }
+  const handleInputChange = (e) => {
+    
+    const value = e.target.value;
+    setInputText(value);
+    debouncedInput(selectValue, value);
+  }
 
   useEffect(() => {
   
     if (!isReturn) {
-      setInput('');
+      setInputText('');
       onMapResultsSelectChange('termino_municipal');
       
     } else {
       // onSetReturnFromDetails(false);
+      // https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-onchange-event-in-react-js
+      var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+      const input = document.getElementById('my-search');
+      // ' ' in order to passe useCallback in debounce
+      nativeInputValueSetter.call(input, input.value + ' ');
+      const event = new Event('input', { bubbles: true });
+      event.simulated = true;
+      input.dispatchEvent(event);
+        
     }
   
     
-  }, [count,setInput, isReturn, onSetReturnFromDetails, onMapResultsSelectChange]);
+  }, [count, setInputText, isReturn, onSetReturnFromDetails, onMapResultsSelectChange]);
   
-  const handleSelectChange = (e) => {
-    onMapResultsSelectChange(e.target.value);
-    setInput('');
-  }
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setInput(value);
-    debouncedInput(selectValue, value);
-  }
+
+  
+
   return (
     <section id="filter" className={classes.root}>
       <div className={classes.resultsHeader}>
@@ -107,10 +121,10 @@ const ResultsFilter = (props) => {
         
           </FormControl>
           <TextField
-            id="standard-search"
+            id="my-search"
             label="search"
             type="search"
-            value={input}
+            value={inputText}
             style={{ marginLeft: '2rem' }}
             onChange={handleInputChange}
             margin="none"

@@ -45,7 +45,8 @@ const MapResults = (props) => {
   }, [beachesList, props.match.url])
 
  
-  const searchHandler = (select, value) => {
+  const searchHandler = (select, val) => {
+    const value = val.trim();
     const regex = new RegExp("" + value + "", "i");
     let results;
     if (!value) {
