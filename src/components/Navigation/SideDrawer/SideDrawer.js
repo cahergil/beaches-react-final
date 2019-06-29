@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+// https://github.com/ReactTraining/react-router/issues/5376
 const LooseNavLink = props => (
   <NavLink {...props} isActive={(match, location) => location.pathname.startsWith(props.to.pathname)} />
 )
