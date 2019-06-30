@@ -61,8 +61,9 @@ function reducer(state, action) {
 
 
 }
-const ResultsContent = (props) => {
-  const { beachesRegionList } = props;
+// React.memo to avoid rerender with all beaches when returning from details
+const ResultsContent = React.memo(({beachesRegionList}) => {
+  // const { beachesRegionList } = props;
   const [state, dispatch] = useReducer(reducer, initialState)
  
   
@@ -147,6 +148,6 @@ const ResultsContent = (props) => {
     </React.Fragment>
     
   );
-}
+})
 
 export default ResultsContent;

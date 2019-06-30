@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { makeStyles } from '@material-ui/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -45,6 +45,7 @@ const useStyles = makeStyles({
 
 
 const ResultsFilter = (props) => {
+  
   const { count, region, onSearched, onMapResultsSelectChange, selectValue, inputValue, isReturn, onSetReturnFromDetails } = props;
   // to synchronize the input
   const [inputText, setInputText] = useState(inputValue);
@@ -75,7 +76,7 @@ const ResultsFilter = (props) => {
       // https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-onchange-event-in-react-js
       var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
       const input = document.getElementById('my-search');
-      // ' ' in order to passe useCallback in debounce
+      // ' ' in order to pass useCallback in debounce
       nativeInputValueSetter.call(input, input.value + ' ');
       const event = new Event('input', { bubbles: true });
       event.simulated = true;
@@ -86,9 +87,6 @@ const ResultsFilter = (props) => {
     
   }, [count, setInputText, isReturn, onSetReturnFromDetails, onMapResultsSelectChange]);
   
-
-  
-
   return (
     <section id="filter" className={classes.root}>
       <div className={classes.resultsHeader}>
@@ -106,7 +104,7 @@ const ResultsFilter = (props) => {
             <Select
               value={selectValue}
               onChange={handleSelectChange}
-              >
+            >
               <MenuItem
                 value="termino_municipal"
               >
@@ -128,7 +126,7 @@ const ResultsFilter = (props) => {
             style={{ marginLeft: '2rem' }}
             onChange={handleInputChange}
             margin="none"
-            />
+          />
         </div>
       </div>
     </section>
