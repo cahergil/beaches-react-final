@@ -98,7 +98,9 @@ const BeachDetails = props => {
           </div>
           <div className={classes.sectionRoot}>
             <Title colorSchema={colorSchema} name="Location" />
-            <Location beach={beach}/>
+            <Location coordinates={{ lat: parseFloat(beach.coordenada_y.replace(',', '.')), lng: parseFloat(beach.coordenada_x.replace(',', '.')) }}
+              nombre={beach.nombre}
+            />
           </div>
         </React.Fragment>
       )
