@@ -25,7 +25,7 @@ const Gallery = props => {
   return (
     <section className={`${classes.root}`}>
     
-      <ImageGallery items={imagesArray} />  
+      <ImageGallery showBullets={true} items={imagesArray} />  
      
     </section>
   );

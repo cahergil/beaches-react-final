@@ -9,6 +9,8 @@ import Facilities from './../../components/Details/Facilities/Facilities';
 import Location from './../../components/Details/Location/Location';
 import * as actionsBeaches from '../../store/actions/beaches';
 import * as actionsMapFilters from '../../store/actions/mapFilters';
+import Title from './../../components/Details/Title/Title';
+import Services from './../../components/Details/Service/Services';
 
 const useStyles = makeStyles({
   root: {
@@ -17,12 +19,21 @@ const useStyles = makeStyles({
     gridTemplateRows: 'repeat(4, min-content)',
     gridRowGap: '2rem',
     margin: '2rem'
+  },
+  sectionRoot: {
+    width: '100%',
+    display: 'grid',
+    gridTemplateRows: 'repeat(2, min-content)',
+    boxShadow: '2px 1px 5px #ccc',
+    borderRadius: '5px',
+    overflow: 'hidden'
   }
 });
 
 const BeachDetails = props => {
   const { beachesList, onSetCountryBeaches, onSetReturnFromDetails } = props;
   const [beach, setBeach] = useState(null);
+  const [colorSchema, setColorSchema] = useState({ backgroundColor:'#FABC3D', color:'#000'})
   const [generalInfo, setGeneralInfo] = useState(null);
   const classes = useStyles();
   
@@ -45,6 +56,7 @@ const BeachDetails = props => {
     // console.log(beach);
     const generalInfo = {};
     if (beach) {
+      
       generalInfo['termino_municipal'] = beach.termino_municipal;
       generalInfo['provincia'] = beach.provincia;
       generalInfo['comunidad_autonoma'] = beach.comunidad_autonoma;
@@ -56,6 +68,9 @@ const BeachDetails = props => {
       generalInfo['images'] = beach.images;
       setGeneralInfo(generalInfo);
       setBeach(beach);
+      if (beach.bandera_azul === 'Sí') {
+        setColorSchema({ backgroundColor: '#074c82', color: '#fff' });
+      } 
     }
     
     
@@ -67,10 +82,24 @@ const BeachDetails = props => {
     if (generalInfo) {
       content = (
         <React.Fragment>
-          <Header name={beach.nombre} />
-          <Presentation generalInfo={generalInfo} />
-          <Facilities />
-          <Location />
+          <Header
+            colorSchema={colorSchema}
+            name={beach.nombre} />
+          <Presentation
+            colorSchema={colorSchema}
+            generalInfo={generalInfo} />
+          <div className={classes.sectionRoot}>
+            <Title colorSchema={colorSchema} name="Features" />
+            <Facilities />
+          </div>
+          <div className={classes.sectionRoot}>
+            <Title colorSchema={colorSchema} name="Services" />
+            <Services beach={beach} />
+          </div>
+          <div className={classes.sectionRoot}>
+            <Title colorSchema={colorSchema} name="Location" />
+            <Location beach={beach}/>
+          </div>
         </React.Fragment>
       )
     }

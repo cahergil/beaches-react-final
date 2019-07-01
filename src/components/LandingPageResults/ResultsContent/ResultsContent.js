@@ -63,20 +63,13 @@ function reducer(state, action) {
 }
 // React.memo to avoid rerender with all beaches when returning from details
 const ResultsContent = React.memo(({beachesRegionList}) => {
-  // const { beachesRegionList } = props;
   const [state, dispatch] = useReducer(reducer, initialState)
- 
-  
   const classes = useStyles()
   const step = 6;
   
   useEffect(() => {
-  
-    
     const hasMoreItems = beachesRegionList.length > step;
- 
     const tempBeaches = beachesRegionList.slice(0, hasMoreItems ? step : beachesRegionList.length);
-   
     dispatch({ type: 'CHANGE_LOADING', payload: false });
     dispatch({ type: 'CHANGE_HAS_MORE_ITEMS', payload: hasMoreItems ? true : false });
     dispatch({ type: 'CHANGE_OFFSET', payload: 6 });

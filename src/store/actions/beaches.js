@@ -32,6 +32,21 @@ export const setCountryBeaches = (route) => {
     axios.get(route)
       .then(response => {
         // console.log(response)
+        // const tempArray = response.data;
+        
+        // const resultsArray = [];
+        // tempArray.forEach(element => {
+        //   if (element.images) {
+        //     const images = element.images.split(',');
+        //     if (images.length > 8) {
+        //       resultsArray.push({nombre: element.nombre, ca: element.comunidad_autonoma, length: images.length})
+        //     }
+        //   } else {
+        //     console.log('noimages', element);
+        //   }
+          
+        // });
+        // console.log(resultsArray);
         dispatch(setCountryBeachesSucceed(response.data))
       }
     ).catch(err => {
