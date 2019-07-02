@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 const Presentation = props => {
   const classes = useStyles();
   const { generalInfo, colorSchema } = props;
-  console.log(colorSchema);
+
   return (
     <section className={classes.root}>
       <div className={classes.sectionRoot}>

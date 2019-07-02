@@ -6,6 +6,7 @@ import Map from '../../components/MapSpain/MapSpain';
 import MapResults from '../MapResults/MapResults';
 import * as actionsMapFilters from '../../store/actions/mapFilters';
 import * as actionsMapArea from '../../store/actions/mapArea';
+import NavDrawer from './../../components/Navigation/NavDrawer';
 
 const LandingPage = (props) => {
   const { onSetReturnFromDetails, onSetMapArea, preSelectedArea } = props;
@@ -33,6 +34,7 @@ const LandingPage = (props) => {
 
   return (
     <div>
+      <NavDrawer />
       <Map 
         onMapClicked={(value) => handleMapClick(value)}
         onSetMapArea={onSetMapArea}

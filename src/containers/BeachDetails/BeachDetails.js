@@ -18,7 +18,9 @@ const useStyles = makeStyles({
     display: 'grid',
     gridTemplateRows: 'repeat(4, min-content)',
     gridRowGap: '2rem',
-    margin: '2rem'
+    marginBottom: '2rem',
+    marginLeft: '2rem',
+    marginRight: '2rem'
   },
   sectionRoot: {
     width: '100%',
@@ -84,7 +86,10 @@ const BeachDetails = props => {
         <React.Fragment>
           <Header
             colorSchema={colorSchema}
-            name={beach.nombre} />
+            name={beach.nombre}
+            isBlueFlag={beach.bandera_azul ==='Sí'? true: false}
+          />
+            
           <Presentation
             colorSchema={colorSchema}
             generalInfo={generalInfo} />

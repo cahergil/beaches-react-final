@@ -24,7 +24,7 @@ const  App = props => {
   return (
     <div className="App">
 
-      <NavDrawer />
+      {/* <NavDrawer /> */}
       <Switch>
         <Route path="/spain-map"  component={LandingPage} />
         <Route path="/search" component={Search} />
