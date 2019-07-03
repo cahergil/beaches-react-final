@@ -18,6 +18,7 @@ import DivingAreaImg from '../../../assets/images/services/dive.png'
 import SurfAreaImg from '../../../assets/images/services/surfing.png'
 import ChildrenAreaImg from '../../../assets/images/services/swing.png'
 import SportAreaImg from '../../../assets/images/services/kick.png'
+import * as utils from '../../../Utils/Utils';
 
 const useStyles = makeStyles({
   root: {
@@ -40,6 +41,12 @@ const useStyles = makeStyles({
     justifyItems: 'left',
     alignItems: 'center',
     fontSize: '1.5rem'
+  },
+  text: {
+    opacity: '0.6'
+  },
+  label: {
+    opacity: '0.87'
   }
 
 })
@@ -53,90 +60,90 @@ const Services = props => {
       
         <div className={classes.row}>
           <img src={ToiletImg} alt="toilet"/>
-          <p>Toilet:</p>
-          <p>{beach.aseos}</p>
+          <p className={classes.label}>Toilet:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.aseos)}</p>
         </div>
         <div className={classes.row}>
           <img src={FootImg} alt="foot" />
-          <p>Footbath:</p>
-          <p>{beach.lavapies}</p>
+          <p className={classes.label}>Footbath:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.lavapies)}</p>
         </div>
      
       {/* <div className={classes.column}> */}
         <div className={classes.row}>
           <img src={ShowerImg} alt="shower" />
-          <p>Shower:</p>
-          <p>{beach.duchas}</p>
+          <p className={classes.label}>Shower:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.duchas)}</p>
         </div>
         <div className={classes.row}>
           <img src={BinImg} alt="bin" />
-          <p>Bin:</p>
-          <p>{beach.papelera}</p>
+          <p className={classes.label}>Bin:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.papelera)}</p>
         </div>
         <div className={classes.row}>
           <img src={CleaningImg} alt="cleaning service" />
-          <p>Cleaning service:</p>
-          <p>{beach.servicio_limpieza}</p>
+          <p className={classes.label}>Cleaning service:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.servicio_limpieza)}</p>
         </div>
         <div className={classes.row}>
           <img src={TouristOfficeImg} alt="tourist office" />
-          <p>Tourist office:</p>
-          <p>{beach.oficina_turismo}</p>
+          <p className={classes.label}>Tourist office:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.oficina_turismo)}</p>
         </div>
         <div className={classes.row}>
           <img src={TelephoneImg} alt="telephone" />
-          <p>Telephone:</p>
-          <p>{beach.telefonos}</p>
+          <p className={classes.label}>Telephone:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.telefonos)}</p>
         </div>
         <div className={classes.row}>
           <img src={BeachBarImg} alt="beach bar" />
-          <p>Beach bar:</p>
-          <p>{beach.establecimiento_comida}</p>
+          <p className={classes.label}>Beach bar:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.establecimiento_comida)}</p>
         </div>
         <div className={classes.row}>
           <img src={DrinkStandImg} alt="drink stand" />
-          <p>Drink stand:</p>
-          <p>{beach.establecimiento_bebida}</p>
+          <p className={classes.label}>Drink stand:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.establecimiento_bebida)}</p>
         </div>
         <div className={classes.row}>
           <img src={SunbedImg} alt="sunbed rental" />
-          <p>Sunbed rental:</p>
-          <p>{beach.alquiler_hamacas}</p>
+          <p className={classes.label}>Sunbed rental:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.alquiler_hamacas)}</p>
         </div>
         <div className={classes.row}>
           <img src={UmbrellaImg} alt="umbrella rental" />
-          <p>Beach umbrella rental:</p>
-          <p>{beach.alquiler_sombrillas}</p>
+          <p className={classes.label}>Beach umbrella rental:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.alquiler_sombrillas)}</p>
         </div>
         <div className={classes.row}>
           <img src={NauticsRentalImg} alt="nautics rental" />
-          <p>Nautics rental:</p>
-          <p>{beach.alquiler_nauticos}</p>
+          <p className={classes.label}>Nautics rental:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.alquiler_nauticos)}</p>
         </div>
         <div className={classes.row}>
           <img src={NauticalClubImg} alt="nautical rental" />
-          <p>Nautical club:</p>
-          <p>{beach.club_nautico}</p>
+          <p className={classes.label}>Nautical club:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.club_nautico)}</p>
         </div>
         <div className={classes.row}>
           <img src={DivingAreaImg} alt="diving area" />
-          <p>Diving area:</p>
-          <p>{beach.submarinismo}</p>
+          <p className={classes.label}>Diving area:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.submarinismo)}</p>
         </div>
         <div className={classes.row}>
           <img src={SurfAreaImg} alt="surf" />
-          <p>Surfing area:</p>
-          <p>{beach.zona_surf}</p>
+          <p className={classes.label}>Surfing area:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.zona_surf)}</p>
         </div>
         <div className={classes.row}>
           <img src={ChildrenAreaImg} alt="children's area" />
-          <p>Children's area:</p>
-          <p>{beach.zona_infantil}</p>
+          <p className={classes.label}>Children's area:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.zona_infantil)}</p>
         </div>
         <div className={classes.row}>
           <img src={SportAreaImg} alt="sport's area" />
-          <p>Sport's zone:</p>
-          <p>{beach.zona_deportiva}</p>
+          <p className={classes.label}>Sport's zone:</p>
+          <p className={classes.text}>{utils.getYesNo(beach.zona_deportiva)}</p>
         </div>
     </section>
   );
