@@ -95,7 +95,7 @@ const BeachDetails = props => {
             generalInfo={generalInfo} />
           <div className={classes.sectionRoot}>
             <Title colorSchema={colorSchema} name="Features" />
-            <Facilities />
+            <Facilities beach={beach}/>
           </div>
           <div className={classes.sectionRoot}>
             <Title colorSchema={colorSchema} name="Services" />
