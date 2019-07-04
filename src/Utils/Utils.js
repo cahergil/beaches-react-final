@@ -20,7 +20,7 @@ export const toCleanObservations = value => {
   if (value.startsWith('"')) {
     pos = 1
   }
-  const value1 = value.substr(pos, len - 2);
+  const value1 = value.substr(pos, len - 1);
   const value2 = value1.replace(/["']/g,'')
   return value2
 }
