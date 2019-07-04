@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 
+import * as utils from '../../../../Utils/Utils';
 const useStyles = makeStyles({
   root: {
     width: '100%',
@@ -8,7 +9,7 @@ const useStyles = makeStyles({
     gridTemplateColumns: '35% 65%',
     gridTemplateRows: 'repeat(7, 3rem)',
     justifyItems: 'start',
-    gridRowGap: '0.5rem',
+    gridRowGap: '1.5rem',
     fontSize: '2rem',
     padding: '1rem'
   },
@@ -34,13 +35,13 @@ const GeneralInfo = props => {
         <div className={classes.label}>Region:</div>
         <div className={classes.value}>{generalInfo.comunidad_autonoma}</div>
         <div className={classes.label}>Length:</div>
-        <div className={classes.value}>{generalInfo.longitud}</div>
+        <div className={classes.value}>{utils.translateMetros(generalInfo.longitud)}</div>
         <div className={classes.label}>Width:</div>
-        <div className={classes.value}>{generalInfo.anchura}</div>
+        <div className={classes.value}>{utils.translateMetros(generalInfo.anchura)}</div>
         <div className={classes.label}>Occupancy:</div>
-        <div className={classes.value}>{generalInfo.grado_ocupacion}</div>
+        <div className={classes.value}>{utils.translateOcuppancy(generalInfo.grado_ocupacion)}</div>
         <div className={classes.label}>Promenade:</div>
-        <div className={classes.value}>{generalInfo.paseo_maritimo}</div>
+        <div className={classes.value}>{utils.getYesNo(generalInfo.paseo_maritimo)}</div>
       </div>
     </section>
     

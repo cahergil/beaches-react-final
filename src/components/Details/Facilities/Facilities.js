@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import SectionTitle from './Section/SectionTitle';
 import * as utils from '../../../Utils/Utils';
+import TranslateTextField from './../TranslateTextField';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -19,14 +20,12 @@ const useStyles = makeStyles(theme => ({
     display: 'grid',
     gridTemplateRows: 'repeat(2, min-content)',
     boxShadow: '2px 1px 5px #ccc',
-    // borderRadius: '5px',
     overflow: 'hidden'
   },
   subsectionRoot: {
     width: '100%',
     display: 'grid',
     gridTemplateColumns: '50% 50%',
-    // gridColumnGap: '2rem',
     gridRowGap: '2rem',
     justifyItems: 'left',
     padding: '1rem',
@@ -44,18 +43,18 @@ const useStyles = makeStyles(theme => ({
 const Facilities = props => {
   const { beach } = props;
   const classes = useStyles();
-  console.log(beach);
+ 
   return (
     <section className={classes.root}>
       <div className={classes.sectionRoot}>
         <SectionTitle name="1. Type of beach" />
         <div className={classes.subsectionRoot} >
           <div className={classes.label}>Composition:</div>
-          <div className={classes.text}>{beach.composicion}</div>
+          <div className={classes.text}>{utils.translateComposition(beach.composicion)}</div>
           <div className={classes.label}>Type of sand:</div>
-          <div className={classes.text}>{beach.tipo_de_arena}</div>
+          <div className={classes.text}>{utils.translateTypeOfSand(beach.tipo_de_arena)}</div>
           <div className={classes.label}>Bathing conditions:</div>
-          <div className={classes.text}>{beach.condiciones_baño}</div>
+          <div className={classes.text}>{utils.translateBathingConditions(beach.condiciones_baño)}</div>
           <div className={classes.label}>Anchoring Area:</div>
           <div className={classes.text}>{utils.getYesNo(beach.zona_fondeo_balizada)}</div>
           <div className={classes.label}>Nudism:</div>
@@ -95,7 +94,7 @@ const Facilities = props => {
         <SectionTitle name="4. Access" />
         <div className={classes.subsectionRoot} >
           <div className={classes.label}>Type of access:</div>
-          <div className={classes.text}>{beach.forma_de_acceso}</div>
+          <div className={classes.text}>{utils.translateTypeOfAccess(beach.forma_de_acceso)}</div>
           <div className={classes.label}>Access signage:</div>
           <div className={classes.text}>{utils.getYesNo(beach.señalizacion_accesos)}</div>
           <div className={classes.label}>Access to disabled persons:</div>
@@ -144,7 +143,8 @@ const Facilities = props => {
       <div className={classes.sectionRoot}>
         <SectionTitle name="8. Observations" />
         <div style={{display: 'grid', gridTemplateColumns: '1fr', padding: '1rem', fontSize: '1.5rem', justifyItems: 'left'}} >
-          <div className={classes.text}>{utils.getYesNo(beach.observaciones)}</div>
+          {/* <div className={classes.text}>{utils.getYesNo(beach.observaciones)}</div> */}
+          <TranslateTextField text={utils.toCleanObservations(beach.observaciones)}/>
                   
         </div>
       </div>

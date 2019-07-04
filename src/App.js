@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import './App.scss';
-import NavDrawer from './components/Navigation/NavDrawer';
+// import NavDrawer from './components/Navigation/NavDrawer';
 import Graphics from './components/Graphics/Graphics';
 import Search from './components/Search/Search';
 import LandingPage from './containers/LandingPage/LandingPage';

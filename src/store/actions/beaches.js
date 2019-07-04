@@ -31,7 +31,7 @@ export const setCountryBeaches = (route) => {
     // axios.get('./playas.json')
     axios.get(route)
       .then(response => {
-          console.log(response.data)
+          // console.log(response.data)
         // const tempArray = response.data;
         
         // const resultsArray = [];
