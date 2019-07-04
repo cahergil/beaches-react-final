@@ -3,7 +3,7 @@ import React from 'react';
 import { makeStyles} from '@material-ui/core';
 import Title from './../../Title/Title';
 import TranslateTextField from './../../TranslateTextField';
-
+import * as utils from '../../../../Utils/Utils'
 
 const useStyles = makeStyles(theme =>({
   root: {
@@ -32,7 +32,7 @@ const Description = props => {
       <div className={classes.sectionRoot}>
         <Title colorSchema={colorSchema} name="Description" />
         <div>
-          <TranslateTextField text={description}/>
+          <TranslateTextField text={utils.toRemoveQuotes(description)}/>
         </div>
       </div> 
     </section>

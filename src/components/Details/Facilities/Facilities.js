@@ -144,7 +144,7 @@ const Facilities = props => {
         <SectionTitle name="8. Observations" />
         <div style={{display: 'grid', gridTemplateColumns: '1fr', padding: '1rem', fontSize: '1.5rem', justifyItems: 'left'}} >
           {/* <div className={classes.text}>{utils.getYesNo(beach.observaciones)}</div> */}
-          <TranslateTextField text={utils.toCleanObservations(beach.observaciones)}/>
+          <TranslateTextField text={utils.toRemoveQuotes(beach.observaciones)}/>
                   
         </div>
       </div>

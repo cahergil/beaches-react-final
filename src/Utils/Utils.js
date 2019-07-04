@@ -14,7 +14,7 @@ export const getYesNo = (value) => {
   }
 }
 
-export const toCleanObservations = value => {
+export const toRemoveQuotes = value => {
   const len = value.length;
   let pos = 0;
   if (value.startsWith('"')) {
