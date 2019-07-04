@@ -84,13 +84,13 @@ const MapSpain = React.memo((props) => {
       mapObject.returnInitialColor(area)
 
     }
-    console.log(areaId);
+    
     onSetMapArea(areaId)
      
   }
 
   const handlePreSelect = (e) => {
-    console.log(preSelectedArea);
+    
     const map = e.chart;
     // get map instance to use it in handleRegionClick
     setMapObject(map);

@@ -52,7 +52,7 @@ const ResultsContentItem = (props) => {
   const image = imagesArray[imagesArray.length - 1];
 
   const handleButtonClick = (e) => {
-    console.log('click');
+   
     props.history.push({
       pathname: '/details/beach',
       search: `?id=${beach.id}`
@@ -80,7 +80,7 @@ const ResultsContentItem = (props) => {
             title: classes.title
           }
         }
-        // style={{ textAlign: 'left' }}
+       
         title={beach.nombre}
         subheader={beach.termino_municipal}
       />
@@ -88,7 +88,7 @@ const ResultsContentItem = (props) => {
         src={image}
         fallbackImage={errorImage}
         initialImage={loaderGif}
-        alt="cool image should be here"
+        alt={beach.nombre}
         className={classes.media} />
     
       {/* <img src={image} alt="prueba" className={classes.media}/> */}
