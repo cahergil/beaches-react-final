@@ -13,7 +13,7 @@ import ReactImageFallback from "react-image-fallback";
 import banderaAzul from '../../../../assets/images/blue_flag_mini.png'
 import normalBeach from '../../../../assets/images/normal_beach.png'
 import errorImage from '../../../../assets/images/image_na.png'
-
+import loaderGif from '../../../../assets/images/loader.gif'
 
 const useStyles = makeStyles(theme=>({
   root: {
@@ -85,10 +85,11 @@ const ResultsContentItem = (props) => {
         subheader={beach.termino_municipal}
       />
        <ReactImageFallback
-         src={image}
-         fallbackImage={errorImage}
-         alt="cool image should be here"
-         className={classes.media} />
+        src={image}
+        fallbackImage={errorImage}
+        initialImage={loaderGif}
+        alt="cool image should be here"
+        className={classes.media} />
     
       {/* <img src={image} alt="prueba" className={classes.media}/> */}
       {/* <CardMedia
