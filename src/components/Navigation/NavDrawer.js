@@ -7,7 +7,7 @@ import SideDrawer from './SideDrawer/SideDrawer'
 
 const NavDrawer = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const sections = ['spain-map', 'search', 'graphics']
+  const sections = ['spain-map', 'search', 'graphics','about']
   
   const handleBurgerToggle = () => {
     setDrawerOpen(prevState => !prevState);

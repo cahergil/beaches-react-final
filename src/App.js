@@ -9,6 +9,7 @@ import Search from './components/Search/Search';
 import LandingPage from './containers/LandingPage/LandingPage';
 import BeachDetails from './containers/BeachDetails/BeachDetails';
 import * as actions from './store/actions/beaches';
+import About from './components/About/About';
 
 
 
@@ -30,6 +31,7 @@ const  App = props => {
         <Route path="/search" component={Search} />
         <Route path="/details/beach/" component={BeachDetails} />
         <Route path="/graphics" component={Graphics} />
+        <Route path="/about" component={About} />
         <Redirect to="/spain-map"  />
       </Switch>
     </div>
