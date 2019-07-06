@@ -1,4 +1,5 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import AmCharts from "@amcharts/amcharts3-react";
 
@@ -149,5 +150,10 @@ const MapSpain = React.memo((props) => {
     return true;
 });
 
+MapSpain.propTypes = {
+  onMapClicked: PropTypes.func.isRequired,
+  onSetMapArea: PropTypes.func.isRequired,
+  preSelectedArea: PropTypes.string.isRequired
+}
 
 export default MapSpain;
