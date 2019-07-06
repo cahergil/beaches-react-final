@@ -1,8 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 import SectionTitle from './Section/SectionTitle';
 import * as utils from '../../../Utils/Utils';
+
 import TranslateTextField from './../TranslateTextField';
+import BeachObject from './../../Model/Model';
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -152,4 +156,7 @@ const Facilities = props => {
   );
 }
 
+Facilities.propTypes = {
+  beach: PropTypes.shape(BeachObject)
+}
 export default Facilities;
