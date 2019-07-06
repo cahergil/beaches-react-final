@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
+import PropTypes  from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,12 +16,20 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Title = (props) => {
-  const {  name } = props;
+  const { name } = props;
   const classes = useStyles(props);
 
   return (
     <section className={classes.root}>{name}</section>
   );
-}
+};
+
+Title.propTypes = {
+  name: PropTypes.string.isRequired,
+  colorSchema: PropTypes.shape({
+    color: PropTypes.string.isRequired,
+    backgroundColor: PropTypes.string.isRequired
+  }).isRequired
+};
 
 export default Title;
