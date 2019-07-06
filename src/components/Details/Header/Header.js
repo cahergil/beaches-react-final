@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 import bannerNormal from '../../../assets/images/beachBannerNormal.jpg';
 import bannerBlueFlag from '../../../assets/images/beachBannerBlueFlag.jpg';
@@ -37,6 +38,15 @@ const Header = (props) => {
       <div className={classes.beachName}>{props.name}</div>
     </section>
   );
+}
+
+Header.propTypes = {
+  colorSchema: PropTypes.shape({
+    color: PropTypes.string,
+    backgroundColor: PropTypes.string
+  }).isRequired,
+  name: PropTypes.string.isRequired,
+  isBlueFlag: PropTypes.bool.isRequired
 }
 
 export default Header;
