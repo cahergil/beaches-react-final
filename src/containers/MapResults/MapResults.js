@@ -114,6 +114,6 @@ MapResults.propTypes = {
   inputValue: PropTypes.string.isRequired,
   isReturn: PropTypes.bool.isRequired
   
-}
+};
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(MapResults));
