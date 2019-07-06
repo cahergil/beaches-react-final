@@ -1,4 +1,5 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core';
 import queryString from 'query-string';
@@ -11,6 +12,7 @@ import * as actionsBeaches from '../../store/actions/beaches';
 import * as actionsMapFilters from '../../store/actions/mapFilters';
 import Title from './../../components/Details/Title/Title';
 import Services from './../../components/Details/Service/Services';
+import BeachObject from './../../components/Model/Model';
 
 const useStyles = makeStyles({
   root: {
@@ -129,5 +131,13 @@ const mapDispatchToProps = dispatch => {
     onSetReturnFromDetails: (value) => dispatch(actionsMapFilters.setReturnFromDetails(value))
   }
 };
+
+BeachDetails.propTypes = {
+  beachesList: PropTypes.arrayOf(
+    PropTypes.shape(BeachObject)
+  ).isRequired,
+  onSetCountryBeaches: PropTypes.func.isRequired,
+  onSetReturnFromDetails: PropTypes.func.isRequired
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(BeachDetails);
