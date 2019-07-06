@@ -2,11 +2,13 @@ import React, {useState, useEffect, useRef} from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {makeStyles} from '@material-ui/styles'
+import { PropTypes } from 'prop-types';
 
 import ResultsFilter from '../../components/LandingPageResults/ResultsFilter/ResultsFilter';
 import ResultsContent from '../../components/LandingPageResults/ResultsContent/ResultsContent';
 import * as actionsBeaches from '../../store/actions/beaches';
 import * as actionsMapFilters from '../../store/actions/mapFilters'
+import BeachType from '../../components/Model/Model';
 
 const useStyles = makeStyles({
   root: {
@@ -101,6 +103,18 @@ const mapDispatchToProps = dispatch => {
     onMapResultsInputChange: (value) => dispatch(actionsMapFilters.setMapResultsInput(value)),
     onSetReturnFromDetails: (value) => dispatch(actionsMapFilters.setReturnFromDetails(value))
   }
+}
+MapResults.propTypes = {
+  beachesList: PropTypes.arrayOf(
+    PropTypes.shape(BeachType)
+  ).isRequired,
+  onSetCountryBeaches: PropTypes.func.isRequired,
+  onMapResultsSelectChange: PropTypes.func.isRequired,
+  onMapResultsInputChange: PropTypes.func.isRequired,
+  selectValue: PropTypes.string.isRequired,
+  inputValue: PropTypes.string.isRequired,
+  isReturn: PropTypes.bool.isRequired,
+  onSetReturnFromDetails: PropTypes.func.isRequired
 }
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(MapResults));
