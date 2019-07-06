@@ -149,6 +149,6 @@ ResultsContent.propTypes = {
   beachesRegionList: PropTypes.arrayOf(
     PropTypes.shape(BeachObject)
   ).isRequired
-}
+};
 
 export default ResultsContent;
