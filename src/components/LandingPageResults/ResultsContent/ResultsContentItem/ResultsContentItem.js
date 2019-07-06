@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -14,6 +14,7 @@ import banderaAzul from '../../../../assets/images/blue_flag_mini.png'
 import normalBeach from '../../../../assets/images/normal_beach.png'
 import errorImage from '../../../../assets/images/image_na.png'
 import loaderGif from '../../../../assets/images/loader.gif'
+import BeachObject from './../../../Model/Model';
 
 const useStyles = makeStyles(theme=>({
   root: {
@@ -116,6 +117,9 @@ const ResultsContentItem = (props) => {
     </CardActions>
     </Card > 
   );
+}
+ResultsContentItem.propTypes = {
+  beach: PropTypes.shape(BeachObject).isRequired
 }
 
 export default withRouter(ResultsContentItem);
