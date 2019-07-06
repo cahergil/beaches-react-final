@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Map from '../../components/MapSpain/MapSpain';
 import MapResults from '../MapResults/MapResults';
@@ -56,6 +57,12 @@ const mapDispatchToProps = dispatch => {
     onSetReturnFromDetails: (value) => dispatch(actionsMapFilters.setReturnFromDetails(value)),
     onSetMapArea: (value) => dispatch(actionsMapArea.setMapArea(value))
   }
+};
+
+LandingPage.propTypes = {
+  onSetReturnFromDetails: PropTypes.func.isRequired,
+  onSetMapArea: PropTypes.func.isRequired,
+  preSelectedArea: PropTypes.string.isRequired
 };
 
 
