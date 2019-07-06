@@ -6,6 +6,7 @@ import Select from '@material-ui/core/Select';
 import { InputLabel } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import _ from 'lodash';
+import PropTypes from 'prop-types'
 
 
 
@@ -46,12 +47,12 @@ const useStyles = makeStyles({
 
 const ResultsFilter = (props) => {
   
-  const { count, region, onSearched, onMapResultsSelectChange, selectValue, inputValue, isReturn, onSetReturnFromDetails } = props;
+  const { count, region, onSearched, onMapResultsSelectChange, selectValue, inputValue, isReturn } = props;
   // to synchronize the input
   const [inputText, setInputText] = useState(inputValue);
   const { debounce } = _;
   const debouncedInput = useCallback(debounce(onSearched, 1000), []);
- 
+
   const classes = useStyles();
 
   const handleSelectChange = (e) => {
@@ -84,8 +85,8 @@ const ResultsFilter = (props) => {
         
     }
   
-    
-  }, [count, setInputText, isReturn, onSetReturnFromDetails, onMapResultsSelectChange]);
+  // count has to be here!  
+  }, [count, setInputText, isReturn, onMapResultsSelectChange]);
   
   return (
     <section id="filter" className={classes.root}>
@@ -131,6 +132,16 @@ const ResultsFilter = (props) => {
       </div>
     </section>
   );
+}
+
+ResultsFilter.propTypes = {
+  count: PropTypes.number.isRequired,
+  region: PropTypes.string.isRequired, 
+  onSearched: PropTypes.func.isRequired,
+  onMapResultsSelectChange: PropTypes.func.isRequired,
+  selectValue: PropTypes.string.isRequired,
+  inputValue: PropTypes.string.isRequired, 
+  isReturn: PropTypes.bool.isRequired,
 }
 
 export default ResultsFilter;
