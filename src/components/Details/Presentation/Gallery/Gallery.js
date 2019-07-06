@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 import ImageGallery from 'react-image-gallery';
 
@@ -29,6 +30,10 @@ const Gallery = props => {
      
     </section>
   );
+}
+
+Gallery.propTypes = {
+  images: PropTypes.string.isRequired
 }
 
 export default Gallery;
