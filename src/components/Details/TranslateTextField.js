@@ -1,4 +1,5 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types'
 import { withStyles, Button, makeStyles } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
 
@@ -75,6 +76,10 @@ const TranslateTextField = (props) => {
           </ColorButton>
   </React.Fragment>
   );
+}
+
+TranslateTextField.propTypes = {
+  text: PropTypes.string.isRequired
 }
 
 export default TranslateTextField;
