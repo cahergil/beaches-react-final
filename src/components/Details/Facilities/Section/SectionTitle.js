@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -24,5 +25,7 @@ const SectionTitle = (props) => {
     <section className={classes.root}>{name}</section>
   );
 }
-
+SectionTitle.propTypes = {
+  name: PropTypes.string.isRequired
+}
 export default SectionTitle;
