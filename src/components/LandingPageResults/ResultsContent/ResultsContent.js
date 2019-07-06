@@ -1,7 +1,9 @@
 import React, { useEffect, useReducer } from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import ResultsContentItem from './ResultsContentItem/ResultsContentItem';
 import scrollIntoView from 'scroll-into-view';
+import BeachObject from './../../Model/Model';
 
 
 const useStyles = makeStyles({
@@ -142,5 +144,11 @@ const ResultsContent = React.memo(({beachesRegionList}) => {
     
   );
 })
+
+ResultsContent.propTypes = {
+  beachesRegionList: PropTypes.arrayOf(
+    PropTypes.shape(BeachObject)
+  ).isRequired
+}
 
 export default ResultsContent;
