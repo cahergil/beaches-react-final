@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 });
 
 const MapResults = (props) => {
-  const { beachesList, onSetCountryBeaches, onMapResultsSelectChange, onMapResultsInputChange, selectValue, inputValue, isReturn, onSetReturnFromDetails} = props;
+  const { beachesList, onSetCountryBeaches, onMapResultsSelectChange, onMapResultsInputChange, selectValue, inputValue, isReturn} = props;
   const [ beachesRegionList, setBeachesRegionList] = useState([]);
   const [ filteredRegionList, setFilteredRegionList] = useState([]);
   const [region, setRegion] = useState([]);
@@ -74,7 +74,7 @@ const MapResults = (props) => {
           selectValue={selectValue}
           inputValue={inputValue}
           isReturn={isReturn}
-          onSetReturnFromDetails={onSetReturnFromDetails}
+         
         />
         <ResultsContent
             beachesRegionList={filteredRegionList} />
@@ -100,8 +100,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onSetCountryBeaches: (route) => dispatch(actionsBeaches.setCountryBeaches(route)),
     onMapResultsSelectChange: (value) => dispatch(actionsMapFilters.setMapResultsSelect(value)),
-    onMapResultsInputChange: (value) => dispatch(actionsMapFilters.setMapResultsInput(value)),
-    onSetReturnFromDetails: (value) => dispatch(actionsMapFilters.setReturnFromDetails(value))
+    onMapResultsInputChange: (value) => dispatch(actionsMapFilters.setMapResultsInput(value))
   }
 }
 MapResults.propTypes = {
@@ -113,8 +112,8 @@ MapResults.propTypes = {
   onMapResultsInputChange: PropTypes.func.isRequired,
   selectValue: PropTypes.string.isRequired,
   inputValue: PropTypes.string.isRequired,
-  isReturn: PropTypes.bool.isRequired,
-  onSetReturnFromDetails: PropTypes.func.isRequired
+  isReturn: PropTypes.bool.isRequired
+  
 }
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(MapResults));
