@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
+import PropTypes from 'prop-types'
 
 import * as utils from '../../../../Utils/Utils';
 const useStyles = makeStyles({
@@ -46,6 +47,20 @@ const GeneralInfo = props => {
     </section>
     
   );
+}
+
+GeneralInfo.propTypes = {
+  generalInfo: PropTypes.shape({
+    termino_municipal: PropTypes.string.isRequired,
+    provincia: PropTypes.string.isRequired,
+    comunidad_autonoma: PropTypes.string.isRequired,
+    longitud: PropTypes.string.isRequired,
+    anchura: PropTypes.string.isRequired,
+    grado_ocupacion: PropTypes.string.isRequired,
+    paseo_maritimo: PropTypes.string.isRequired,
+    descripcion: PropTypes.string.isRequired,
+    images: PropTypes.string.isRequired
+  }).isRequired 
 }
 
 export default GeneralInfo;
