@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { makeStyles} from '@material-ui/core';
 import Title from './../../Title/Title';
 import TranslateTextField from './../../TranslateTextField';
@@ -37,6 +37,14 @@ const Description = props => {
       </div> 
     </section>
   );
+}
+
+Description.propTypes = {
+  description: PropTypes.string.isRequired,
+  colorSchema: PropTypes.shape({
+    color: PropTypes.string.isRequired,
+    backgroundColor: PropTypes.string.isRequired
+  })
 }
 
 export default Description;
