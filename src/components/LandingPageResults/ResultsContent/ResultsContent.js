@@ -64,14 +64,14 @@ function reducer(state, action) {
 
 }
 // React.memo to avoid rerender with all beaches when returning from details
-const ResultsContent = React.memo(({beachesRegionList}) => {
+const ResultsContent = React.memo(({beachesList}) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const classes = useStyles()
   const step = 6;
   
   useEffect(() => {
-    const hasMoreItems = beachesRegionList.length > step;
-    const tempBeaches = beachesRegionList.slice(0, hasMoreItems ? step : beachesRegionList.length);
+    const hasMoreItems = beachesList.length > step;
+    const tempBeaches = beachesList.slice(0, hasMoreItems ? step : beachesList.length);
     dispatch({ type: 'CHANGE_LOADING', payload: false });
     dispatch({ type: 'CHANGE_HAS_MORE_ITEMS', payload: hasMoreItems ? true : false });
     dispatch({ type: 'CHANGE_OFFSET', payload: 6 });
@@ -92,18 +92,18 @@ const ResultsContent = React.memo(({beachesRegionList}) => {
     }, 500);
    
     
-  },[beachesRegionList]);
+  },[beachesList]);
 
   useEffect(() => {
     const loadItems = () => {
-      // beachesRegionList.length ===0 conditon for coming back from details
-      if (state.loading || !state.hasMoreItems || beachesRegionList.length ===0) {
+      // beachesList.length ===0 conditon for coming back from details
+      if (state.loading || !state.hasMoreItems || beachesList.length ===0) {
         return;
       }
       
       dispatch({ type: 'CHANGE_LOADING', payload: true });
-      dispatch({ type: 'SET_BEACHES', payload: beachesRegionList.slice(0, state.offset + step) });
-      dispatch({ type: 'CHANGE_HAS_MORE_ITEMS', payload: (state.offset + step) >= beachesRegionList.length ? false : true });
+      dispatch({ type: 'SET_BEACHES', payload: beachesList.slice(0, state.offset + step) });
+      dispatch({ type: 'CHANGE_HAS_MORE_ITEMS', payload: (state.offset + step) >= beachesList.length ? false : true });
       dispatch({ type: 'CHANGE_OFFSET', payload: state.offset + step });
       dispatch({ type: 'CHANGE_LOADING', payload: false });
     }
@@ -122,13 +122,13 @@ const ResultsContent = React.memo(({beachesRegionList}) => {
       window.removeEventListener('scroll', handleScroll);
     }
 
-  }, [beachesRegionList,state.loading, state.offset, state.hasMoreItems]);
+  }, [beachesList,state.loading, state.offset, state.hasMoreItems]);
  
  
   
   return (
     <React.Fragment>
-      <div className={classes.showing}>Showing {state.beaches.length} beach(es) of {beachesRegionList.length}</div>
+      <div className={classes.showing}>Showing {state.beaches.length} beach(es) of {beachesList.length}</div>
       <div id="content" className={classes.root}>
         {
           state.beaches.map((beach, index) => {
@@ -146,7 +146,7 @@ const ResultsContent = React.memo(({beachesRegionList}) => {
 })
 
 ResultsContent.propTypes = {
-  beachesRegionList: PropTypes.arrayOf(
+  beachesList: PropTypes.arrayOf(
     PropTypes.shape(BeachObject)
   ).isRequired
 };

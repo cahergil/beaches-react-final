@@ -77,7 +77,7 @@ const MapResults = (props) => {
          
         />
         <ResultsContent
-            beachesRegionList={filteredRegionList} />
+            beachesList={filteredRegionList} />
       </React.Fragment>
     ) 
   }
