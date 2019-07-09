@@ -54,8 +54,6 @@ const BeachDetails = props => {
 
   useEffect(() => {
     const id = queryString.parse(props.location.search).id;
-    // console.log('id', id.trim());
-    // console.log(typeof id);
     const beach = beachesList.find(beach => beach.id === id);
     // console.log(beach);
     const generalInfo = {};

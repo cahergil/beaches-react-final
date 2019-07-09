@@ -258,3 +258,11 @@ export const translateTypeOfAccess = value => {
     return '-';
   }
 }
+
+export const translateIntoSpanish = value => {
+  if (value) {
+    return 'Sí'
+  } else  {
+    return 'No'
+  }
+}

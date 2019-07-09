@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 import './App.scss';
 import Graphics from './components/Graphics/Graphics';
-import Search from './components/Search/Search';
+import Search from './containers/Search/Search';
 import LandingPage from './containers/LandingPage/LandingPage';
 import BeachDetails from './containers/BeachDetails/BeachDetails';
 import About from './components/About/About';
