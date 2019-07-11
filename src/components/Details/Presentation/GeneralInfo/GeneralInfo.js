@@ -8,7 +8,7 @@ const useStyles = makeStyles({
     width: '100%',
     display: 'grid',
     gridTemplateColumns: '35% 65%',
-    gridTemplateRows: 'repeat(7, 3rem)',
+    gridTemplateRows: 'repeat(9, 3rem)',
     justifyItems: 'start',
     gridRowGap: '1.5rem',
     fontSize: '2rem',
@@ -43,6 +43,10 @@ const GeneralInfo = props => {
         <div className={classes.value}>{utils.translateOcuppancy(generalInfo.grado_ocupacion)}</div>
         <div className={classes.label}>Promenade:</div>
         <div className={classes.value}>{utils.getYesNo(generalInfo.paseo_maritimo)}</div>
+        <div className={classes.label}>Alt name 1:</div>
+        <div className={classes.value}>{utils.getYesNo(generalInfo.nombre_alternativo)}</div>
+        <div className={classes.label}>Alt name 2:</div>
+        <div className={classes.value}>{utils.getYesNo(generalInfo.nombre_alternativo_2)}</div>
       </div>
     </section>
     

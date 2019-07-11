@@ -68,6 +68,9 @@ const BeachDetails = props => {
       generalInfo['paseo_maritimo'] = beach.paseo_maritimo;
       generalInfo['descripcion'] = beach.descripcion;
       generalInfo['images'] = beach.images;
+      generalInfo['nombre_alternativo'] = beach.nombre_alternativo;
+      generalInfo['nombre_alternativo_2'] = beach.nombre_alternativo_2;
+
       setGeneralInfo(generalInfo);
       setBeach(beach);
       if (beach.bandera_azul === 'Sí') {
