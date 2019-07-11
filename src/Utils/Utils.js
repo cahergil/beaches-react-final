@@ -259,10 +259,76 @@ export const translateTypeOfAccess = value => {
   }
 }
 
-export const translateIntoSpanish = value => {
+export const translateYesNoIntoSpanish = value => {
   if (value) {
     return 'Sí'
   } else  {
     return 'No'
   }
+}
+
+export const translateOccupancyIntoSpanish = value => {
+  if (value === 'High') {
+    return 'Alto'
+  } else if (value === 'Low') {
+    return 'Bajo'
+  } else if (value === 'Average') {
+    return 'Medio';
+
+  } else if (value === 'Average / High') {
+    return 'Medio / Alto';
+
+  } else if (value === 'Average / Low') {
+    return 'Medio / Bajo';
+
+  } else if (value === 'Very Low') {
+    return 'Muy bajo';
+
+  } else if (value === 'Non-existent') {
+    return 'Nulo';
+  } else {
+    return value;
+  }
+}
+
+export const includeDistance = (distance, userDistance) => {
+
+  distance = distance.replace(",", ".");
+  // include floating point number
+  const regex = /\d+(\.\d+)?/g;
+  const matchesArray = distance.match(regex);
+  let dbDistance;
+  if (matchesArray.length === 1) {
+    dbDistance = matchesArray[0];
+  } else if (matchesArray.length === 2) {
+    dbDistance = matchesArray[1];
+  }
+  if (dbDistance <= userDistance) {
+    return true;
+  } else {
+    console.log(dbDistance + ">" + userDistance);
+    return false;
+  }
+
+}
+
+export const includeLength = (length, userDistance) => {
+
+  length = length.replace(".", "");
+  // include floating point number
+  const regex = /\d+(\.\d+)?/g;
+  const matchesArray = length.match(regex);
+  let dbDistance;
+  if (matchesArray.length === 1) {
+    dbDistance = matchesArray[0];
+  } else if (matchesArray.length === 2) {
+    dbDistance = matchesArray[1];
+  }
+  if (dbDistance <= userDistance) {
+    return true;
+  } else {
+    // console.log(dbDistance + ">" + userDistance);
+    return false;
+  }
+
 }

@@ -12,7 +12,8 @@ const initialState = {
   disabledPersons: false,
   occupancy: 'All',
   promenade: false,
-  length: 40,
+  hospitalDistance: 120,
+  beachLength: 28000,
   selectText: 'termino_municipal',
   searchText: ''
   
@@ -75,10 +76,15 @@ const reducer = (state = initialState, action) => {
         ...state,
         promenade: action.payload
       }
-    case actions.SET_LENGTH:
+    case actions.SET_HOSPITAL_DISTANCE:
       return {
         ...state,
-        length: action.payload
+        hospitalDistance: action.payload
+      }
+    case actions.SET_BEACH_LENGTH:
+      return {
+        ...state,
+        beachLength: action.payload
       }
     case actions.SET_SELECT_TEXT:
       return {
@@ -102,9 +108,10 @@ const reducer = (state = initialState, action) => {
         sunbedRental: false,
         beachUmbrellaRental: false,
         disabledPersons: false,
-        occupancy: 'Medio',
+        occupancy: 'All',
         promenade: false,
-        length: 40,
+        hospitalDistance: 120,
+        beachLength: 28000,
         selectText: 'termino_municipal',
         searchText: ''
       }

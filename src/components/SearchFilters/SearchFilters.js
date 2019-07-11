@@ -17,7 +17,7 @@ import _ from 'lodash';
 
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme =>({
   root: {
  
     display: 'grid',
@@ -26,7 +26,9 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: '1.7rem',
-    padding: '1rem'
+    padding: '1rem',
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: '5px',
 
   },
   rootMobile: {
@@ -70,14 +72,18 @@ const useStyles = makeStyles({
     paddingTop: '1rem',
     top: '1.8rem',
     left: '0',
-    height: '15rem',
-    width: '20rem',
-    overflow: 'scroll'
+    height: '23rem',
+    width: '50rem',
+    overflowY: 'scroll'
     
   },
   typeOfBeachListRoot: {
     width: '100%',
-    maxWidth: '20rem'
+    maxWidth: '50rem'
+  },
+  typeOfBeachSlider: {
+    width: '30rem',
+    color: '#D4AC16',
   },
   // styles of SERVICES dropdown
   menuServices: {
@@ -90,7 +96,7 @@ const useStyles = makeStyles({
     left: '0',
     height: '30rem',
     width: '30rem',
-    overflow: 'scroll'
+    overflowY: 'scroll'
 
 
   },
@@ -102,23 +108,22 @@ const useStyles = makeStyles({
     zIndex: '100',
     clipPath: 'polygon(0% 4%, 5% 4%, 10% 0%, 15% 4% ,100% 4%, 100% 100%, 0% 100%)',
     backgroundColor: '#F5F5F5',
-    // color: '#C9C9CA',
     position: 'absolute',
     paddingTop: '2rem',
     top: '1.8rem',
     left: '0',
     height: '30rem',
     width: '40rem',
-    overflow: 'scroll',
-    marginLeft: '1rem'
+    overflowY: 'scroll',
+  
     
   },
   notActive: {
     display: 'none'
   },
   textStyle: {
-    color: '#D4AC16',
-    opacity: '0.87'
+    color: '#fff',
+    // opacity: '0.87'
   },
   generalPadding: {
     paddingTop: '1.5rem'
@@ -126,7 +131,9 @@ const useStyles = makeStyles({
   marginCheckbox: {
     margin: '0 1rem'
   },
-  
+  labelTextFieldStyle: {
+    color: '#fff'
+  },
   // styles of GENERAL dropdown
   generalListRoot: {
     width: '100%',
@@ -144,7 +151,7 @@ const useStyles = makeStyles({
     marginLeft: '1.7rem',
     marginTop: '1rem'
   },
-  generalSliderThumb: {
+  sliderThumb: {
     backgroundColor: '#D4AC16',
     '&:focus,&:hover,&$active': {
       // boxShadow: 'inherit', deletes it
@@ -153,7 +160,7 @@ const useStyles = makeStyles({
   },
   generalSlider: {
     width: '20rem',
-    color: '#D4AC16'
+    color: '#D4AC16',
   },
   generalSpanKmLeft: {
     display: 'inline-block',
@@ -168,25 +175,29 @@ const useStyles = makeStyles({
     color: '#777'
   }
 
-});
+}));
+
 
 const SearchFilters = props => {
   const { filters, actions } = props;
   const classes = useStyles();
   const { debounce } = _;
-  const debouncedHospitalLength = useCallback(debounce(actions.onSetLength, 500), []);
+  const debouncedhospitalDistance = useCallback(debounce(actions.onSetHospitalDistance, 500), []);
   const debouncedContainText = useCallback(debounce(actions.onSetSearchText, 500), []);
+  const debouncedBeachLength = useCallback(debounce(actions.onSetBeachLength, 500), []);
   const [stateServices, setStateServices] = useState(false);
   const [stateTypeOfBeach, setStateTypeOfBeach] = useState(false);
   const [stateGeneral, setStateGeneral] = useState(false);
   const [valueContainText, setValueContainText] = useState(filters.searchText);
-  const [hospitalLength, setHospitalLength] = useState(40);
+  const [hospitalDistance, setHospitalDistance] = useState(filters.hospitalDistance);
+  const [beachLength, setBeachLength] = useState(filters.beachLength);
+
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down(800));
+  const matches = useMediaQuery(theme.breakpoints.down(900));
 
   const handleClick = name => event => {
     if (name === 'services') {
-      console.log('services clicked');
+     
       setStateServices(!stateServices);
       if (stateServices === false) {
         setStateGeneral(false);
@@ -236,23 +247,36 @@ const SearchFilters = props => {
   }
 
   const handleOccupancy = event => {
-    actions.onSetOccupancy(event.target.value)
+    actions.onSetOccupancy(event.target.value);
   }
-  const handleChangeLength = (event,newValue) => {
-    setHospitalLength(newValue);
-    debouncedHospitalLength(newValue)
+  const handleHospitalDistanceChange = (event,newValue) => {
+    setHospitalDistance(newValue);
+    debouncedhospitalDistance(newValue);
   
 
   }
+  const handleBeachLengthChange = (event, newValue) => {
+    setBeachLength(newValue);
+    debouncedBeachLength(newValue);
+  }
   const handleSelectChange = (e) => {
 
-    actions.onSetSelectText(e.target.value)
+    actions.onSetSelectText(e.target.value);
   }
   const handleContainText = (e) => {
     const value = e.target.value;
     setValueContainText(value);
     debouncedContainText(value);
     
+  }
+
+  const handleOnReset = () => {
+    // hide menus
+    setStateServices(false);
+    setStateGeneral(false);
+    setStateTypeOfBeach(false);
+    // reset state in Redux
+    actions.onResetFilters();
   }
   // type of beach
   let isActiveTypeOfBeach = classes.notActive;
@@ -273,14 +297,16 @@ const SearchFilters = props => {
     <div className={classes.root}>
       
       <div className={classes.generalPadding}>
-        <span className={classes.textStyle}>FILTERS </span>
+        <span className={classes.textStyle} style={{ color: '#BBDEFB'}}>FILTERS </span>
         <img className={classes.filterSize} src={filterIcon} alt="filter icon" />
       </div>
 
       {/* TYPE OF BEACH *********************************************************** */}
-      <div className={`${classes.wrapper} ${classes.generalPadding}`}>
+      <div  
+        onClick={handleClick('type of beach')}
+        className={`${classes.wrapper} ${classes.generalPadding}`}>
         <div className={classes.textWrapper}>
-          <span onClick={handleClick('type of beach')} className={classes.textStyle}>Type of Beach</span>
+          <span  className={classes.textStyle}>Type of Beach</span>
           <div className={`${classes.menuTypeOfBeach} ${isActiveTypeOfBeach}`} >
             <List classes={{
               root: classes.typeOfBeachListRoot
@@ -312,6 +338,37 @@ const SearchFilters = props => {
                   label="Blue flag"
                 />
               </ListItem>
+              <Divider />
+              <ListItem alignItems="flex-start">
+                <ListItemText
+                  primary="Beach max length"
+                  secondary={
+                    <React.Fragment>
+                      <span className={classes.generalSpanKmLeft}>50 m</span>
+                      <Slider
+                        classes={{
+                          root: classes.typeOfBeachSlider,
+                          thumb: classes.sliderThumb
+                        }}
+                        defaultValue={beachLength}
+                        value={beachLength}
+                        valueLabelDisplay="auto"
+                        onChange={handleBeachLengthChange}
+                        min={50}
+                        max={28000}
+                        // marks={marks}
+                        color="secondary"
+                      />
+                      <span className={classes.generalSpanKmRight}>28.000 m</span>
+
+                    </React.Fragment>
+                  }
+                  classes={{
+                    primary: classes.generalPrimary,
+                    secondary: classes.generalSecondary
+                  }}
+                />
+              </ListItem>
 
             </List>
           </div>
@@ -320,7 +377,8 @@ const SearchFilters = props => {
       </div>
 
       {/* SERVICES *********************************************************** */}
-      <div className={`${classes.wrapper} ${classes.generalPadding}`}>
+      <div 
+        className={`${classes.wrapper} ${classes.generalPadding}`}>
         <div className={classes.textWrapper}>
           <span onClick={handleClick('services')} className={classes.textStyle}>Services</span>
           <div className={`${classes.menuServices} ${isActiveServices}`}>
@@ -413,12 +471,13 @@ const SearchFilters = props => {
             </List>
           </div>
         </div>
-        <KeyBoardArrowDownIcon />
+        <KeyBoardArrowDownIcon onClick={handleClick('services')} />
       </div>
       {/* GENERAL *********************************************************** */}
-      <div className={`${classes.wrapper} ${classes.generalPadding}`}>
+      <div 
+        className={`${classes.wrapper} ${classes.generalPadding}`}>
         <div className={classes.textWrapper}>
-          <span onClick={handleClick('general')} className={classes.textStyle}>General</span>
+          <span onClick={handleClick('general')}  className={classes.textStyle}>General</span>
           <div className={`${classes.menuGeneral} ${isActiveGeneral}`}>
             <List classes={{
               root: classes.generalListRoot
@@ -493,17 +552,17 @@ const SearchFilters = props => {
                       <Slider
                         classes={{  
                           root: classes.generalSlider,
-                          thumb: classes.generalSliderThumb
+                          thumb: classes.sliderThumb
                         }}
-                        defaultValue={hospitalLength}
-                        value={hospitalLength}
+                        defaultValue={hospitalDistance}
+                        value={hospitalDistance}
                         valueLabelDisplay="auto"
-                        onChange={handleChangeLength}
+                        onChange={handleHospitalDistanceChange}
                         min={0}
-                        max={60}
+                        max={120}
                         color="secondary"
                         />
-                      <span className={classes.generalSpanKmLeft}>60 Km</span>
+                      <span className={classes.generalSpanKmRight}>120 Km</span>
                       
                     </React.Fragment>
                   }
@@ -516,12 +575,12 @@ const SearchFilters = props => {
             </List>
           </div>
         </div>
-        <KeyBoardArrowDownIcon />
+        <KeyBoardArrowDownIcon onClick={handleClick('general')} />
       </div>
      
       <div className={classes.wrapper}>
         <FormControl>
-          <InputLabel htmlFor="select">Select by</InputLabel>
+          <InputLabel htmlFor="select" style={{color: '#fff'}}>Select by</InputLabel>
           <Select
              value={filters.selectText}
              onChange={handleSelectChange}
@@ -543,13 +602,16 @@ const SearchFilters = props => {
           label="Contain text"
           type="search"
           value={valueContainText}
+          InputLabelProps={{
+            className: classes.labelTextFieldStyle,
+          }}
           style={{ marginLeft: '2rem' }}
-           onChange={handleContainText}
+          onChange={handleContainText}
           margin="none"
         />
       </div>
       <div className={`${classes.wrapper} ${classes.generalPadding}`}>
-        <Typography >Reset</Typography>
+        <Typography onClick={handleOnReset} variant="subtitle1" style={{opacity: '0.6'}}>Reset</Typography>
       </div>
       </div>
   );
@@ -559,7 +621,7 @@ const SearchFilters = props => {
       <span className={classes.textStyle}>Filters</span>
       <KeyBoardArrowDownIcon />
     </div>
-    <Typography >Reset</Typography>
+    <Typography onClick={handleOnReset} variant="subtitle1">Reset</Typography>
   </div>
   let content = contentDesktop;
   if (matches) {

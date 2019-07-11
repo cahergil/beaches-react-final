@@ -54,9 +54,15 @@ export const setPromenade = value => {
     payload: value
   }
 }
-export const setLength = value => {
+export const setHospitalDistance = value => {
   return {
-    type: actions.SET_LENGTH,
+    type: actions.SET_HOSPITAL_DISTANCE,
+    payload: value
+  }
+}
+export const setBeachLength = value => {
+  return {
+    type: actions.SET_BEACH_LENGTH,
     payload: value
   }
 }

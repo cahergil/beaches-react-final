@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
+// import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
-import { Typography,Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import ReactImageFallback from "react-image-fallback";
 
 import banderaAzul from '../../../../assets/images/blue_flag_mini.png'
@@ -99,17 +99,17 @@ const ResultsContentItem = (props) => {
         title={`beach ${beach.nombre}`}
     />  */}
     
-    <CardContent
+    {/* <CardContent
       classes={{
         root: classes.cardContent
         }}
       >
 
-        {/* color="textPrimary" */}
-      <Typography align="left" variant="body2" component="p">
+      
+      <Typography align="left" color="textPrimary" variant="body2" component="p">
         {beach.descripcion}
       </Typography>
-    </CardContent>
+    </CardContent> */}
     <CardActions >
         <Button variant="outlined" color={beach.bandera_azul !== 'Sí' ? 'secondary': 'primary'} onClick={handleButtonClick}>
           Details

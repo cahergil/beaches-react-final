@@ -11,6 +11,7 @@ import * as beachesActions from '../../store/actions/beaches';
 import * as searchFiltersActions from '../../store/actions/searchFilters';
 import * as utils from '../../Utils/Utils';
 
+
 const useStyles = makeStyles({
   root: {
     display: 'grid',
@@ -40,7 +41,7 @@ const useStyles = makeStyles({
 const Search = (props) => {
   const {  beachesList, filters,actions } = props;
   const classes = useStyles();
-  const [filteredBeachesList, setFilteredBeachesList] = useState(null);
+  const [filteredBeachesList, setFilteredBeachesList] = useState([]);
   const [loading, setLoading] = useState(true);
 
 
@@ -55,41 +56,54 @@ const Search = (props) => {
     setLoading(true);
     const filterObject = {};
     if (filters.nudism) {
-      filterObject['nudismo'] = utils.translateIntoSpanish(filters.nudism);
+      filterObject['nudismo'] = utils.translateYesNoIntoSpanish(filters.nudism);
     }
     if (filters.blueFlag) {
-      filterObject['bandera_azul'] = utils.translateIntoSpanish(filters.blueFlag)
+      filterObject['bandera_azul'] = utils.translateYesNoIntoSpanish(filters.blueFlag)
     }
     if (filters.surfingArea) {
-      filterObject['zona_surf'] = utils.translateIntoSpanish(filters.surfingArea)
+      filterObject['zona_surf'] = utils.translateYesNoIntoSpanish(filters.surfingArea)
       
     }
     if (filters.beachBar) {
-      filterObject['establecimiento_comida'] = utils.translateIntoSpanish(filters.beachBar)
+      filterObject['establecimiento_comida'] = utils.translateYesNoIntoSpanish(filters.beachBar)
       
     }
     if (filters.nauticsRental) {
-      filterObject['alquiler_nauticos'] = utils.translateIntoSpanish(filters.nauticsRental)
+      filterObject['alquiler_nauticos'] = utils.translateYesNoIntoSpanish(filters.nauticsRental)
       
     }
     if (filters.divingArea) {
-      filterObject['submarinismo'] = utils.translateIntoSpanish(filters.divingArea)
+      filterObject['submarinismo'] = utils.translateYesNoIntoSpanish(filters.divingArea)
       
     }
     if (filters.sunbedRental) {
-      filterObject['alquiler_hamacas'] = utils.translateIntoSpanish(filters.sunbedRental)
+      filterObject['alquiler_hamacas'] = utils.translateYesNoIntoSpanish(filters.sunbedRental)
       
     }
     if (filters.beachUmbrellaRental) {
-      filterObject['alquiler_sombrillas'] = utils.translateIntoSpanish(filters.beachUmbrellaRental)
+      filterObject['alquiler_sombrillas'] = utils.translateYesNoIntoSpanish(filters.beachUmbrellaRental)
       
     }
     if (filters.disabledPersons) {
-      filterObject['acceso_discapacitados'] = utils.translateIntoSpanish(filters.disabledPersons)
+      filterObject['acceso_discapacitados'] = utils.translateYesNoIntoSpanish(filters.disabledPersons)
       
+    }
+    if (filters.promenade) {
+      filterObject['paseo_maritimo'] = utils.translateYesNoIntoSpanish(filters.promenade);
+
+    }
+    if (filters.occupancy !== 'All') {
+      filterObject['grado_ocupacion'] = utils.translateOccupancyIntoSpanish(filters.occupancy)
     }
     if (filters.searchText.trim()) {
       filterObject[`${filters.selectText}`] = filters.searchText; 
+    }
+    if (filters.hospitalDistance) {
+      filterObject['distancia_hospital'] = filters.hospitalDistance;
+    }
+    if (filters.beachLength) {
+      filterObject['longitud'] = filters.beachLength;
     }
     
     const tempBeaches = beachesList.filter(beach => {
@@ -98,6 +112,26 @@ const Search = (props) => {
         if (key === 'termino_municipal' || key === 'nombre' || key === 'comunidad_autonoma') {
           const regex = new RegExp("" + filterObject[key] + "", "i");
           return beach[key].match(regex)
+        }
+        if (key === 'distancia_hospital') {
+          let distance = beach[key];
+          if (!distance) {
+            distance = '30 Km';
+            // return false, there are almost 100 record not informed;
+          }
+          if (distance) {
+            if (distance === 'Al lado') {
+              distance = "0 Km"
+            }
+            return utils.includeDistance(distance, filterObject[key]);
+          }
+        }
+        if (key === 'longitud') {
+          let len = beach[key];
+          if (!len) {
+            len = '0 metros';
+          }
+          return utils.includeLength(len, filterObject[key]);
         }
         return beach[key] === filterObject[key];
       });
@@ -153,7 +187,8 @@ const mapDispatchToProps = dispatch => {
       onSetDisabledPersons: (value) => dispatch(searchFiltersActions.setDisabledPersons(value)),
       onSetOccupancy: (value) => dispatch(searchFiltersActions.setOcuppancy(value)),
       onSetPromenade: (value) => dispatch(searchFiltersActions.setPromenade(value)),
-      onSetLength: (value) => dispatch(searchFiltersActions.setLength(value)),
+      onSetHospitalDistance: (value) => dispatch(searchFiltersActions.setHospitalDistance(value)),
+      onSetBeachLength: (value) => dispatch(searchFiltersActions.setBeachLength(value)),
       onSetSelectText: (value) => dispatch(searchFiltersActions.setSelectText(value)),
       onSetSearchText: (value) => dispatch(searchFiltersActions.setSearchText(value)),
       onResetFilters: () => dispatch(searchFiltersActions.setReset())
