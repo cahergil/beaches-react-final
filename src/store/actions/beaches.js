@@ -32,7 +32,7 @@ export const setCountryBeaches = (route) => {
     let finalRoute;
     if (process.env.NODE_ENV === 'production') {
       console.log('production');
-      finalRoute = finalRoute.substr(3);
+      finalRoute = route.substr(3);
     } else {
       console.log('development');
       finalRoute = route
