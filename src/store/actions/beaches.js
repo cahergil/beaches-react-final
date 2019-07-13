@@ -31,10 +31,14 @@ export const setCountryBeaches = (route) => {
     // axios.get('./playas.json')
     let finalRoute;
     if (process.env.NODE_ENV === 'production') {
+      console.log('production');
       finalRoute = '../' + route;
     } else {
+      console.log('development');
       finalRoute = route
+      // finalRoute = '../' + route;
     }
+    console.log(finalRoute);
     axios.get(finalRoute)
       .then(response => {
           // console.log(response.data)
