@@ -332,3 +332,25 @@ export const includeLength = (length, userDistance) => {
   }
 
 }
+
+export const logarithmicSlider = position => {
+  const minp = 0;
+  const maxp = 100;
+
+  const minv = Math.log(50);
+  const maxv = Math.log(28000);
+  const scale = (maxv - minv) / (maxp - minp);
+
+  return Math.exp(minv + scale * (position - minp));
+}
+
+export const logPositionSlider = value => {
+  const minp = 0;
+  const maxp = 100;
+
+  const minv = Math.log(50);
+  const maxv = Math.log(28000);
+  const scale = (maxv - minv) / (maxp - minp);
+
+  return (Math.log(value) - minv) / scale + minp;
+}

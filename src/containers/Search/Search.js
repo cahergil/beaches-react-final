@@ -13,7 +13,11 @@ import * as utils from '../../Utils/Utils';
 
 
 const useStyles = makeStyles({
+  rootWrap: {
+    position: 'relative',
+  },
   root: {
+    
     display: 'grid',
     gridTemplateColumns: '100%',
     justifyContent: 'center',
@@ -27,13 +31,6 @@ const useStyles = makeStyles({
   circleProgressRoot: {
     marginTop: '10rem',
     justifySelf: 'center'
-    // minHeight: '50rem'
-    // display: 'flex',
-    // flexDirection: 'column',
-    // width: '100%',
-    // height: '70vh',
-    // justifyContent: 'center',
-    // alignItems: 'center'
   }
 });
 
@@ -153,7 +150,7 @@ const Search = (props) => {
     />;
   }
   return (
-    <section>
+    <section className={classes.rootWrap}>
       <NavDrawer />
       <div className={classes.root}>
         <div className={classes.title}>Advanced Search</div>

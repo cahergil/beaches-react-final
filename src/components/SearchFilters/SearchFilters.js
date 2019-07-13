@@ -14,6 +14,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Slider from '@material-ui/core/Slider';
 import _ from 'lodash';
+import SearchFiltersMobile from './SearchFiltersMobile';
+import { logarithmicSlider, logPositionSlider } from './../../Utils/Utils';
 
 
 
@@ -31,17 +33,7 @@ const useStyles = makeStyles(theme =>({
     borderRadius: '5px',
 
   },
-  rootMobile: {
-    height: '5rem',
-    border: '1px solid #ddd',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    fontSize: '1.7rem',
-    padding: '1rem'
-
-  },
+  
   filterSize: {
     height: '1.8rem',
     width: '1.8rem',
@@ -72,7 +64,7 @@ const useStyles = makeStyles(theme =>({
     paddingTop: '1rem',
     top: '1.8rem',
     left: '0',
-    height: '23rem',
+    height: '25rem',
     width: '50rem',
     overflowY: 'scroll'
     
@@ -83,7 +75,7 @@ const useStyles = makeStyles(theme =>({
   },
   typeOfBeachSlider: {
     width: '30rem',
-    color: '#D4AC16',
+    color: theme.palette.secondary.main,
   },
   // styles of SERVICES dropdown
   menuServices: {
@@ -96,9 +88,7 @@ const useStyles = makeStyles(theme =>({
     left: '0',
     height: '30rem',
     width: '30rem',
-    overflowY: 'scroll'
-
-
+    overflowY: 'scroll',
   },
   servicesListRoot: {
     width: '100%',
@@ -123,7 +113,6 @@ const useStyles = makeStyles(theme =>({
   },
   textStyle: {
     color: '#fff',
-    // opacity: '0.87'
   },
   generalPadding: {
     paddingTop: '1.5rem'
@@ -152,15 +141,17 @@ const useStyles = makeStyles(theme =>({
     marginTop: '1rem'
   },
   sliderThumb: {
-    backgroundColor: '#D4AC16',
+    backgroundColor: theme.palette.secondary.main,
     '&:focus,&:hover,&$active': {
       // boxShadow: 'inherit', deletes it
       boxShadow: '#ccc 0px 0px 1px 6px',
+      MozBoxShadow: '#ccc 0px 0px 1px 6px'
+
     },
   },
   generalSlider: {
     width: '20rem',
-    color: '#D4AC16',
+    color: theme.palette.secondary.main,
   },
   generalSpanKmLeft: {
     display: 'inline-block',
@@ -171,7 +162,7 @@ const useStyles = makeStyles(theme =>({
   generalSpanKmRight: {
     transform: 'translateY(-7px)',
     display: 'inline-block',
-    marginLeft: '0.7rem',
+    marginLeft: '1.7rem',
     color: '#777'
   }
 
@@ -203,7 +194,7 @@ const SearchFilters = props => {
         setStateGeneral(false);
         setStateTypeOfBeach(false);
       }
-    } else if (name === 'type of beach') {
+    } else if (name === 'typeOfBeach') {
       setStateTypeOfBeach(!stateTypeOfBeach);
       if (stateTypeOfBeach === false) {
         setStateServices(false);
@@ -256,8 +247,9 @@ const SearchFilters = props => {
 
   }
   const handleBeachLengthChange = (event, newValue) => {
-    setBeachLength(newValue);
-    debouncedBeachLength(newValue);
+    const value = logarithmicSlider(newValue);
+    setBeachLength(value);
+    debouncedBeachLength(value);
   }
   const handleSelectChange = (e) => {
 
@@ -303,7 +295,7 @@ const SearchFilters = props => {
 
       {/* TYPE OF BEACH *********************************************************** */}
       <div  
-        onClick={handleClick('type of beach')}
+        onClick={handleClick('typeOfBeach')}
         className={`${classes.wrapper} ${classes.generalPadding}`}>
         <div className={classes.textWrapper}>
           <span  className={classes.textStyle}>Type of Beach</span>
@@ -344,6 +336,8 @@ const SearchFilters = props => {
                   primary="Beach max length"
                   secondary={
                     <React.Fragment>
+
+
                       <span className={classes.generalSpanKmLeft}>50 m</span>
                       <Slider
                         classes={{
@@ -351,16 +345,15 @@ const SearchFilters = props => {
                           thumb: classes.sliderThumb
                         }}
                         defaultValue={beachLength}
-                        value={beachLength}
-                        valueLabelDisplay="auto"
+                        value={logPositionSlider(beachLength)}
                         onChange={handleBeachLengthChange}
-                        min={50}
-                        max={28000}
-                        // marks={marks}
+                        min={0}
+                        max={100}
                         color="secondary"
                       />
-                      <span className={classes.generalSpanKmRight}>28.000 m</span>
+                      <span className={classes.generalSpanKmRight}>28k m</span>
 
+                      <span style={{ marginLeft: '12rem', display: 'block' }}>{Math.round(beachLength)} meters</span>
                     </React.Fragment>
                   }
                   classes={{
@@ -616,13 +609,10 @@ const SearchFilters = props => {
       </div>
   );
 
-  let contentMobile = <div className={classes.rootMobile}>
-    <div className={classes.wrapper}>
-      <span className={classes.textStyle}>Filters</span>
-      <KeyBoardArrowDownIcon />
-    </div>
-    <Typography onClick={handleOnReset} variant="subtitle1">Reset</Typography>
-  </div>
+  let contentMobile = (<SearchFiltersMobile
+    filters={filters}
+    actions={actions}
+  />);
   let content = contentDesktop;
   if (matches) {
     content = contentMobile;
