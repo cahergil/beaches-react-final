@@ -26,7 +26,8 @@ const useStyles = makeStyles({
   },
   title: {
     fontSize: '3rem',
-    opacity: '0.87'
+    opacity: '0.87',
+    fontWeight: '300'
   },
   circleProgressRoot: {
     marginTop: '10rem',

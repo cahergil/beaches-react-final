@@ -160,8 +160,8 @@ const useStyles = makeStyles(theme =>({
     color: '#777'
   },
   generalSpanKmRight: {
-    transform: 'translateY(-7px)',
     display: 'inline-block',
+    transform: 'translateY(-7px)',
     marginLeft: '1.7rem',
     color: '#777'
   }
