@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/spain-beaches-react/static/css/main.03d0fb2a.chunk.css",
+    "main.js": "/spain-beaches-react/static/js/main.e630205e.chunk.js",
+    "main.js.map": "/spain-beaches-react/static/js/main.e630205e.chunk.js.map",
+    "runtime~main.js": "/spain-beaches-react/static/js/runtime~main.964795ce.js",
+    "runtime~main.js.map": "/spain-beaches-react/static/js/runtime~main.964795ce.js.map",
+    "static/js/2.ceb9994f.chunk.js": "/spain-beaches-react/static/js/2.ceb9994f.chunk.js",
+    "static/js/2.ceb9994f.chunk.js.map": "/spain-beaches-react/static/js/2.ceb9994f.chunk.js.map",
+    "index.html": "/spain-beaches-react/index.html",
+    "precache-manifest.3db98b76a590969767c4ffa2e90dfe64.js": "/spain-beaches-react/precache-manifest.3db98b76a590969767c4ffa2e90dfe64.js",
+    "service-worker.js": "/spain-beaches-react/service-worker.js",
+    "static/css/main.03d0fb2a.chunk.css.map": "/spain-beaches-react/static/css/main.03d0fb2a.chunk.css.map",
+    "static/media/beachBannerBlueFlag.jpg": "/spain-beaches-react/static/media/beachBannerBlueFlag.61d013c0.jpg",
+    "static/media/beachBannerNormal.jpg": "/spain-beaches-react/static/media/beachBannerNormal.b53671aa.jpg",
+    "static/media/react.png": "/spain-beaches-react/static/media/react.47ce6e77.png",
+    "static/media/redux.png": "/spain-beaches-react/static/media/redux.8251fe76.png"
+  }
+}
