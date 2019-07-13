@@ -50,7 +50,7 @@ const store = createStore(rootReducer,
 ReactDOM.render(
   // <BrowserRouter basename="/playas-react" > apply this in production(gh-pages)
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename="/spain-beaches-react">
       <ThemeProvider theme={theme} >
         <App />
       </ThemeProvider>
