@@ -29,7 +29,13 @@ export const setCountryBeaches = (route) => {
   return dispatch => {
     dispatch(setCountryBeachesStart());
     // axios.get('./playas.json')
-    axios.get(route)
+    let finalRoute;
+    if (process.env.NODE_ENV === 'production') {
+      finalRoute = '../' + route;
+    } else {
+      finalRoute = route
+    }
+    axios.get(finalRoute)
       .then(response => {
           // console.log(response.data)
         // const tempArray = response.data;
