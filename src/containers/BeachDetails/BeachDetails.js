@@ -41,6 +41,12 @@ const BeachDetails = props => {
   const [generalInfo, setGeneralInfo] = useState(null);
   const classes = useStyles();
   
+  useEffect(() => {
+    const element = document.getElementById('header');
+    if (element) {
+      element.scrollIntoView();
+    }
+  });
   useEffect(()=> {
     onSetCountryBeaches('../playas.json');
   }, [onSetCountryBeaches]);
