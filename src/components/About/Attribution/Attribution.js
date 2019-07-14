@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     gridTemplateColumns: '100%',
     gridRowGap: '1rem',
     justifyItems: 'start',
-    paddingLeft: '2rem'
+    padding: '0 2rem'
   },
   subHeader: {
     fontSize: '1.7rem',

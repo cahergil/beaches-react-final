@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     width: '100%'
   },
   wrapper: {
-    paddingLeft: '2rem'
+    padding: '0 2rem'
   },
   subHeader: {
     fontSize: '1.7rem',
@@ -83,7 +83,7 @@ const Stack = props => {
   return (
     <section className={classes.root}>
       <Fade duration={600} right>
-        <Title title="Stack" color="#000" lineLength="5rem" />
+        <Title margin="3rem 0" title="Stack" color="#000" lineLength="5rem" />
       </Fade>
       <div className={classes.wrapper}>
         <div className={classes.subHeader}>

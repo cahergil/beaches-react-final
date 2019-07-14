@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect} from 'react';
 import { makeStyles } from '@material-ui/styles';
 import Stack from './Stack/Stack';
 import Attribution from './Attribution/Attribution';
@@ -16,6 +16,12 @@ const useStyle = makeStyles({
 
 const About = props => {
   const classes = useStyle();
+  useEffect(() => {
+    const element = document.getElementById('navbar');
+    if (element) {
+      element.scrollIntoView();
+    }
+  }, []);
   return (
     <React.Fragment>
       <NavDrawer />
