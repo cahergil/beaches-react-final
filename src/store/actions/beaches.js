@@ -28,15 +28,11 @@ export const setCountryBeachesFailed = (error) => {
 export const setCountryBeaches = (route) => {
   return dispatch => {
     dispatch(setCountryBeachesStart());
-    // axios.get('./playas.json')
     let finalRoute;
     if (process.env.NODE_ENV === 'production') {
-      console.log('production');
       finalRoute = route.substr(3);
     } else {
-      console.log('development');
       finalRoute = route
-      // finalRoute = '../' + route;
     }
     console.log(finalRoute);
     axios.get(finalRoute)
