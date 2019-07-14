@@ -108,12 +108,15 @@ const ResultsContent = React.memo(({beachesList}) => {
       dispatch({ type: 'CHANGE_LOADING', payload: false });
     }
     const handleScroll = (event) => {
-
+      // 100 for mobile to work
       if (
-        window.innerHeight + document.documentElement.scrollTop
-        === document.documentElement.offsetHeight
+        window.innerHeight + document.documentElement.scrollTop + 100
+        > document.documentElement.offsetHeight
+        // window.innerHeight + document.documentElement.scrollTop 
+        // === document.documentElement.offsetHeight
       ) {
         loadItems();
+        console.log('loadItems');
       }
 
     }

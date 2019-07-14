@@ -113,6 +113,11 @@ const MapSpain = React.memo((props) => {
           className={classes.mapDiv}
           options={{
             "type": "map",
+            "zoomControl": {
+              "homeButtonEnabled": false,
+              "zoomControlEnabled": false,
+              "panControlEnabled": false,
+            },
             // "backgroundColor": "#90CAF9",
             "backgroundAlpha": 1,
             "dataProvider": dataProvider,
