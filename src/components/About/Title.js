@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 
 
 const useStyles = makeStyles(theme=>({
   
   headingGrid: {
-    margin: '10rem 0',
+    margin: props => props.margin,
     display: 'grid',
     gridTemplateColumns: '1fr',
     gridTemplateRows: 'repeat(2, min-content)',
@@ -45,5 +46,9 @@ const Title = (props) => {
   );
 
 }
+
+Title.defaultProps = {
+  margin: '10rem 0'
+};
 
 export default Title;
