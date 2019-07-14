@@ -28,14 +28,14 @@ export const setCountryBeachesFailed = (error) => {
 export const setCountryBeaches = (route) => {
   return dispatch => {
     dispatch(setCountryBeachesStart());
-    // let finalRoute;
-    // if (process.env.NODE_ENV === 'production') {
-    //   finalRoute = route.substr(3);
-    // } else {
-    //   finalRoute = route
-    // }
+    let finalRoute;
+    if (process.env.NODE_ENV === 'production') {
+      finalRoute = route.substr(6);
+    } else {
+      finalRoute = route
+    }
     // console.log(finalRoute);
-    axios.get(route)
+    axios.get(finalRoute)
       .then(response => {
           // console.log(response.data)
         // const tempArray = response.data;
