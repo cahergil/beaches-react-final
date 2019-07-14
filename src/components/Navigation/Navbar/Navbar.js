@@ -60,7 +60,7 @@ const Navbar = (props) => {
  
 
   const toolbarSections = (
-    <nav>
+    <nav id="navbar">
       <ul className={classes.ulStyle}>
         {
           sections.map((section, index) => {
