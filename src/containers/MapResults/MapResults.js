@@ -34,7 +34,8 @@ const MapResults = (props) => {
   });
 
   useEffect(() => {
-    onSetCountryBeaches('../../playas.json');
+    // onSetCountryBeaches('../../playas.json');
+    onSetCountryBeaches('../playas.json');
   }, [onSetCountryBeaches]);
 
   useEffect(() => {
