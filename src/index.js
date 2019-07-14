@@ -51,7 +51,8 @@ ReactDOM.render(
   // <BrowserRouter basename="/playas-react" > apply this in production(gh-pages)
   <Provider store={store}>
     {/* <BrowserRouter basename="/spain-beaches-react"> */}
-    <HashRouter basename="/spain-beaches-react">
+    {/* <HashRouter basename="/spain-beaches-react"> */}
+    <HashRouter>
       <ThemeProvider theme={theme} >
         <App />
       </ThemeProvider>
