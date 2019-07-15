@@ -67,7 +67,7 @@ const Stack = props => {
     },
     {
       tech: 'React-image-gallery',
-      url: 'https://www.npmjs.com/package/react-image-gallery',
+      url: 'https://github.com/xiaolin/react-image-gallery',
       icon: githubIcon
     },
     {
