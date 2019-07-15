@@ -44,9 +44,11 @@ const LooseNavLink = props => (
 )
 
 const SideDrawer = (props) => {
-  const { sections, drawerOpen, onClose} = props;
+  const { sections, drawerOpen, onClose, onSetMapArea} = props;
   const classes = useStyles();
-
+  const handleOnClick = e => {
+    onSetMapArea('');
+  }
   
   const drawerSections = (
     <nav className={classes.navStyle}>
@@ -69,6 +71,7 @@ const SideDrawer = (props) => {
                     color: '#D4AC16',
                     fontWeight: 'bold'
                   }}
+                  onClick={handleOnClick}
                 >
                   {
                     section.toUpperCase() 

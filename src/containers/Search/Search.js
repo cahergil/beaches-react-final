@@ -9,6 +9,8 @@ import ResultsContent from '../../components/LandingPageResults/ResultsContent/R
 import SearchFilters from '../../components/SearchFilters/SearchFilters';
 import * as beachesActions from '../../store/actions/beaches';
 import * as searchFiltersActions from '../../store/actions/searchFilters';
+import * as mapsFilterActions from '../../store/actions/mapFilters';
+import * as mapsAreaActions from '../../store/actions/mapArea';
 import * as utils from '../../Utils/Utils';
 
 
@@ -42,9 +44,12 @@ const Search = (props) => {
   const [filteredBeachesList, setFilteredBeachesList] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     actions.onSetCountryBeaches('../playas.json');
+    return () => {
+      actions.onSetReturnFromDetails(false);
+ 
+    }
   }, [actions]);
   
   useEffect(() => {
@@ -152,7 +157,7 @@ const Search = (props) => {
   }
   return (
     <section className={classes.rootWrap}>
-      <NavDrawer />
+      <NavDrawer onSetMapArea={actions.onSetMapArea}/>
       <div className={classes.root}>
         <div className={classes.title}>Advanced Search</div>
         <SearchFilters 
@@ -189,7 +194,9 @@ const mapDispatchToProps = dispatch => {
       onSetBeachLength: (value) => dispatch(searchFiltersActions.setBeachLength(value)),
       onSetSelectText: (value) => dispatch(searchFiltersActions.setSelectText(value)),
       onSetSearchText: (value) => dispatch(searchFiltersActions.setSearchText(value)),
-      onResetFilters: () => dispatch(searchFiltersActions.setReset())
+      onResetFilters: () => dispatch(searchFiltersActions.setReset()),
+      onSetReturnFromDetails: (value) => dispatch(mapsFilterActions.setReturnFromDetails(value)),
+      onSetMapArea: (value) => dispatch(mapsAreaActions.setMapArea(value))
     }
     
   }

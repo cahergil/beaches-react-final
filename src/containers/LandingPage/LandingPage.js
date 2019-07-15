@@ -35,7 +35,7 @@ const LandingPage = (props) => {
 
   return (
     <div>
-      <NavDrawer />
+      <NavDrawer onSetMapArea={onSetMapArea}/>
       <Map 
         onMapClicked={(value) => handleMapClick(value)}
         onSetMapArea={onSetMapArea}

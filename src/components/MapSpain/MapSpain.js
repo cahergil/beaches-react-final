@@ -91,7 +91,6 @@ const MapSpain = React.memo((props) => {
   }
 
   const handlePreSelect = (e) => {
-    
     const map = e.chart;
     // get map instance to use it in handleRegionClick
     setMapObject(map);

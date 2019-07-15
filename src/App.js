@@ -6,7 +6,7 @@ import Graphics from './components/Graphics/Graphics';
 import Search from './containers/Search/Search';
 import LandingPage from './containers/LandingPage/LandingPage';
 import BeachDetails from './containers/BeachDetails/BeachDetails';
-import About from './components/About/About';
+import About from './containers/About/About';
 
 
 

@@ -49,16 +49,21 @@ const useStyles = makeStyles(theme => ({
 })
 )
 
+
 // https://github.com/ReactTraining/react-router/issues/5376
  const LooseNavLink = props => (
   <NavLink {...props} isActive={(match, location) => location.pathname.startsWith(props.to.pathname)} />
 )
 
 const Navbar = (props) => {
-  const { sections, burgerClicked } = props;
+  const { sections, burgerClicked, onSetMapArea } = props;
   const classes = useStyles();
  
-
+  const handleOnClick = e => {
+    onSetMapArea('')
+    
+    
+  }
   const toolbarSections = (
     <nav id="navbar">
       <ul className={classes.ulStyle}>
@@ -83,6 +88,7 @@ const Navbar = (props) => {
                   className={`${classes.linkStyle} ${
                     classes.marginRight
                     }`}
+                  onClick={handleOnClick}
                 >
                   {section.toUpperCase()}
                 </LooseNavLink>

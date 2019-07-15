@@ -116,7 +116,7 @@ const ResultsContent = React.memo(({beachesList}) => {
         // === document.documentElement.offsetHeight
       ) {
         loadItems();
-        console.log('loadItems');
+     
       }
 
     }
