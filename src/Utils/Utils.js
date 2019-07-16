@@ -15,12 +15,13 @@ export const getYesNo = (value) => {
 }
 
 export const toRemoveQuotes = value => {
-  const len = value.length;
+  // const len = value.length;
   let pos = 0;
   if (value.startsWith('"')) {
     pos = 1
   }
-  const value1 = value.substr(pos, len - 1);
+  // const value1 = value.substr(pos, len - 1);
+  const value1 = value.substr(pos);
   const value2 = value1.replace(/["']/g,'')
   return value2
 }
