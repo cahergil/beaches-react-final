@@ -61,11 +61,6 @@ const Stack = props => {
       icon: sassIcon
     },
     {
-      tech: 'Formik',
-      url: 'https://github.com/jaredpalmer/formik',
-      icon: githubIcon
-    },
-    {
       tech: 'React-image-gallery',
       url: 'https://github.com/xiaolin/react-image-gallery',
       icon: githubIcon
@@ -78,6 +73,11 @@ const Stack = props => {
     {
       tech: 'React-image-fallback',
       url: 'https://github.com/socialtables/react-image-fallback',
+      icon: githubIcon
+    },
+   {
+      tech: 'Amcharts3-react',
+      url: 'https://github.com/amcharts/amcharts3-react',
       icon: githubIcon
     }]
   return (
