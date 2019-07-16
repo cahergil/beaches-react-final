@@ -36,22 +36,22 @@ const Stack = props => {
   const classes = useStyles();
   const stack = [
     {
-      tech: 'React',
+      tech: 'React 16.8.6',
       url: 'https://reactjs.org/',
       icon: reactIcon
     },
     {
-      tech: 'React router',
+      tech: 'React router 5.0.0',
       url: 'https://reacttraining.com/react-router/web/guides/quick-start',
       icon: reactRouterIcon
     },
     {
-      tech: 'Redux',
+      tech: 'Redux 4.0.1',
       url: 'https://redux.js.org/',
       icon: reduxIcon
     },
     {
-      tech: 'Material-UI',
+      tech: 'Material-UI 4.2.0',
       url: 'https://material-ui.com/',
       icon: materialUIIcon
     },
@@ -61,23 +61,33 @@ const Stack = props => {
       icon: sassIcon
     },
     {
-      tech: 'React-image-gallery',
+      tech: 'React-image-gallery 0.8.17',
       url: 'https://github.com/xiaolin/react-image-gallery',
       icon: githubIcon
     },
     {
-      tech: 'React reveal',
-      url: 'https://www.react-reveal.com/examples/',
+      tech: 'React reveal 1.2.2',
+      url: 'https://github.com/rnosov/react-reveal',
       icon: githubIcon
     },
     {
-      tech: 'React-image-fallback',
+      tech: 'React-image-fallback 8.0.0',
       url: 'https://github.com/socialtables/react-image-fallback',
       icon: githubIcon
     },
-   {
-      tech: 'Amcharts3-react',
+    {
+      tech: 'Amcharts3-react 3.1.0',
       url: 'https://github.com/amcharts/amcharts3-react',
+      icon: githubIcon
+    },
+    {
+      tech: 'React-google-maps 9.4.5',
+      url: 'https://github.com/tomchentw/react-google-maps',
+      icon: githubIcon
+    },
+    {
+      tech: 'React-textfit 1.1.0',
+      url: 'https://github.com/malte-wessel/react-textfit',
       icon: githubIcon
     }]
   return (
