@@ -45,6 +45,12 @@ const Search = (props) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const element = document.getElementById('navbar');
+    if (element) {
+      element.scrollIntoView();
+    }
+  }, []);
+  useEffect(() => {
     actions.onSetCountryBeaches('../playas.json');
     return () => {
       actions.onSetReturnFromDetails(false);
