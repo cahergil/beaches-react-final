@@ -32,6 +32,7 @@ const TranslateTextField = (props) => {
     let fromLang = 'es';
     let toLang = 'en'
     let text = state.text;
+    // api key restricted in google developer console
     const API_KEY = 'AIzaSyCKOeL1RQS5BNIKgPQMuBl8jy30MkuyShA';
     let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`;
     url += '&q=' + encodeURI(text);
