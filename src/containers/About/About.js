@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
+import scrollIntoView from 'scroll-into-view';
+
 import Stack from '../../components/About/Stack/Stack';
 import Attribution from '../../components/About/Attribution/Attribution';
 import Email from '../../components/About/Email/Email';
@@ -22,7 +24,11 @@ const About = props => {
   useEffect(() => {
     const element = document.getElementById('navbar');
     if (element) {
-      element.scrollIntoView();
+      scrollIntoView(element, {
+        time: 0
+        
+      });
+      
     }
   }, []);
   return (

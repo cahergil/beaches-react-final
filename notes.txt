@@ -125,7 +125,4 @@ const Location = props => {
 
 export default Location;
 
-gmapikey: AIzaSyBzE15BZUN0Xhhx0OzkMKNlaII7QX4p6GU
-AIzaSyBzE15BZUN0Xhhx0OzkMKNlaII7QX4p6GU
-use: key=API_KEY
 chrome://flags/#ignore-gpu-blacklist
