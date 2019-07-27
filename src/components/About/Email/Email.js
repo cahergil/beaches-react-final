@@ -58,7 +58,7 @@ const Email = props => {
               color="secondary"
               style={{ width: '20rem', fontSize: '2rem' }}
             >
-              Send Mail
+              Send EMail
               <ContactMail className={classes.rightIcon} />
             </Button>
           </a>
