@@ -106,7 +106,9 @@ const BeachDetails = props => {
             generalInfo={generalInfo} />
           <div className={classes.sectionRoot}>
             <Title colorSchema={colorSchema} name="Weather & Forecast" />
-            <Weather city={beach.termino_municipal}/>
+            <Weather
+              isBlueFlag={beach.bandera_azul === 'Sí' ? true : false}
+              city={beach.termino_municipal} />
           </div>
           <div className={classes.sectionRoot}>
             <Title colorSchema={colorSchema} name="Features" />
