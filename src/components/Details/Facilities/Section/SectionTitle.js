@@ -7,11 +7,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     textAlign: 'left',
     fontSize: '1.8rem',
-    // borderBottom: '1px dotted #ddd',
     backgroundColor: '#bbb',
-    // backgroundColor: props => props.colorSchema.backgroundColor,
     color: '#444',
-    // color: props => props.colorSchema.color,
     padding: '1rem'
     
   }

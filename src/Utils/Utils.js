@@ -307,7 +307,7 @@ export const includeDistance = (distance, userDistance) => {
   if (dbDistance <= userDistance) {
     return true;
   } else {
-    console.log(dbDistance + ">" + userDistance);
+    // console.log(dbDistance + ">" + userDistance);
     return false;
   }
 

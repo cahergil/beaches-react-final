@@ -28,7 +28,6 @@ const useStyles = makeStyles({
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(25rem, 1fr))',
     gridRowGap: '2rem',
-    // gridColumnGap: '3rem',
     padding: '2rem 2rem'
   },
   // column: {
@@ -123,7 +122,7 @@ const Services = props => {
         <p className={classes.text}>{utils.getYesNo(beach.alquiler_nauticos)}</p>
       </div>
       <div className={classes.row}>
-        <img src={NauticalClubImg} alt="nautical rental" />
+        <img src={NauticalClubImg} alt="nautical club" />
         <p className={classes.label}>Nautical club:</p>
         <p className={classes.text}>{utils.getYesNo(beach.club_nautico)}</p>
       </div>

@@ -160,11 +160,9 @@ const SearchFiltersMobile = props => {
     actions.onSetOccupancy(event.target.value);
   }
 
-   const handleHospitalDistanceChange = (event,newValue) => {
+  const handleHospitalDistanceChange = (event,newValue) => {
     setHospitalDistance(newValue);
     debouncedhospitalDistance(newValue);
-  
-
   }
 
   const handleBeachLengthChange = (event, newValue) => {

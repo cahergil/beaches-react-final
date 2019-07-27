@@ -295,10 +295,10 @@ const SearchFilters = props => {
 
       {/* TYPE OF BEACH *********************************************************** */}
       <div  
-        onClick={handleClick('typeOfBeach')}
+        
         className={`${classes.wrapper} ${classes.generalPadding}`}>
         <div className={classes.textWrapper}>
-          <span  className={classes.textStyle}>Type of Beach</span>
+          <span  onClick={handleClick('typeOfBeach')} className={classes.textStyle}>Type of Beach</span>
           <div className={`${classes.menuTypeOfBeach} ${isActiveTypeOfBeach}`} >
             <List classes={{
               root: classes.typeOfBeachListRoot
@@ -366,7 +366,7 @@ const SearchFilters = props => {
             </List>
           </div>
         </div>
-        <KeyBoardArrowDownIcon />
+        <KeyBoardArrowDownIcon onClick={handleClick('typeOfBeach')} />
       </div>
 
       {/* SERVICES *********************************************************** */}

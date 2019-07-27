@@ -16,7 +16,6 @@ import BeachObject from './../../components/Model/Model';
 
 const useStyles = makeStyles({
   root: {
-    with: '100%',
     display: 'grid',
     gridTemplateRows: 'repeat(4, min-content)',
     gridRowGap: '2rem',
@@ -29,6 +28,7 @@ const useStyles = makeStyles({
     display: 'grid',
     gridTemplateRows: 'repeat(2, min-content)',
     boxShadow: '2px 1px 5px #ccc',
+    // mozboxshadow
     borderRadius: '5px',
     overflow: 'hidden'
   }
