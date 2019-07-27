@@ -89,6 +89,11 @@ const Stack = props => {
       tech: 'React-textfit 1.1.0',
       url: 'https://github.com/malte-wessel/react-textfit',
       icon: githubIcon
+    },
+    {
+      tech: 'React-open-weather 0.4.0',
+      url: 'https://github.com/farahat80/react-open-weather',
+      icon: githubIcon
     }]
   return (
     <section className={classes.root}>
