@@ -13,11 +13,12 @@ import * as actionsMapFilters from '../../store/actions/mapFilters';
 import Title from './../../components/Details/Title/Title';
 import Services from './../../components/Details/Service/Services';
 import BeachObject from './../../components/Model/Model';
+import Weather from '../../components/Details/Weather/Weather';
 
 const useStyles = makeStyles({
   root: {
     display: 'grid',
-    gridTemplateRows: 'repeat(4, min-content)',
+    gridTemplateRows: 'repeat(6, min-content)',
     gridRowGap: '2rem',
     marginBottom: '2rem',
     marginLeft: '2rem',
@@ -103,6 +104,10 @@ const BeachDetails = props => {
           <Presentation
             colorSchema={colorSchema}
             generalInfo={generalInfo} />
+          <div className={classes.sectionRoot}>
+            <Title colorSchema={colorSchema} name="Weather & Forecast" />
+            <Weather city={beach.termino_municipal}/>
+          </div>
           <div className={classes.sectionRoot}>
             <Title colorSchema={colorSchema} name="Features" />
             <Facilities beach={beach}/>
