@@ -1,19 +1,21 @@
 {
   "files": {
     "main.css": "/spain-beaches-react/static/css/main.03d0fb2a.chunk.css",
-    "main.js": "/spain-beaches-react/static/js/main.a56aec82.chunk.js",
-    "main.js.map": "/spain-beaches-react/static/js/main.a56aec82.chunk.js.map",
+    "main.js": "/spain-beaches-react/static/js/main.098cdbb2.chunk.js",
+    "main.js.map": "/spain-beaches-react/static/js/main.098cdbb2.chunk.js.map",
     "runtime~main.js": "/spain-beaches-react/static/js/runtime~main.964795ce.js",
     "runtime~main.js.map": "/spain-beaches-react/static/js/runtime~main.964795ce.js.map",
-    "static/js/2.3a1b8c6e.chunk.js": "/spain-beaches-react/static/js/2.3a1b8c6e.chunk.js",
-    "static/js/2.3a1b8c6e.chunk.js.map": "/spain-beaches-react/static/js/2.3a1b8c6e.chunk.js.map",
+    "static/js/2.976140d6.chunk.js": "/spain-beaches-react/static/js/2.976140d6.chunk.js",
+    "static/js/2.976140d6.chunk.js.map": "/spain-beaches-react/static/js/2.976140d6.chunk.js.map",
     "index.html": "/spain-beaches-react/index.html",
-    "precache-manifest.3af8e0b7537d336093a61945a11e6185.js": "/spain-beaches-react/precache-manifest.3af8e0b7537d336093a61945a11e6185.js",
+    "precache-manifest.533e8ec2598a555a501b2efdefb1d1b6.js": "/spain-beaches-react/precache-manifest.533e8ec2598a555a501b2efdefb1d1b6.js",
     "service-worker.js": "/spain-beaches-react/service-worker.js",
     "static/css/main.03d0fb2a.chunk.css.map": "/spain-beaches-react/static/css/main.03d0fb2a.chunk.css.map",
     "static/media/beachBannerBlueFlag.jpg": "/spain-beaches-react/static/media/beachBannerBlueFlag.61d013c0.jpg",
     "static/media/beachBannerNormal.jpg": "/spain-beaches-react/static/media/beachBannerNormal.b53671aa.jpg",
     "static/media/react.png": "/spain-beaches-react/static/media/react.47ce6e77.png",
-    "static/media/redux.png": "/spain-beaches-react/static/media/redux.8251fe76.png"
+    "static/media/redux.png": "/spain-beaches-react/static/media/redux.8251fe76.png",
+    "static/media/videoMp4Width500.mp4": "/spain-beaches-react/static/media/videoMp4Width500.57c7009f.mp4",
+    "static/media/video_compressed.mp4": "/spain-beaches-react/static/media/video_compressed.4c2daf67.mp4"
   }
 }

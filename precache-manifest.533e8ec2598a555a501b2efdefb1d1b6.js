@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "90f94ad58f785902d414a8e0ae8684f5",
+    "revision": "730364d2a00d8e700a20a159292f4f66",
     "url": "/spain-beaches-react/index.html"
   },
   {
-    "revision": "06a690891666cf39bf69",
+    "revision": "be0791612c423bb9deda",
     "url": "/spain-beaches-react/static/css/main.03d0fb2a.chunk.css"
   },
   {
-    "revision": "257c2cb2e81d7d66b8a8",
-    "url": "/spain-beaches-react/static/js/2.3a1b8c6e.chunk.js"
+    "revision": "4b5fa8b68cbb2be5ee6b",
+    "url": "/spain-beaches-react/static/js/2.976140d6.chunk.js"
   },
   {
-    "revision": "06a690891666cf39bf69",
-    "url": "/spain-beaches-react/static/js/main.a56aec82.chunk.js"
+    "revision": "be0791612c423bb9deda",
+    "url": "/spain-beaches-react/static/js/main.098cdbb2.chunk.js"
   },
   {
     "revision": "b3ce55a743f38aae8a1f",
@@ -34,5 +34,13 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "8251fe76d7487a28b07603515b300964",
     "url": "/spain-beaches-react/static/media/redux.8251fe76.png"
+  },
+  {
+    "revision": "57c7009fba72f9604b56a834d484676f",
+    "url": "/spain-beaches-react/static/media/videoMp4Width500.57c7009f.mp4"
+  },
+  {
+    "revision": "4c2daf67edb0b029b085dc10d45e50b6",
+    "url": "/spain-beaches-react/static/media/video_compressed.4c2daf67.mp4"
   }
 ]);
