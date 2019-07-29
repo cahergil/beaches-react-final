@@ -18,6 +18,7 @@ import videoMp4Width500 from '../../assets/videos/videoMp4Width500.mp4';
 
 
 
+
 const useStyles = makeStyles(theme =>({
 
   root: {
@@ -27,11 +28,19 @@ const useStyles = makeStyles(theme =>({
     justifyContent: 'center',
     gridRowGap: '2rem',
   },
-  title: {
+  titleWrapper: {
+    // display: 'inline-block',
     margin: '4rem 2rem 2rem 2rem',
     fontSize: '3rem',
     opacity: '0.87',
-    fontWeight: '300'
+    fontWeight: '300',
+  },
+  title: {
+    background: 'linear-gradient(to bottom right,rgba(255,255,255,0.7),rgba(255,255,255,1))',
+    borderRadius: '10px',
+    padding: '5px',
+    boxShadow: '0 1.5rem 4rem rgba(0,0,0,.5)'
+
   },
   circleProgressRoot: {
     marginTop: '10rem',
@@ -42,13 +51,16 @@ const useStyles = makeStyles(theme =>({
     position: 'absolute',
     top: '0',
     left: '0',
-    height: '34vh',
+    height: '32vh',
     width: '100%',
     zIndex: '-2',
     opacity: '0.15',
     overflow: 'hidden',
+    [theme.breakpoints.down(500)]: {
+      height: '25vh'
+    },
     [theme.breakpoints.down(900)]: {
-      height: '28vh'
+      height: '28.5vh'
     }
   }
 }));
@@ -190,8 +202,8 @@ const Search = (props) => {
 
   } else {
     video = <BackgroundVideo
-          verticalAlign={0.05}
-          src={videoMp4}
+      verticalAlign={0.05}
+      src={videoMp4}
     />
   }
   return (
@@ -201,7 +213,9 @@ const Search = (props) => {
         <div className={classes.video}>
           {video}
         </div>
-        <div className={classes.title}>Advanced Search
+        <div className={classes.titleWrapper}>
+          <span className={classes.title}>Advanced Search
+          </span>
         </div>
         <SearchFilters 
           filters={filters}
