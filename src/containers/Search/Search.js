@@ -1,9 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import  BackgroundVideo  from 'react-background-video-player';
 
 import NavDrawer from '../../components/Navigation/NavDrawer';
 import ResultsContent from '../../components/LandingPageResults/ResultsContent/ResultsContent';
@@ -14,10 +14,7 @@ import * as mapsFilterActions from '../../store/actions/mapFilters';
 import * as mapsAreaActions from '../../store/actions/mapArea';
 import * as utils from '../../Utils/Utils';
 import videoMp4 from '../../assets/videos/video_compressed.mp4';
-import videoWebm from '../../assets/videos/video.webm';
-
 import videoMp4Width500 from '../../assets/videos/videoMp4Width500.mp4';
-import videoWebmWidth500 from '../../assets/videos/video.webm';
 
 
 
@@ -40,10 +37,7 @@ const useStyles = makeStyles(theme =>({
     marginTop: '10rem',
     justifySelf: 'center'
   },
-  videoWrapper: {
-    position: 'relative',
-    width: '100%'
-  },
+
   video: {
     position: 'absolute',
     top: '0',
@@ -189,36 +183,24 @@ const Search = (props) => {
   }
   let video = null;
   if (matchesWidth500) {
-    console.log('width <= 500px')
-    video = (
-      <div className={classes.videoWrapper}>
-        <div className={classes.video}>
-          <video autoPlay muted loop>
-            <source src={videoMp4Width500} type="video/mp4"></source>
-            <source src={videoWebmWidth500} type="video/ogg"></source>
-          </video>
-        </div>
-      </div>
-    )
+    video = <BackgroundVideo
+      verticalAlign={0.05}
+      src={videoMp4Width500}
+    />
 
   } else {
-    console.log('width >500px')
-    video = (
-      <div className={classes.videoWrapper}>
-        <div className={classes.video}>
-        <video autoPlay muted loop>
-          <source src={videoMp4} type="video/mp4"></source>
-          <source src={videoWebm} type="video/ogg"></source>
-        </video>
-        </div>
-      </div>
-    );
+    video = <BackgroundVideo
+          verticalAlign={0.05}
+          src={videoMp4}
+    />
   }
   return (
     <section>
       <NavDrawer onSetMapArea={actions.onSetMapArea}/>
       <div className={classes.root}>
-        {video}
+        <div className={classes.video}>
+          {video}
+        </div>
         <div className={classes.title}>Advanced Search
         </div>
         <SearchFilters 

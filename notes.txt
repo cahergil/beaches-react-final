@@ -125,4 +125,11 @@ const Location = props => {
 
 export default Location;
 
-chrome://flags/#ignore-gpu-blacklist
+//   video = (
+    //     <div className={classes.video}>
+    //       <video autoPlay muted loop>
+    //         <source src={videoMp4} type="video/mp4"></source>
+    //         <source src={videoWebm} type="video/ogg"></source>
+    //       </video>
+    //     </div>
+    // );

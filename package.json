@@ -18,6 +18,7 @@
     "query-string": "^6.8.1",
     "react": "^16.8.6",
     "react-app-polyfill": "^1.0.1",
+    "react-background-video-player": "^1.1.6",
     "react-dom": "^16.8.6",
     "react-google-maps": "^9.4.5",
     "react-image-fallback": "^8.0.0",
