@@ -11,6 +11,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import _ from 'lodash';
 import Slider from '@material-ui/core/Slider';
 import { logarithmicSlider, logPositionSlider } from '../../Utils/Utils';
+import { borderRadius } from '@material-ui/system';
 
 const useStyles = makeStyles(theme =>({
   rootMobile: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles(theme =>({
     alignItems: 'center',
     fontSize: '1.7rem',
     padding: '1rem',
+    borderRadius: '5px',
     backgroundColor: theme.palette.primary.main,
   
 
