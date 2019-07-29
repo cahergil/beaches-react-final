@@ -51,10 +51,11 @@ const useStyles = makeStyles(theme =>({
     position: 'absolute',
     top: '0',
     left: '0',
-    height: '32vh',
+    height: '31vh',
     width: '100%',
     zIndex: '-2',
-    opacity: '0.15',
+    maskImage: 'linear-gradient(to right,rgba(255,255,255,1),rgba(255,255,255,0.2),rgba(255,255,255,0.2))',
+    // opacity: '0.15',
     overflow: 'hidden',
     [theme.breakpoints.down(500)]: {
       height: '25vh'
