@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
+import { useTheme } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useMediaQuery } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import NavDrawer from '../../components/Navigation/NavDrawer';
@@ -12,21 +13,25 @@ import * as searchFiltersActions from '../../store/actions/searchFilters';
 import * as mapsFilterActions from '../../store/actions/mapFilters';
 import * as mapsAreaActions from '../../store/actions/mapArea';
 import * as utils from '../../Utils/Utils';
+import videoMp4 from '../../assets/videos/video_compressed.mp4';
+import videoWebm from '../../assets/videos/video.webm';
+
+import videoMp4Width500 from '../../assets/videos/videoMp4Width500.mp4';
+import videoWebmWidth500 from '../../assets/videos/video.webm';
 
 
-const useStyles = makeStyles({
-  rootWrap: {
-    position: 'relative',
-  },
+
+const useStyles = makeStyles(theme =>({
+
   root: {
-    
+    position: 'relative',
     display: 'grid',
     gridTemplateColumns: '100%',
     justifyContent: 'center',
     gridRowGap: '2rem',
-    margin: '3rem'
   },
   title: {
+    margin: '4rem 2rem 2rem 2rem',
     fontSize: '3rem',
     opacity: '0.87',
     fontWeight: '300'
@@ -34,8 +39,25 @@ const useStyles = makeStyles({
   circleProgressRoot: {
     marginTop: '10rem',
     justifySelf: 'center'
+  },
+  videoWrapper: {
+    position: 'relative',
+    width: '100%'
+  },
+  video: {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    height: '34vh',
+    width: '100%',
+    zIndex: '-2',
+    opacity: '0.15',
+    overflow: 'hidden',
+    [theme.breakpoints.down(900)]: {
+      height: '28vh'
+    }
   }
-});
+}));
 
 
 const Search = (props) => {
@@ -44,12 +66,16 @@ const Search = (props) => {
   const [filteredBeachesList, setFilteredBeachesList] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const theme = useTheme();
+  const matchesWidth500 = useMediaQuery(theme.breakpoints.down(500));
+
   useEffect(() => {
     const element = document.getElementById('navbar');
     if (element) {
       element.scrollIntoView();
     }
   }, []);
+
   useEffect(() => {
     actions.onSetCountryBeaches('../playas.json');
     return () => {
@@ -161,11 +187,40 @@ const Search = (props) => {
       classes={{ root: classes.circleProgressRoot }}
     />;
   }
+  let video = null;
+  if (matchesWidth500) {
+    console.log('width <= 500px')
+    video = (
+      <div className={classes.videoWrapper}>
+        <div className={classes.video}>
+          <video autoPlay muted loop>
+            <source src={videoMp4Width500} type="video/mp4"></source>
+            <source src={videoWebmWidth500} type="video/ogg"></source>
+          </video>
+        </div>
+      </div>
+    )
+
+  } else {
+    console.log('width >500px')
+    video = (
+      <div className={classes.videoWrapper}>
+        <div className={classes.video}>
+        <video autoPlay muted loop>
+          <source src={videoMp4} type="video/mp4"></source>
+          <source src={videoWebm} type="video/ogg"></source>
+        </video>
+        </div>
+      </div>
+    );
+  }
   return (
-    <section className={classes.rootWrap}>
+    <section>
       <NavDrawer onSetMapArea={actions.onSetMapArea}/>
       <div className={classes.root}>
-        <div className={classes.title}>Advanced Search</div>
+        {video}
+        <div className={classes.title}>Advanced Search
+        </div>
         <SearchFilters 
           filters={filters}
           actions={actions}

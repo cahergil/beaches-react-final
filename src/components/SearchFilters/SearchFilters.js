@@ -21,7 +21,7 @@ import { logarithmicSlider, logPositionSlider } from './../../Utils/Utils';
 
 const useStyles = makeStyles(theme =>({
   root: {
- 
+    margin: '0 3rem',
     display: 'grid',
     gridTemplateColumns: 'repeat(6, max-content)',
     gridColumnGap: '2rem',
@@ -59,7 +59,8 @@ const useStyles = makeStyles(theme =>({
   menuTypeOfBeach: {
     zIndex: '100',
     clipPath: 'polygon(0% 4%, 5% 4%, 10% 0%, 15% 4% ,100% 4%, 100% 100%, 0% 100%)',
-    backgroundColor: '#F5F5F5',
+    // backgroundColor: '#F5F5F5',
+    background: 'linear-gradient(to bottom right, #e1e1e1, #fff)',
     position: 'absolute',
     paddingTop: '1rem',
     top: '1.8rem',
@@ -81,7 +82,8 @@ const useStyles = makeStyles(theme =>({
   menuServices: {
     zIndex: '100',
     clipPath: 'polygon(0% 4%, 5% 4%, 10% 0%, 15% 4% ,100% 4%, 100% 100%, 0% 100%)',
-    backgroundColor: '#F5F5F5',
+    // backgroundColor: '#F5F5F5',
+    background: 'linear-gradient(to bottom right, #e1e1e1, #fff)',
     position: 'absolute',
     paddingTop: '1rem',
     top: '1.8rem',
@@ -97,7 +99,8 @@ const useStyles = makeStyles(theme =>({
   menuGeneral: {
     zIndex: '100',
     clipPath: 'polygon(0% 4%, 5% 4%, 10% 0%, 15% 4% ,100% 4%, 100% 100%, 0% 100%)',
-    backgroundColor: '#F5F5F5',
+    // backgroundColor: '#F5F5F5',
+    background: 'linear-gradient(to bottom right, #e1e1e1, #fff)',
     position: 'absolute',
     paddingTop: '2rem',
     top: '1.8rem',
@@ -111,8 +114,15 @@ const useStyles = makeStyles(theme =>({
   notActive: {
     display: 'none'
   },
+  active: {
+    color: '#FABC3D !important'
+  },
   textStyle: {
     color: '#fff',
+    transition: 'all 0.3s',
+    '&:hover': {
+      color: theme.palette.secondary.main
+    }
   },
   generalPadding: {
     paddingTop: '1.5rem'
@@ -121,7 +131,8 @@ const useStyles = makeStyles(theme =>({
     margin: '0 1rem'
   },
   labelTextFieldStyle: {
-    color: '#fff'
+    color: '#fff',
+    opacity: '0.6'
   },
   // styles of GENERAL dropdown
   generalListRoot: {
@@ -270,20 +281,33 @@ const SearchFilters = props => {
     // reset state in Redux
     actions.onResetFilters();
   }
+  // Active menu customization
   // type of beach
   let isActiveTypeOfBeach = classes.notActive;
+  let highlightSpanTypeOfBeach = '';
+  let highlightArrowIconTypeOfBeach = '#000'
   if (stateTypeOfBeach) {
     isActiveTypeOfBeach = '';
+    highlightArrowIconTypeOfBeach = '#FABC3D';
+    highlightSpanTypeOfBeach = classes.active
   }
   // services
   let isActiveServices = classes.notActive;
+  let highlightSpanServices = ''
+  let highlightArrowIconServices = '#000'
   if (stateServices) {
     isActiveServices = '';
+    highlightArrowIconServices = '#FABC3D'
+    highlightSpanServices = classes.active
   };
   // general
   let isActiveGeneral = classes.notActive;
+  let highlightSpanGeneral = ''
+  let highlightArrowIconGeneral = '#000'
   if (stateGeneral) {
     isActiveGeneral = '';
+    highlightArrowIconGeneral = '#FABC3D'
+    highlightSpanGeneral = classes.active
   }
   let contentDesktop = (
     <div className={classes.root}>
@@ -298,7 +322,7 @@ const SearchFilters = props => {
         
         className={`${classes.wrapper} ${classes.generalPadding}`}>
         <div className={classes.textWrapper}>
-          <span  onClick={handleClick('typeOfBeach')} className={classes.textStyle}>Type of Beach</span>
+          <span onClick={handleClick('typeOfBeach')} className={`${classes.textStyle} ${highlightSpanTypeOfBeach}`}>Type of Beach</span>
           <div className={`${classes.menuTypeOfBeach} ${isActiveTypeOfBeach}`} >
             <List classes={{
               root: classes.typeOfBeachListRoot
@@ -366,14 +390,16 @@ const SearchFilters = props => {
             </List>
           </div>
         </div>
-        <KeyBoardArrowDownIcon onClick={handleClick('typeOfBeach')} />
+        <KeyBoardArrowDownIcon 
+          onClick={handleClick('typeOfBeach')}
+          style={{ fill: highlightArrowIconTypeOfBeach}}/>
       </div>
 
       {/* SERVICES *********************************************************** */}
       <div 
         className={`${classes.wrapper} ${classes.generalPadding}`}>
         <div className={classes.textWrapper}>
-          <span onClick={handleClick('services')} className={classes.textStyle}>Services</span>
+          <span onClick={handleClick('services')} className={`${classes.textStyle} ${highlightSpanServices}`}>Services</span>
           <div className={`${classes.menuServices} ${isActiveServices}`}>
             <List classes={{
               root: classes.servicesListRoot
@@ -464,13 +490,16 @@ const SearchFilters = props => {
             </List>
           </div>
         </div>
-        <KeyBoardArrowDownIcon onClick={handleClick('services')} />
+        <KeyBoardArrowDownIcon 
+          onClick={handleClick('services')} 
+          style={{ fill: highlightArrowIconServices}}
+          />
       </div>
       {/* GENERAL *********************************************************** */}
       <div 
         className={`${classes.wrapper} ${classes.generalPadding}`}>
         <div className={classes.textWrapper}>
-          <span onClick={handleClick('general')}  className={classes.textStyle}>General</span>
+          <span onClick={handleClick('general')} className={`${classes.textStyle} ${highlightSpanGeneral}`}>General</span>
           <div className={`${classes.menuGeneral} ${isActiveGeneral}`}>
             <List classes={{
               root: classes.generalListRoot
@@ -568,7 +597,10 @@ const SearchFilters = props => {
             </List>
           </div>
         </div>
-        <KeyBoardArrowDownIcon onClick={handleClick('general')} />
+        <KeyBoardArrowDownIcon 
+          onClick={handleClick('general')} 
+          style={{ fill: highlightArrowIconGeneral }}
+          />
       </div>
      
       <div className={classes.wrapper}>

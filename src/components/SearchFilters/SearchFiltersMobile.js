@@ -14,6 +14,7 @@ import { logarithmicSlider, logPositionSlider } from '../../Utils/Utils';
 
 const useStyles = makeStyles(theme =>({
   rootMobile: {
+    margin: '0 3rem',
     height: '5rem',
     display: 'flex',
     flexDirection: 'row',
