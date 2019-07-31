@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types'
 import { withStyles, Button, makeStyles } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
@@ -28,6 +28,14 @@ const TranslateTextField = (props) => {
   const classes = useStyles();
   const { text } = props
   const [state, setState] = useState({ text: text, translated: false })
+  // necessary when clicking markers
+  useEffect(() => {
+    setState({
+      ...state,
+      text: text
+    
+    });
+  }, [text, state])
   const handlerTranslate = () => {
     const fromLang = 'es';
     const toLang = 'en';

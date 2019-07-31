@@ -32,15 +32,13 @@ const useStyles = makeStyles(theme =>({
   }
 }))
 
-const Presentation = props => {
+const Presentation = React.memo(({generalInfo, colorSchema}) => {
   const classes = useStyles();
-  const { generalInfo, colorSchema } = props;
-
   return (
     <section className={classes.root}>
       <div className={classes.sectionRoot}>
-        <Title colorSchema={colorSchema} name="General information"/>
-        <GeneralInfo generalInfo={generalInfo}/>
+        <Title colorSchema={colorSchema} name="General information" />
+        <GeneralInfo generalInfo={generalInfo} />
       </div>
       <div className={classes.sectionRoot}>
         <Title colorSchema={colorSchema} name="Photo gallery" />
@@ -48,11 +46,11 @@ const Presentation = props => {
       </div>
      
         
-      <Description colorSchema={colorSchema} description={generalInfo.descripcion}/>
+      <Description colorSchema={colorSchema} description={generalInfo.descripcion} />
       
     </section>
   );
-}
+});
 Presentation.propTypes = {
   colorSchema: PropTypes.shape({
     color: PropTypes.string,

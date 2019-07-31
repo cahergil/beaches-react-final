@@ -14,6 +14,7 @@ import Title from './../../components/Details/Title/Title';
 import Services from './../../components/Details/Service/Services';
 import BeachObject from './../../components/Model/Model';
 import Weather from '../../components/Details/Weather/Weather';
+import { getDistance } from '../../Utils/Utils';
 
 const useStyles = makeStyles({
   root: {
@@ -40,6 +41,9 @@ const BeachDetails = props => {
   const [beach, setBeach] = useState(null);
   const [colorSchema, setColorSchema] = useState({ backgroundColor:'#FABC3D', color:'#000'})
   const [generalInfo, setGeneralInfo] = useState(null);
+  const [nearbyBeaches, setNearbyBeaches] = useState(null);
+  const [city, setCity] = useState(null);
+  const [isBlueFlag, setIsBlueFlag] = useState(null);
   const classes = useStyles();
   
   useEffect(() => {
@@ -63,10 +67,27 @@ const BeachDetails = props => {
   useEffect(() => {
     const id = queryString.parse(props.location.search).id;
     const beach = beachesList.find(beach => beach.id === id);
-    // console.log(beach);
     const generalInfo = {};
     if (beach) {
+      // calculate nearby beaches
+      const nearbyBeaches = [];
+      const beachLatLng = { lat: undefined, lng: undefined };
+      beachLatLng.lat = parseFloat(beach.coordenada_y.replace(',', '.'));
+      beachLatLng.lng = parseFloat(beach.coordenada_x.replace(',', '.'));
+
+      nearbyBeaches.push({name: beach.nombre, lat: beachLatLng.lat, lng: beachLatLng.lng, id: beach.id})
       
+      beachesList.forEach(element => {
+        const p1 = {lat: undefined, lng: undefined};
+        p1.lat = parseFloat(element.coordenada_y.replace(',', '.'));
+        p1.lng = parseFloat(element.coordenada_x.replace(',', '.'));
+        const distanceInMeters = getDistance(p1, beachLatLng);
+        if (distanceInMeters < 15000) {
+          nearbyBeaches.push({name: element.nombre, lat: p1.lat, lng: p1.lng, id: element.id})
+        }
+      });
+      console.log(nearbyBeaches[0]);
+      // inform generalInfo fields
       generalInfo['termino_municipal'] = beach.termino_municipal;
       generalInfo['provincia'] = beach.provincia;
       generalInfo['comunidad_autonoma'] = beach.comunidad_autonoma;
@@ -79,11 +100,17 @@ const BeachDetails = props => {
       generalInfo['nombre_alternativo'] = beach.nombre_alternativo;
       generalInfo['nombre_alternativo_2'] = beach.nombre_alternativo_2;
 
+      setNearbyBeaches(nearbyBeaches);
       setGeneralInfo(generalInfo);
       setBeach(beach);
       if (beach.bandera_azul === 'Sí') {
         setColorSchema({ backgroundColor: '#074c82', color: '#fff' });
-      } 
+        setIsBlueFlag(true);
+      } else {
+        setColorSchema({ backgroundColor: '#FABC3D', color: '#000' })
+        setIsBlueFlag(false);
+      }
+      setCity(beach.termino_municipal);
     }
     
     
@@ -98,17 +125,19 @@ const BeachDetails = props => {
           <Header
             colorSchema={colorSchema}
             name={beach.nombre}
-            isBlueFlag={beach.bandera_azul ==='Sí'? true: false}
+            // isBlueFlag={beach.bandera_azul ==='Sí'? true: false}
+            isBlueFlag={isBlueFlag}
           />
             
           <Presentation
             colorSchema={colorSchema}
             generalInfo={generalInfo} />
+            
           <div className={classes.sectionRoot}>
-            <Title colorSchema={colorSchema} name="Weather & Forecast" />
+            {/* <Title colorSchema={colorSchema} name="Weather & Forecast" />
             <Weather
-              isBlueFlag={beach.bandera_azul === 'Sí' ? true : false}
-              city={beach.termino_municipal} />
+              isBlueFlag={isBlueFlag}
+              city={city} /> */}
           </div>
           <div className={classes.sectionRoot}>
             <Title colorSchema={colorSchema} name="Features" />
@@ -119,9 +148,13 @@ const BeachDetails = props => {
             <Services beach={beach} />
           </div>
           <div className={classes.sectionRoot}>
-            <Title colorSchema={colorSchema} name="Location" />
-            <Location coordinates={{ lat: parseFloat(beach.coordenada_y.replace(',', '.')), lng: parseFloat(beach.coordenada_x.replace(',', '.')) }}
+            <Title colorSchema={colorSchema} name="Location and 15Km nearby beaches" />
+            <Location
+              coordinates={{ lat: parseFloat(beach.coordenada_y.replace(',', '.')), lng: parseFloat(beach.coordenada_x.replace(',', '.')) }}
               nombre={beach.nombre}
+              isBlueFlag={isBlueFlag}
+              nearbyBeaches={nearbyBeaches}
+
             />
           </div>
         </React.Fragment>
