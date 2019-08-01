@@ -6,7 +6,7 @@ import PropTypes  from 'prop-types';
 const useStyles = makeStyles(theme => ({
   root: {
     textAlign: 'left',
-    fontSize: '2.5rem',
+    fontSize: '2rem',
     borderBottom: '1px dotted #ddd',
     backgroundColor: props => props.colorSchema.backgroundColor,
     color: props => props.colorSchema.color,

@@ -22,8 +22,8 @@ const useStyles = makeStyles({
     gridTemplateRows: 'repeat(6, min-content)',
     gridRowGap: '2rem',
     marginBottom: '2rem',
-    marginLeft: '2rem',
-    marginRight: '2rem'
+    marginLeft: '1rem',
+    marginRight: '1rem'
   },
   sectionRoot: {
     width: '100%',

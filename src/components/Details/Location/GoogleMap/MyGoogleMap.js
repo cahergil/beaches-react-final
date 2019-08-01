@@ -75,7 +75,8 @@ const  MyGoogleMap = (props) => {
   }, [map, selectedPlace, nearbyBeaches]);
   
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyBzE15BZUN0Xhhx0OzkMKNlaII7QX4p6GU" // ,
+    googleMapsApiKey: "AIzaSyBzE15BZUN0Xhhx0OzkMKNlaII7QX4p6GU",
+    language: "en"
     // ...otherOptions
   });
 
@@ -103,8 +104,9 @@ const  MyGoogleMap = (props) => {
     }
     // place here isLoaded to prevent 'google is not defined' error
     return isLoaded && <GoogleMap
+      options={{ scaleControl: true}}
       mapContainerStyle={{
-        height: "400px",
+        height: "520px",
         width: "100%"
       }}
       zoom={12}
