@@ -83,10 +83,14 @@ const BeachDetails = props => {
         p1.lng = parseFloat(element.coordenada_x.replace(',', '.'));
         const distanceInMeters = getDistance(p1, beachLatLng);
         if (distanceInMeters < 15000) {
-          nearbyBeaches.push({name: element.nombre, lat: p1.lat, lng: p1.lng, id: element.id})
+          // to not duplicate beach
+          if (element.id !== beach.id && distanceInMeters !== 0) {
+            nearbyBeaches.push({ name: element.nombre, lat: p1.lat, lng: p1.lng, id: element.id, distance: distanceInMeters })
+          }
         }
       });
-      console.log(nearbyBeaches[0]);
+      
+      console.log(nearbyBeaches);
       // inform generalInfo fields
       generalInfo['termino_municipal'] = beach.termino_municipal;
       generalInfo['provincia'] = beach.provincia;
@@ -134,10 +138,10 @@ const BeachDetails = props => {
             generalInfo={generalInfo} />
             
           <div className={classes.sectionRoot}>
-            {/* <Title colorSchema={colorSchema} name="Weather & Forecast" />
+            <Title colorSchema={colorSchema} name="Weather & Forecast" />
             <Weather
               isBlueFlag={isBlueFlag}
-              city={city} /> */}
+              city={city} />
           </div>
           <div className={classes.sectionRoot}>
             <Title colorSchema={colorSchema} name="Features" />

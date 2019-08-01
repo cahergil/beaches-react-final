@@ -1,123 +1,160 @@
-import React from 'react';
-import { compose, withProps, lifecycle, withState, withHandlers } from "recompose"
-import { withScriptjs, withGoogleMap, GoogleMap, Marker,InfoWindow } from "react-google-maps";
+import React, { useState, useEffect, useRef } from 'react';
+import { makeStyles } from '@material-ui/core';
+import { green } from '@material-ui/core/colors';
+// import CircularProgress from '@material-ui/core/CircularProgress';
+import { GoogleMap, useLoadScript, Marker, InfoWindow} from '@react-google-maps/api'
 
-// import mapMarkerIcon from '../../../../assets/images/nbpin.png'
-// import mapMarkerBlueFlagIcon from '../../../../assets/images/bfpin.png'
 import iconnbf from '../../../../assets/images/nbpin.svg';
 import iconbf from '../../../../assets/images/bfpin.svg';
-const MyGoogleMap = compose(
-  withProps({
-    
+
+const useStyle = makeStyles({
+  infoWindow: {
+    cursor: 'pointer',
+    fontSize: '1.5rem',
+    color: '#444',
+    fontWeight: 700
+  },
+  go: {
+    color: green[900],
+    display: 'inline-block',
+    margin: '1rem',
+    '&:hover': {
+      color: green[500]
+    }
+  }
   
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBzE15BZUN0Xhhx0OzkMKNlaII7QX4p6GU",
-    loadingElement: <div style={{ height: '100%' }} />,
-    containerElement: <div style={{ height: '400px' }} />,
-    mapElement: < div style={{ height: '100%' }} />
-  }),
-  withState('places', 'updatePlaces', ''),
-  withState('selectedPlace', 'updateSelectedPlace', 0),
-  withHandlers(() => {
-    const refs = {
-      map: undefined,
-    }
-    const beaches = {
-      nearbyBeaches: undefined
-    }
-    return {
-      onMapMounted: (beaches) => ref => {
-        refs.map = ref;
-        beaches.nearbyBeaches = beaches;
-      }, 
-      onToggleOpen: ({ updateSelectedPlace }) => key => {
-        updateSelectedPlace(key);
-      },
-      onTilesLoaded: () => {
-        const bounds = new window.google.maps.LatLngBounds()
-        beaches.nearbyBeaches.map((beach, i) => {
+})
+
+const  MyGoogleMap = (props) => {
+  const {nearbyBeaches, history, isBlueFlag} = props;
+  const [selectedPlace, setSelectedPlace] = useState(0);
+  const refNewBeachesList = useRef(false);
+  const [map, setMap] = useState(null);
+  const classes = useStyle();
+
+
+  const onToggleOpen = (i) => {
+    setSelectedPlace(i);
+  }
+
+  useEffect(() => {
+    // to recognize when a change is due to prop neabyBeaches
+    refNewBeachesList.current = true;
+    // so that starts showing the first item in nearbBeaches, which is always the 
+    // beach in details
+    setSelectedPlace(0);
+  }, [nearbyBeaches]);
+  
+  useEffect(() => {
+    if (map) {
+        if (!selectedPlace) {
+        return;
+
+      } else if (refNewBeachesList.current) { // to fitbounds
+        refNewBeachesList.current = false;
+        const bounds = new window.google.maps.LatLngBounds();
+        // eslint-disable-next-line
+        nearbyBeaches.map((beach, i) => {
           bounds.extend(new window.google.maps.LatLng(
             beach.lat,
             beach.lng
           ));
         });
-        refs.map.fitBounds(bounds)
-      }
-    }
-  }),
-  
-  withScriptjs,
-  withGoogleMap,
-  lifecycle({
-
-    componentDidUpdate(prevProps, prevState) {
-      console.log('map updated');
-
-      // const bounds = new window.google.maps.LatLngBounds()
-      // this.props.nearbyBeaches.map((beach, i) => {
-      //   bounds.extend(new window.google.maps.LatLng(
-      //     beach.lat,
-      //     beach.lng
-      //   ));
-      // });
-      // this.refs.map.fitBounds(bounds)
-    },
-    componentWillMount() {
-      console.log('map willmount');
-     
-      
-      
-      // this.setState({
-
-      //   zoomToMarkers: map => {
-      //     //console.log("Zoom to markers");
-      //     const bounds = new window.google.maps.LatLngBounds();
-      //     if(!map) { return}
-      //     map.props.children.forEach((child) => {
-      //       if (child.type === Marker) {
-      //         // console.log('marker', ++count)
-      //         bounds.extend(new window.google.maps.LatLng(child.props.position.lat, child.props.position.lng));
-      //       }
-      //     })
-      //     map.fitBounds(bounds);
-      //   }
-      // })
-    },
-  }),
-)(props =>
-  <GoogleMap
-    options={{ scaleControl: true }}
-    // ref={props.zoomToMarkers}
-    ref={props.onMapMounted(props.nearbyBeaches)}
-    defaultZoom={12}
-    onTilesLoaded={props.onTilesLoaded}
-    defaultCenter={{ lat: props.nearbyBeaches[0].lat, lng: props.nearbyBeaches[0].lng }}
-    >
-    {props.nearbyBeaches && props.nearbyBeaches.map((nearbyBeach, index) => (
-      <Marker
-        // icon={(index === 0 && props.isBlueFlag) ? iconbf : (index === 0 && !props.isBlueFlag) ? iconnbf: null }
-        icon={index === 0 ? iconnbf : null}
-        key={index}
-        position={{ lat: nearbyBeach.lat, lng: nearbyBeach.lng }}
-        onClick={() => props.onToggleOpen(index)}
-        >
-        { props.selectedPlace === index &&
-            <InfoWindow onCloseClick={props.onToggleOpen}>
-            <span onClick={() => props.history.push({
-              pathname: '/details/beach',
-              search: `?id=${nearbyBeach.id}`
-              })}  style={{cursor: 'pointer', fontSize: '1.5rem', color: '#444', fontWeight: 700 }}>
-              Go &nbsp;
-              {props.nearbyBeaches[props.selectedPlace].name}
-              </span>
-            </InfoWindow>
-            
-         }
+        map.fitBounds(bounds);
+       
+      } else { // to center map when clicking a marker
+        // to avoid case when the next array is smaller than the current selectedPlace, test case: Dícido
+        if (selectedPlace < nearbyBeaches.length) {
+          map.panTo({ lat: nearbyBeaches[selectedPlace].lat, lng: nearbyBeaches[selectedPlace].lng })
           
+        }
+       
+      }
+    
+    }
+  }, [map, selectedPlace, nearbyBeaches]);
+  
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: "AIzaSyBzE15BZUN0Xhhx0OzkMKNlaII7QX4p6GU" // ,
+    // ...otherOptions
+  });
+
+  const renderMap = () => {
+    // wrapping to a function is useful in case you want to access `window.google`
+    // to eg. setup options or create latLng object, it won't be available otherwise
+    // feel free to render directly if you don't need that
+    // const onResize = (map) => {
+    //   console.log('onResize');
+    //   onLoad(map);
+    // }
+    
+    const onLoad = (map) => {
+      const bounds = new window.google.maps.LatLngBounds();
+      // eslint-disable-next-line
+      nearbyBeaches.map((beach, i) => {
+        bounds.extend(new window.google.maps.LatLng(
+          beach.lat,
+          beach.lng
+          ));
+        });
+        map.fitBounds(bounds);
+        setMap(map);    
+        
+    }
+    // place here isLoaded to prevent 'google is not defined' error
+    return isLoaded && <GoogleMap
+      mapContainerStyle={{
+        height: "400px",
+        width: "100%"
+      }}
+      zoom={12}
+      onLoad={onLoad}>
+      {nearbyBeaches && nearbyBeaches.map((nearbyBeach, index) => (
+        <Marker
+          onLoad={marker => {
+          }}
+          icon={(index === 0 && isBlueFlag) ? iconbf : (index === 0 && !isBlueFlag) ? iconnbf : null}
+          key={index}
+          position={{ lat: nearbyBeach.lat, lng: nearbyBeach.lng }}
+          onClick={(e) => { 
+            onToggleOpen(index)
+          }}
+        >
+          {selectedPlace === index &&
+            <InfoWindow
+            onLoad={iw => {
+            }}
+            onCloseClick={onToggleOpen}
+            position={{ lat: nearbyBeach.lat, lng: nearbyBeach.lng }}
+            options={{ pixelOffset:  new window.google.maps.Size(0, -50)}}
+            // anchor={{anchorPoint: }} anchor = new window.google.maps.Point(0, -52);
+          >
+            {/* use replace instead of push for being able to come back to map-spain page when clicking back */}
+            <div className={classes.infoWindow} onClick={() => history.replace({
+                pathname: '/details/beach',
+                search: `?id=${nearbyBeach.id}`
+              })}>
+             
+              <span className={classes.go}> {nearbyBeaches[selectedPlace].name}</span> &nbsp;
+              </div>
+            </InfoWindow>
+
+          }
+
         </Marker>
 
       ))}
- 
-  </GoogleMap >
-);
+
+    </GoogleMap>
+  }
+
+  if (loadError) {
+    return <div>Map cannot be loaded right now, sorry.</div>
+  }
+  return renderMap();
+  // return isLoaded ? renderMap() : <CircularProgress  color="secondary" size={60} />
+    
+  
+}
 
 export default MyGoogleMap;
