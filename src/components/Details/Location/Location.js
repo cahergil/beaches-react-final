@@ -15,20 +15,13 @@ const useStyles = makeStyles({
 const Location = props => {
   const classes = useStyles();
  
-  const { coordinates, nombre,nearbyBeaches, isBlueFlag, history } = props;
+  const { nearbyBeaches, isBlueFlag, history } = props;
   return (
     <section className={classes.root}>
       <MyGoogleMap
-        coordinates={coordinates}
-        nombre={nombre}
         nearbyBeaches={nearbyBeaches}
         isBlueFlag={isBlueFlag}
         history={history}
-      
-      // googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBzE15BZUN0Xhhx0OzkMKNlaII7QX4p6GU"
-      // loadingElement={<div style={{ height: '100%' }} />}
-      // containerElement={<div style={{ height: '400px' }} />}
-      // mapElement={<div style={{ height: '100%' }} />}
       />
     </section>
   );

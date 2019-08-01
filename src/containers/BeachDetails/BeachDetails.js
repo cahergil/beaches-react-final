@@ -154,11 +154,8 @@ const BeachDetails = props => {
           <div className={classes.sectionRoot}>
             <Title colorSchema={colorSchema} name="Location and 15Km nearby beaches" />
             <Location
-              coordinates={{ lat: parseFloat(beach.coordenada_y.replace(',', '.')), lng: parseFloat(beach.coordenada_x.replace(',', '.')) }}
-              nombre={beach.nombre}
               isBlueFlag={isBlueFlag}
               nearbyBeaches={nearbyBeaches}
-
             />
           </div>
         </React.Fragment>
