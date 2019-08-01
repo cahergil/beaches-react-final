@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f7a007ecf055b40fdb79fa21dd428a15",
+    "revision": "eabeecc2aad2fc4e001a796994f39a73",
     "url": "/spain-beaches-react/index.html"
   },
   {
-    "revision": "7d1af3edfb3221d7ffb9",
+    "revision": "6c5ca3eb1539bc90d2ce",
     "url": "/spain-beaches-react/static/css/main.03d0fb2a.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/spain-beaches-react/static/js/2.4e409bb8.chunk.js"
   },
   {
-    "revision": "7d1af3edfb3221d7ffb9",
-    "url": "/spain-beaches-react/static/js/main.37335a98.chunk.js"
+    "revision": "6c5ca3eb1539bc90d2ce",
+    "url": "/spain-beaches-react/static/js/main.dd7178db.chunk.js"
   },
   {
     "revision": "b3ce55a743f38aae8a1f",
