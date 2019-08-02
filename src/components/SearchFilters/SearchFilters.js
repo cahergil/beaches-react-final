@@ -636,7 +636,7 @@ const SearchFilters = props => {
         />
       </div>
       <div className={`${classes.wrapper} ${classes.generalPadding}`}>
-        <Typography onClick={handleOnReset} variant="subtitle1" style={{opacity: '0.6'}}>Reset</Typography>
+        <Typography onClick={handleOnReset} variant="subtitle1" style={{opacity: '0.6'}}>Clear filters</Typography>
       </div>
       </div>
   );

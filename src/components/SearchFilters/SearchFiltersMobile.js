@@ -507,7 +507,7 @@ const SearchFiltersMobile = props => {
           <span onClick={toggleDrawer(true)} className={classes.textStyle}>Filters</span>
           <KeyBoardArrowDownIcon onClick={toggleDrawer(true)} />
         </div>
-          <Typography onClick={handleOnReset} style={{cursor: 'pointer', color: '#fff'}} variant="subtitle1">Reset</Typography>
+          <Typography onClick={handleOnReset} style={{cursor: 'pointer', color: '#fff'}} variant="subtitle1">Clear filters</Typography>
       </div>
       <Drawer 
         variant="temporary"
