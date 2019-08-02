@@ -19,11 +19,29 @@ const useStyles = makeStyles(theme => ({
     
   },
   imageWrapper: {
+    position: 'relative',
     overflow: 'hidden',
     height: '20rem',
     width: '100%',
     marginBottom: '10px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    '&:hover $remainingImagesCount': {
+      visibility: 'visible',
+      opacity: '1'
+    }
+  },
+  remainingImagesCount: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    // zIndex: '100',
+    transform: 'perspective(1px) translate(-50%,-50%)',
+    fontSize: '5rem',
+    color: '#fff',
+    visibility: 'hidden',
+    opacity: '0',
+    transition: 'opacity visibility 0.4s',
+   
   },
   image: {
     // height: 0,
@@ -36,8 +54,10 @@ const useStyles = makeStyles(theme => ({
     backfaceVisibility: 'hidden',
     '&:hover': {
       transform: 'scale(1.1)',
-      filter: 'brightness(70%)'
-    }
+      filter: props => props.remainingPhotos > 0 ? 'brightness(50%)' : 'brightness(70%)'
+    },
+   
+
   },
   terminoMunicipal: {
     fontSize: '1.3rem',
@@ -66,10 +86,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ResultsContentItem = (props) => {
-  const { beach } = props;
+  const { beach, remainingPhotos } = props;
   const classes = useStyles(props);
   const imagesArray = beach.images.split(',');
   const image = imagesArray[imagesArray.length - 1];
+  let remainingImages = remainingPhotos;
+  if (remainingImages <= 0) {
+    remainingImages = '';
+  } else {
+    remainingImages = '+' + remainingImages;
+  }
   const featureList = [];
   const length = beach.longitud.replace('metros', 'm').replace(',', '.');  
   const lifeGuard = beach.auxilio_y_salvamento === 'Sí' ? 'lifeguard' : null;
@@ -99,7 +125,7 @@ const ResultsContentItem = (props) => {
         initialImage={loaderGif}
         alt={beach.nombre}
         className={classes.image} />
-
+        <div className={classes.remainingImagesCount}>{remainingImages}</div>
       </div>
       <div className={classes.terminoMunicipal}>{beach.termino_municipal}</div>
       <div className={classes.beachName} onClick={handleButtonClick}>{beach.nombre.concat(' beach')}</div>
@@ -118,7 +144,8 @@ const ResultsContentItem = (props) => {
   );
 }
 ResultsContentItem.propTypes = {
-  beach: PropTypes.shape(BeachObject).isRequired
+  beach: PropTypes.shape(BeachObject).isRequired,
+  remainingPhotos: PropTypes.number.isRequired
 }
 
 export default withRouter(ResultsContentItem);

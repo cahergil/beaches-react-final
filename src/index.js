@@ -46,7 +46,7 @@ const store = createStore(rootReducer,
   composeEnhancers(applyMiddleware(thunk))
 );
 
-
+console.disableYellowBox = true;
 ReactDOM.render(
   // <BrowserRouter basename="/playas-react" > apply this in production(gh-pages)
   <Provider store={store}>

@@ -136,7 +136,10 @@ const ResultsContent = React.memo(({beachesList}) => {
       <div id="content" className={classes.root}>
         {
           state.beaches.map((beach, index) => {
-              return <ResultsContentItem key={index} beach={beach} />
+            return <ResultsContentItem
+              key={index}
+              beach={beach}
+              remainingPhotos={beach.images.split(',').length - 2} />
           })}
         {/* {state.loading && 
           <div className={classes.loading}>Loading...</div>
