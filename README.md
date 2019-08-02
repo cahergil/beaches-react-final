@@ -1,6 +1,7 @@
 
 ## Spain beaches react
 ![GitHub](https://img.shields.io/github/license/cahergil/spain-beaches-react)
+
 App to discover beaches in Spain built with React
 
 ## Available Scripts
