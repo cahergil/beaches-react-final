@@ -28,11 +28,16 @@ const Location = props => {
 };
 
 Location.propTypes = {
-  coordinates: PropTypes.shape({
+  nearbyBeaches: PropTypes.arrayOf(
+    PropTypes.shape({
+    name: PropTypes.string.isRequired,
     lat: PropTypes.number.isRequired,
-    lng: PropTypes.number.isRequired
-  }).isRequired,
-  nombre: PropTypes.string.isRequired
+    lng: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired 
+    })
+  ).isRequired,
+  isBlueFlag: PropTypes.bool.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 export default withRouter(Location);
