@@ -81,8 +81,8 @@ const Stack = props => {
       icon: githubIcon
     },
     {
-      tech: 'React-google-maps 9.4.5',
-      url: 'https://github.com/tomchentw/react-google-maps',
+      tech: 'React-google-maps/api 1.5.2',
+      url: 'https://github.com/JustFly1984/react-google-maps-api/tree/master/packages/react-google-maps-api',
       icon: githubIcon
     },
     {
@@ -94,7 +94,13 @@ const Stack = props => {
       tech: 'React-open-weather 0.4.0',
       url: 'https://github.com/farahat80/react-open-weather',
       icon: githubIcon
-    }]
+    },
+    {
+      tech: 'React-background-video-player 1.1.6',
+      url: 'https://github.com/Jam3/react-background-video-player',
+      icon: githubIcon
+    }
+  ]
   return (
     <section className={classes.root}>
       <Fade duration={600} right>
