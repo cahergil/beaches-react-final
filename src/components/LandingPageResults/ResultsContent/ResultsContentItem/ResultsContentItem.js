@@ -109,7 +109,7 @@ const ResultsContentItem = (props) => {
           featureList.filter(feature => feature !== null)
             .map((feature, i) => {
               return (
-                <FeatureItem feature={feature} />
+                <FeatureItem key={i} feature={feature} />
               );
           })
       }
