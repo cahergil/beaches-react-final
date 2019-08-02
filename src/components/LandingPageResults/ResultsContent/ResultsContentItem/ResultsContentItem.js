@@ -2,47 +2,66 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-// import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
-import { Button } from '@material-ui/core';
 import ReactImageFallback from "react-image-fallback";
 
-import banderaAzul from '../../../../assets/images/blue_flag_mini.png'
-import normalBeach from '../../../../assets/images/normal_beach.png'
-import errorImage from '../../../../assets/images/image_na.png'
-import loaderGif from '../../../../assets/images/loader.gif'
-import BeachObject from './../../../Model/Model';
+import errorImage from '../../../../assets/images/image_na.png';
+import loaderGif from '../../../../assets/images/loader.gif';
+import BeachObject from '../../../Model/Model';
+import FeatureItem from './FeatureItem';
 
-const useStyles = makeStyles(theme=>({
+const useStyles = makeStyles(theme => ({
   root: {
+    width: '35rem',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start'
+    
   },
-  headerRoot: {
-    backgroundColor: props => props.beach.bandera_azul !== 'Sí' ? theme.palette.secondary.light : theme.palette.primary.dark
+  imageWrapper: {
+    overflow: 'hidden',
+    height: '20rem',
+    width: '100%',
+    marginBottom: '10px',
+    cursor: 'pointer'
   },
-  card: {
-    width: '35rem'
-  },
-  media: {
+  image: {
     // height: 0,
     // paddingTop: '56.25%', // 16:9
     objectFit: 'cover',
     height: '20rem',
-    width: '100%'
+    width: '100%',
+    marginBottom: '1rem',
+    transition: 'all 0.4s',
+    backfaceVisibility: 'hidden',
+    '&:hover': {
+      transform: 'scale(1.1)',
+      filter: 'brightness(70%)'
+    }
   },
-  title: {
-    textAlign: 'left'
-
+  terminoMunicipal: {
+    fontSize: '1.3rem',
+    fontStyle: 'italic',
+    color: '#959595',
+    marginBottom: '5px'
   },
-  subheader: {
-    color: props => props.beach.bandera_azul !=='Sí'? theme.palette.secondary.dark: theme.palette.primary.light,
-    textAlign: 'left'
+  beachName: {
+    fontSize: '1.8rem',
+    textTransform: 'uppercase',
+    color: theme.palette.primary.main,
+    cursor: 'pointer'
   },
-  cardContent: {
-    height: '13.2rem',
-    overflowY: 'auto',
+  hr: {
+    width: '25px',
+    height: '2px',
+    marginTop: '8px',
+    backgroundColor: '#000'
+  },
+  featureList: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap'
   }
 }));
 
@@ -51,9 +70,19 @@ const ResultsContentItem = (props) => {
   const classes = useStyles(props);
   const imagesArray = beach.images.split(',');
   const image = imagesArray[imagesArray.length - 1];
+  const featureList = [];
+  const length = beach.longitud.replace('metros', 'm').replace(',', '.');  
+  const lifeGuard = beach.auxilio_y_salvamento === 'Sí' ? 'lifeguard' : null;
+  const nudism = beach.nudismo === 'Sí' ? 'nudism': null;
+  const surf = beach.zona_surf === 'Sí' ? 'surf' : null;
+  const beachBar = beach.establecimiento_comida === 'Sí' ? 'beach bar':null;
+  const shower = beach.duchas === 'Sí' ? 'shower' : null;
+  const blueFlag = beach.bandera_azul === 'Sí' ? 'blue flag' : null;
+  const diving = beach.submarinismo === 'Sí' ? 'diving' : null;
+  featureList.push(length, shower, beachBar, lifeGuard, nudism, surf, diving, blueFlag);
 
   const handleButtonClick = (e) => {
-   
+
     props.history.push({
       pathname: '/details/beach',
       search: `?id=${beach.id}`
@@ -62,60 +91,30 @@ const ResultsContentItem = (props) => {
 
 
   return (
-    <Card
-      className={classes.card}
-      classes={{
-        root: classes.root
-      }}
-    >
-
-      <CardHeader
-        avatar={
-          <Avatar alt="bandera azul" src={beach.bandera_azul !== 'Sí' ? normalBeach : banderaAzul} className={classes.avatar}>
-          </Avatar>
-        }
-        classes={
-          {
-            root: classes.headerRoot,
-            subheader: classes.subheader,
-            title: classes.title
-          }
-        }
-       
-        title={beach.nombre}
-        subheader={beach.termino_municipal}
-      />
-       <ReactImageFallback
+    <div className={classes.root} >
+      <div className={classes.imageWrapper} onClick={handleButtonClick}>
+      <ReactImageFallback
         src={image}
         fallbackImage={errorImage}
         initialImage={loaderGif}
         alt={beach.nombre}
-        className={classes.media} />
-    
-      {/* <img src={image} alt="prueba" className={classes.media}/> */}
-      {/* <CardMedia
-        className={classes.media}
-        image={image}
-        title={`beach ${beach.nombre}`}
-    />  */}
-    
-    {/* <CardContent
-      classes={{
-        root: classes.cardContent
-        }}
-      >
+        className={classes.image} />
 
-      
-      <Typography align="left" color="textPrimary" variant="body2" component="p">
-        {beach.descripcion}
-      </Typography>
-    </CardContent> */}
-    <CardActions >
-        <Button variant="outlined" color={beach.bandera_azul !== 'Sí' ? 'secondary': 'primary'} onClick={handleButtonClick}>
-          Details
-        </Button>
-    </CardActions>
-    </Card > 
+      </div>
+      <div className={classes.terminoMunicipal}>{beach.termino_municipal}</div>
+      <div className={classes.beachName} onClick={handleButtonClick}>{beach.nombre.concat(' beach')}</div>
+      <div className={classes.hr}></div>
+      <div className={classes.featureList}>
+        {
+          featureList.filter(feature => feature !== null)
+            .map((feature, i) => {
+              return (
+                <FeatureItem feature={feature} />
+              );
+          })
+      }
+      </div>
+    </div>
   );
 }
 ResultsContentItem.propTypes = {

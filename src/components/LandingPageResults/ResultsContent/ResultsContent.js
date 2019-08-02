@@ -6,6 +6,7 @@ import scrollIntoView from 'scroll-into-view';
 import BeachObject from './../../Model/Model';
 
 
+
 const useStyles = makeStyles({
   root: {
     display: 'grid',
@@ -67,14 +68,14 @@ function reducer(state, action) {
 const ResultsContent = React.memo(({beachesList}) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const classes = useStyles()
-  const step = 6;
+  const step = 12;
   
   useEffect(() => {
     const hasMoreItems = beachesList.length > step;
     const tempBeaches = beachesList.slice(0, hasMoreItems ? step : beachesList.length);
     dispatch({ type: 'CHANGE_LOADING', payload: false });
     dispatch({ type: 'CHANGE_HAS_MORE_ITEMS', payload: hasMoreItems ? true : false });
-    dispatch({ type: 'CHANGE_OFFSET', payload: 6 });
+    dispatch({ type: 'CHANGE_OFFSET', payload: 12 });
     dispatch({ type: 'SET_BEACHES', payload: tempBeaches });
 
     
