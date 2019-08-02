@@ -90,7 +90,7 @@ const BeachDetails = props => {
         }
       });
       
-      console.log(nearbyBeaches);
+      
       // inform generalInfo fields
       generalInfo['termino_municipal'] = beach.termino_municipal;
       generalInfo['provincia'] = beach.provincia;

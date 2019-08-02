@@ -24,22 +24,22 @@ const ColorButton = withStyles(theme => ({
   },
 }))(Button);
 
-const TranslateTextField = (props) => {
+const TranslateTextField = React.memo(({text}) => {
   const classes = useStyles();
-  const { text } = props
-  const [state, setState] = useState({ text: text, translated: false })
+  const [translatedText, setTranslatedText] = useState(text);
+  const [isTextTranslated, setIsTextTranslated] = useState(false);
+  
   // necessary when clicking markers
   useEffect(() => {
-    setState({
-      ...state,
-      text: text
-    
-    });
-  }, [text, state])
+    setTranslatedText(text);
+    setIsTextTranslated(false);
+  }, [text]);
+
+ 
   const handlerTranslate = () => {
     const fromLang = 'es';
     const toLang = 'en';
-    const text = state.text;
+    let text = translatedText;
     // api key restricted in google developer console
     const API_KEY = 'AIzaSyCKOeL1RQS5BNIKgPQMuBl8jy30MkuyShA';
     let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`;
@@ -55,37 +55,35 @@ const TranslateTextField = (props) => {
     })
       .then(res => res.json())
       .then((response) => {
-        // console.log("response from google: ", response);
-        setState({
-          text: response.data.translations[0].translatedText,
-          translated: true
-        })
+        console.log("response from google: ", response);
+        setTranslatedText(response.data.translations[0].translatedText)
+        setIsTextTranslated(true);
+        
       })
       .catch(error => {
         console.log("There was an error with the translation request: ", error);
-        setState({
-          text: text,
-          translated: false
-        });
+        setTranslatedText(text)
+        setIsTextTranslated(false);
+        
       });
 
   }
   return (
     
-  <React.Fragment>
-    <div className={classes.description}>{state.text}</div>
-    <ColorButton
-      variant="outlined"
-      disabled={state.translated}
-      onClick={handlerTranslate}
-      color="secondary"
-      className={classes.button}
-    >
-      Translate
+    <React.Fragment>
+      <div className={classes.description}>{translatedText}</div>
+      <ColorButton
+        variant="outlined"
+        disabled={isTextTranslated}
+        onClick={handlerTranslate}
+        color="secondary"
+        className={classes.button}
+      >
+        Translate
           </ColorButton>
-  </React.Fragment>
+    </React.Fragment>
   );
-}
+});
 
 TranslateTextField.propTypes = {
   text: PropTypes.string.isRequired
