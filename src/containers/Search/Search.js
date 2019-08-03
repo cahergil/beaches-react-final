@@ -29,7 +29,6 @@ const useStyles = makeStyles(theme =>({
     gridRowGap: '2rem',
   },
   titleWrapper: {
-    // display: 'inline-block',
     margin: '4rem 2rem 2rem 2rem',
     fontSize: '3rem',
     opacity: '0.87',
@@ -71,23 +70,34 @@ const Search = (props) => {
   const {  beachesList, filters,actions } = props;
   const classes = useStyles();
   const [filteredBeachesList, setFilteredBeachesList] = useState([]);
+  // to avoid props warnings of the video background library. The size is actually  managed in jss
+  const [videoContainerWidth, setVideoContainerWidth] = useState(1800);
+  const [videoContainerHeight, setVideoContainerHeight] = useState(400);
   const [loading, setLoading] = useState(true);
 
   const theme = useTheme();
   const matchesWidth500 = useMediaQuery(theme.breakpoints.down(500));
 
   useEffect(() => {
+
     const element = document.getElementById('navbar');
     if (element) {
       element.scrollIntoView();
     }
+    
   }, []);
+  // point 4 of https://github.com/reactjs/rfcs/blob/master/text/0068-react-hooks.md#drawbacks
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    }
+  });
 
   useEffect(() => {
     actions.onSetCountryBeaches('../playas.json');
     return () => {
       actions.onSetReturnFromDetails(false);
- 
     }
   }, [actions]);
   
@@ -185,6 +195,11 @@ const Search = (props) => {
 
   },[beachesList, filters])
   
+  const handleResize = e => {
+    setVideoContainerWidth(window.innerWidth);
+    setVideoContainerHeight(window.innerHeight*0.31);
+  }
+
   let resultContent = <ResultsContent beachesList={filteredBeachesList} />
   if (loading) {
     resultContent = <CircularProgress
@@ -199,12 +214,16 @@ const Search = (props) => {
     video = <BackgroundVideo
       verticalAlign={0.05}
       src={videoMp4Width500}
+      containerWidth={videoContainerWidth}
+      containerHeight={videoContainerHeight}
     />
 
   } else {
     video = <BackgroundVideo
       verticalAlign={0.05}
       src={videoMp4}
+      containerWidth={videoContainerWidth}
+      containerHeight={videoContainerHeight}
     />
   }
   return (
