@@ -26,9 +26,8 @@ const LandingPage = (props) => {
       // onSetMapArea('') set this when navigating to other section
     }
   }, []);  
-  
   const handleMapClick = (region) => {
-    props.history.push({ pathname: '/spain-map/' + region });
+    props.history.push({ pathname: '/spain-map/' + region, state: '/spain-map/' });
     // solves issue when comming back from details
     onSetReturnFromDetails(false);
   };

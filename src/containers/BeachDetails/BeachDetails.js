@@ -120,7 +120,7 @@ const BeachDetails = props => {
     
 
   }, [beachesList, props.location.search]);
-
+  console.log(props);
   let content = null;
   if (beach) {
     if (generalInfo) {

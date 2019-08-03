@@ -111,7 +111,8 @@ const ResultsContentItem = (props) => {
 
     props.history.push({
       pathname: '/details/beach',
-      search: `?id=${beach.id}`
+      search: `?id=${beach.id}`,
+      state: props.match.path
     });
   }
 

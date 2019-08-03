@@ -64,7 +64,8 @@ const SideDrawer = (props) => {
                   // 
                   exact
                   to={{
-                    pathname: '/' + (section === section[0] ? 'spain-map' : section)
+                    pathname: '/' + (section === section[0] ? 'spain-map' : section),
+                    state: section === 'search' ? 'other' : section
                   }}
                   className={classes.linkStyle}
                   activeStyle={{

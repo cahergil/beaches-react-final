@@ -75,7 +75,9 @@ const Navbar = (props) => {
                   // activeClass(NavLink) only works with this form of 'to'
                   exact
                   to={{
-                    pathname: '/'+ (section === section[0] ? 'spain-map': section)
+                    pathname: '/' + (section === section[0] ? 'spain-map' : section),
+                    state: section === 'search' ? 'other': section
+                   
 
                   }}
                   activeStyle={{

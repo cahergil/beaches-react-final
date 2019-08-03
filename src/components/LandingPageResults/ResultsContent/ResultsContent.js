@@ -77,20 +77,20 @@ const ResultsContent = React.memo(({beachesList}) => {
     dispatch({ type: 'CHANGE_HAS_MORE_ITEMS', payload: hasMoreItems ? true : false });
     dispatch({ type: 'CHANGE_OFFSET', payload: 12 });
     dispatch({ type: 'SET_BEACHES', payload: tempBeaches });
-
-    
+      
     setTimeout(() => {
       const element = document.getElementById('filter');
       if (element) {
           scrollIntoView(element, {
-            time: 500,
+            time: 300,
             align: {
               top: 0.2
             }
           })
         }
         
-    }, 500);
+    }, 200);
+     
    
     
   },[beachesList]);

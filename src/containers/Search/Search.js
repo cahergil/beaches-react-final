@@ -19,6 +19,7 @@ import videoMp4Width500 from '../../assets/videos/videoMp4Width500.mp4';
 
 
 
+
 const useStyles = makeStyles(theme =>({
 
   root: {
@@ -77,15 +78,16 @@ const Search = (props) => {
 
   const theme = useTheme();
   const matchesWidth500 = useMediaQuery(theme.breakpoints.down(500));
-
   useEffect(() => {
-
-    const element = document.getElementById('navbar');
-    if (element) {
-      element.scrollIntoView();
+    if (props.location.state && !props.location.state.includes('search')) {
+      
+      const element = document.getElementById('navbar');
+      if (element) {
+        element.scrollIntoView();
+      }
     }
     
-  }, []);
+  }, [props.location]);
   // point 4 of https://github.com/reactjs/rfcs/blob/master/text/0068-react-hooks.md#drawbacks
   useEffect(() => {
     window.addEventListener('resize', handleResize);

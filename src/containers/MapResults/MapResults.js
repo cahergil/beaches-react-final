@@ -62,7 +62,7 @@ const MapResults = (props) => {
     onMapResultsInputChange(value)
    
   }
-
+ 
   let content = null;
   if (beachesRegionList.length > 0) {
     content = (
