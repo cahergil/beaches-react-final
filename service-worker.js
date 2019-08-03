@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/spain-beaches-react/precache-manifest.e4a5665e18b0f887d8089a1536f49f61.js"
+  "/spain-beaches-react/precache-manifest.6c34199414e0e03908355cb9c6f98fe9.js"
 );
 
 self.addEventListener('message', (event) => {
