@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
-// import CircularProgress from '@material-ui/core/CircularProgress';
 import { GoogleMap, useLoadScript, Marker, InfoWindow} from '@react-google-maps/api'
 
 import iconnbf from '../../../../assets/images/nbpin.svg';
