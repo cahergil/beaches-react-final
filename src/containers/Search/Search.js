@@ -5,13 +5,12 @@ import { makeStyles, useMediaQuery } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import  BackgroundVideo  from 'react-background-video-player';
 
-import NavDrawer from '../../components/Navigation/NavDrawer';
+
 import ResultsContent from '../../components/LandingPageResults/ResultsContent/ResultsContent';
 import SearchFilters from '../../components/SearchFilters/SearchFilters';
 import * as beachesActions from '../../store/actions/beaches';
 import * as searchFiltersActions from '../../store/actions/searchFilters';
 import * as mapsFilterActions from '../../store/actions/mapFilters';
-import * as mapsAreaActions from '../../store/actions/mapArea';
 import * as utils from '../../Utils/Utils';
 import videoMp4 from '../../assets/videos/video_compressed.mp4';
 import videoMp4Width500 from '../../assets/videos/videoMp4Width500.mp4';
@@ -230,7 +229,7 @@ const Search = (props) => {
   }
   return (
     <section>
-      <NavDrawer onSetMapArea={actions.onSetMapArea}/>
+    
       <div className={classes.root}>
         <div className={classes.video}>
           {video}
@@ -274,8 +273,7 @@ const mapDispatchToProps = dispatch => {
       onSetSelectText: (value) => dispatch(searchFiltersActions.setSelectText(value)),
       onSetSearchText: (value) => dispatch(searchFiltersActions.setSearchText(value)),
       onResetFilters: () => dispatch(searchFiltersActions.setReset()),
-      onSetReturnFromDetails: (value) => dispatch(mapsFilterActions.setReturnFromDetails(value)),
-      onSetMapArea: (value) => dispatch(mapsAreaActions.setMapArea(value))
+      onSetReturnFromDetails: (value) => dispatch(mapsFilterActions.setReturnFromDetails(value))
     }
     
   }
