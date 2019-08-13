@@ -71,16 +71,18 @@ const BeachDetails = props => {
     if (beach) {
       // calculate nearby beaches
       const nearbyBeaches = [];
-      const beachLatLng = { lat: undefined, lng: undefined };
-      beachLatLng.lat = parseFloat(beach.coordenada_y.replace(',', '.'));
-      beachLatLng.lng = parseFloat(beach.coordenada_x.replace(',', '.'));
+      // const beachLatLng = { lat: undefined, lng: undefined };
+      const beachLatLng = { };
+      beachLatLng['lat'] = parseFloat(beach.coordenada_y.replace(',', '.'));
+      beachLatLng['lng'] = parseFloat(beach.coordenada_x.replace(',', '.'));
 
       nearbyBeaches.push({name: beach.nombre, lat: beachLatLng.lat, lng: beachLatLng.lng, id: beach.id})
       
       beachesList.forEach(element => {
-        const p1 = {lat: undefined, lng: undefined};
-        p1.lat = parseFloat(element.coordenada_y.replace(',', '.'));
-        p1.lng = parseFloat(element.coordenada_x.replace(',', '.'));
+        // const p1 = {lat: undefined, lng: undefined};
+        const p1 = {};
+        p1['lat'] = parseFloat(element.coordenada_y.replace(',', '.'));
+        p1['lng'] = parseFloat(element.coordenada_x.replace(',', '.'));
         const distanceInMeters = getDistance(p1, beachLatLng);
         if (distanceInMeters < 15000) {
           // to not duplicate beach
@@ -120,7 +122,7 @@ const BeachDetails = props => {
     
 
   }, [beachesList, props.location.search]);
-  console.log(props);
+ 
   let content = null;
   if (beach) {
     if (generalInfo) {
