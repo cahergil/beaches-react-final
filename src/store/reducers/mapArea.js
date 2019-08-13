@@ -1,6 +1,6 @@
 import * as actions from '../actions/actionTypes';
 
-const initialState = {
+export const initialState = {
   regionId: ''
 }
 

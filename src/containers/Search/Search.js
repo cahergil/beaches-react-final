@@ -3,7 +3,8 @@ import { useTheme } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import  BackgroundVideo  from 'react-background-video-player';
+import BackgroundVideo  from 'react-background-video-player';
+// const BackgroundVideo = require('react-background-video-player');
 
 
 import ResultsContent from '../../components/LandingPageResults/ResultsContent/ResultsContent';
