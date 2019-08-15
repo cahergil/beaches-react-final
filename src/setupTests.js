@@ -1,8 +1,9 @@
 // react-testing-library renders your components to document.body,
 // this will ensure they're removed after each test.
+import '@testing-library/jest-dom/extend-expect';
+
 // import '@testing-library/react/cleanup-after-each'; NO necessary
 // this adds jest-dom's custom assertions
-import '@testing-library/jest-dom/extend-expect';
 
 
 /**
@@ -22,6 +23,13 @@ global.matchMedia = global.matchMedia || function () {
 global.AmCharts = {
     makeChart: jest.fn()
 }
+
+// needed in search
+// global.document = {
+//   getElementById: (value) => jest.fn().mockReturnValue(`<ul><li>${value}</li></ul>`)
+// }
+
+// jest.mock('lodash.debounce', () => jest.fn(fn => fn));
 
 // global.AmCharts = global.AmCharts || function() {
 //   return {

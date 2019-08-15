@@ -7,3 +7,4 @@ https://github.com/jsdom/jsdom
  <a href="https://pngtree.com/free-backgrounds">free background photos from pngtree.com</a>
 
  Access a json file with axios: https://github.com/nuxt/nuxt.js/issues/2006
+ https://stackoverflow.com/questions/35454633/redux-connect-with-multiples-actions-states

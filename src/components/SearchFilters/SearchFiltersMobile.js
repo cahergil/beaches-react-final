@@ -117,9 +117,9 @@ const SearchFiltersMobile = props => {
   const { filters, actions } = props;
   const classes = useStyles();
   const { debounce } = _;
-  const debouncedhospitalDistance = useCallback(debounce(actions.onSetHospitalDistance, 500), []);
-  const debouncedContainText = useCallback(debounce(actions.onSetSearchText, 500), []);
-  const debouncedBeachLength = useCallback(debounce(actions.onSetBeachLength, 500), []);
+  const debouncedhospitalDistance = useCallback(debounce(actions.setHospitalDistance, 500), []);
+  const debouncedContainText = useCallback(debounce(actions.setSearchText, 500), []);
+  const debouncedBeachLength = useCallback(debounce(actions.setBeachLength, 500), []);
   const [drawerState, setDrawerState] = useState(false);
   const [valueContainText, setValueContainText] = useState(filters.searchText);
   const [hospitalDistance, setHospitalDistance] = useState(filters.hospitalDistance);
@@ -133,34 +133,34 @@ const SearchFiltersMobile = props => {
   const checkBoxHandler = name => event => {
     if (name === 'nudismo') {
 
-      actions.onSetNudism(event.target.checked);
+      actions.setNudism(event.target.checked);
     } else if (name === 'bandera_azul') {
-      actions.onSetBlueFlag(event.target.checked);
+      actions.setBlueFlag(event.target.checked);
     } else if (name === 'zona_surf') {
-      actions.onSetSurfingArea(event.target.checked);
+      actions.setSurfingArea(event.target.checked);
     } else if (name === 'establecimiento_comida') {
-      actions.onSetBeachBar(event.target.checked);
+      actions.setBeachBar(event.target.checked);
     } else if (name === 'alquiler_nauticos') {
-      actions.onSetNauticsRental(event.target.checked);
+      actions.setNauticsRental(event.target.checked);
     } else if (name === 'submarinismo') {
-      actions.onSetDivingArea(event.target.checked);
+      actions.setDivingArea(event.target.checked);
     } else if (name === 'alquiler_hamacas') {
-      actions.onSetSunbedRental(event.target.checked);
+      actions.setSunbedRental(event.target.checked);
     } else if (name === 'alquiler_sombrillas') {
 
-      actions.onSetUmbrellaBeachRental(event.target.checked);
+      actions.setUmbrellaBeachRental(event.target.checked);
 
     } else if (name === 'acceso_discapacitados') {
-      actions.onSetDisabledPersons(event.target.checked);
+      actions.setDisabledPersons(event.target.checked);
 
     } else if (name === 'paseo_maritimo') {
 
-      actions.onSetPromenade(event.target.checked);
+      actions.setPromenade(event.target.checked);
     }
   }
 
   const handleOccupancy = event => {
-    actions.onSetOccupancy(event.target.value);
+    actions.setOccupancy(event.target.value);
   }
 
   const handleHospitalDistanceChange = (event,newValue) => {
@@ -179,7 +179,7 @@ const SearchFiltersMobile = props => {
 
    const handleSelectChange = (e) => {
 
-    actions.onSetSelectText(e.target.value);
+    actions.setSelectText(e.target.value);
   }
   const handleContainText = (e) => {
     const value = e.target.value;
