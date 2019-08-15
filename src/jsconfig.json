@@ -1,0 +1,8 @@
+// so that vsc detects jest globals -> add intellisense to .test files
+{
+  "typeAcquisition": {
+    "include": [
+      "jest"
+    ]
+  }
+}
