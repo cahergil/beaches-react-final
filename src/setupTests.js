@@ -17,22 +17,45 @@ global.matchMedia = global.matchMedia || function () {
     removeListener: function () { }
   }
 }
-
-
-
+global.currentUser = {
+  name: 'john'
+}
 global.AmCharts = {
-    makeChart: jest.fn()
+  makeChart: jest.fn(),
+  options: {
+    "type": "map",
+    "zoomControl": {
+      "homeButtonEnabled": false,
+      "zoomControlEnabled": false,
+      "panControlEnabled": false,
+    },
+
+    "backgroundAlpha": 1,
+    "areasSettings": {
+      "outlineColor": '#fff',
+      "outlineAlpha": 1,
+      "outlineThickness": 1,
+      "autoZoom": false,
+      "selectedColor": '#D4AC16',
+      "selectable": true,
+      "rollOverColor": '#D4AC16'
+
+    },
+    "listeners": [
+      {
+        "event": "clickMapObject",
+        "method": jest.fn(e => "ES-CT")
+      },
+      {
+        "event": "init",
+        "method": jest.fn(e => " ")
+      }
+    ]
+
+  }
+
 }
 
-// needed in search
-// global.document = {
-//   getElementById: (value) => jest.fn().mockReturnValue(`<ul><li>${value}</li></ul>`)
-// }
 
-// jest.mock('lodash.debounce', () => jest.fn(fn => fn));
 
-// global.AmCharts = global.AmCharts || function() {
-//   return {
-//     makeChart: jest.fn()
-//   }
-// }
+

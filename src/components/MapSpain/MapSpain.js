@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import AmCharts from "@amcharts/amcharts3-react";
+import AmCharts  from "@amcharts/amcharts3-react";
 
 import {regionMap} from './types';
 
@@ -75,6 +75,7 @@ const MapSpain = React.memo((props) => {
 
   // 
   const handleRegionClick = (e) => {
+    console.log(e);
     const areaId = e.mapObject.id;
     const region = mapComunidades.get(areaId);
     onMapClicked(region);

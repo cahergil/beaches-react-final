@@ -133,7 +133,7 @@ const ResultsContent = React.memo(({beachesList}) => {
   return (
     <React.Fragment>
       <div className={classes.showing}>Showing {state.beaches.length} beach(es) of {beachesList.length}</div>
-      <div id="content" className={classes.root}>
+      <div id="content" data-testid="content" className={classes.root}>
         {
           state.beaches.map((beach, index) => {
             return <ResultsContentItem

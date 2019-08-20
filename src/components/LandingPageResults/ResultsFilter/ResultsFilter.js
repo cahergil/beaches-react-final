@@ -93,7 +93,7 @@ const ResultsFilter = (props) => {
       <div className={classes.resultsHeader}>
         <span className={classes.resultsHeaderNumber}>{count}</span>
         <span> beaches in </span>
-        <span className={classes.resultsHeaderRegion}>{region}</span>
+        <span data-testid="region" className={classes.resultsHeaderRegion}>{region}</span>
       </div>
       <div className={classes.resultsSearch}>
         <div className={classes.resultsSearchTitle}>

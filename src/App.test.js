@@ -73,7 +73,7 @@ afterEach(() => {
 
 })
 
-test('<LandingPage/> screen renders ok', async () => {
+test.skip('<LandingPage/> screen renders ok', async () => {
   // initial route
   const route = { route: '/map-spain/' }
   // scrollintoView is not a function
@@ -85,7 +85,7 @@ test('<LandingPage/> screen renders ok', async () => {
   
 });
 
-test('navigating to search screen is ok', async () => {
+test.skip('navigating to search screen is ok', async () => {
   const route = { route: '/map-spain/' }
   _.debounce = jest.fn((fn) => fn);
   // scrollintoView is not a function
@@ -102,7 +102,7 @@ test('navigating to search screen is ok', async () => {
   // expect(getByText(/advanced search/i)).toBeDefined; // should workd
 });
 
-test('navigating to about screen is ok', async () => {
+test.skip('navigating to about screen is ok', async () => {
   const route = { route: '/map-spain/' }
   // scrollintoView is not a function
   window.HTMLElement.prototype.scrollIntoView = function () { };

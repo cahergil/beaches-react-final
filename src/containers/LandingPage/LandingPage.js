@@ -11,7 +11,6 @@ import * as actionsMapArea from '../../store/actions/mapArea';
 
 const LandingPage = (props) => {
   const { onSetReturnFromDetails, onSetMapArea, preSelectedArea } = props;
-  
   const handleMapClick = (region) => {
     props.history.push({ pathname: '/spain-map/' + region, state: '/spain-map/' });
     // solves issue when comming back from details
