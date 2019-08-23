@@ -1,15 +1,16 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './App.scss';
 
 import Graphics from './components/Graphics/Graphics';
-import Search from './containers/Search/Search';
 import LandingPage from './containers/LandingPage/LandingPage';
 import BeachDetails from './containers/BeachDetails/BeachDetails';
-import About from './containers/About/About';
 import NavDrawer from './components/Navigation/NavDrawer';
 import * as actionsMapArea from './store/actions/mapArea';
+
+const Search = React.lazy(() => import('./containers/Search/Search'));
+const About  = React.lazy(() => import('./containers/About/About'))
 
 const DefaultContainer = ({onSetMapArea}) => {
   
@@ -18,9 +19,17 @@ const DefaultContainer = ({onSetMapArea}) => {
       <NavDrawer onSetMapArea={onSetMapArea}/>
       <Switch>
         <Route path="/spain-map" component={LandingPage} />
-        <Route path="/search" component={Search} />
+        <Route path="/search" render={() => (
+          <Suspense fallback={<div>...Loading</div>}>
+            <Search />
+          </Suspense>
+        )} />
         <Route path="/graphics" component={Graphics} />
-        <Route path="/about" component={About} />
+        <Route path="/about" render={() => (
+          <Suspense fallback={<div>...Loading</div>}>
+            <About />
+          </Suspense>          
+        )}/>
         <Redirect to="/spain-map" />
       </Switch>
     </React.Fragment>

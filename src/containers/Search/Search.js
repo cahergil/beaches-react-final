@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from '@material-ui/core/styles';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import BackgroundVideo  from 'react-background-video-player';
@@ -16,11 +17,6 @@ import * as mapsFilterActions from '../../store/actions/mapFilters';
 import * as utils from '../../Utils/Utils';
 import videoMp4 from '../../assets/videos/video_compressed.mp4';
 import videoMp4Width500 from '../../assets/videos/videoMp4Width500.mp4';
-
-
-
-
-
 
 const useStyles = makeStyles(theme =>({
 
@@ -264,32 +260,8 @@ const mapDispatchToProps = dispatch => {
 
   }
 }
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     actions: {
-//       onSetCountryBeaches: (route) => dispatch(beachesActions.setCountryBeaches(route)),
-//       onSetNudism: (value) => dispatch(searchFiltersActions.setNudism(value)),
-//       onSetBlueFlag: (value) => dispatch(searchFiltersActions.setBlueFlag(value)),
-//       onSetSurfingArea: (value) => dispatch(searchFiltersActions.setSurfingArea(value)),
-//       onSetBeachBar: (value) => dispatch(searchFiltersActions.setBeachBar(value)),
-//       onSetNauticsRental: (value) => dispatch(searchFiltersActions.setNauticsRental(value)),
-//       onSetDivingArea: (value) => dispatch(searchFiltersActions.setDivingArea(value)),
-//       onSetSunbedRental: (value) => dispatch(searchFiltersActions.setSunbedRental(value)),
-//       onSetUmbrellaBeachRental: (value) => dispatch(searchFiltersActions.setUmbrellaBeachRental(value)),
-//       onSetDisabledPersons: (value) => dispatch(searchFiltersActions.setDisabledPersons(value)),
-//       onSetOccupancy: (value) => dispatch(searchFiltersActions.setOcuppancy(value)),
-//       onSetPromenade: (value) => dispatch(searchFiltersActions.setPromenade(value)),
-//       onSetHospitalDistance: (value) => dispatch(searchFiltersActions.setHospitalDistance(value)),
-//       onSetBeachLength: (value) => dispatch(searchFiltersActions.setBeachLength(value)),
-//       onSetSelectText: (value) => dispatch(searchFiltersActions.setSelectText(value)),
-//       onSetSearchText: (value) => dispatch(searchFiltersActions.setSearchText(value)),
-//       onResetFilters: () => dispatch(searchFiltersActions.setReset()),
-//       onSetReturnFromDetails: (value) => dispatch(mapsFilterActions.setReturnFromDetails(value))
-//     }
-    
-//   }
-// }
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Search));
