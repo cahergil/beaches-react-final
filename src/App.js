@@ -1,16 +1,29 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import './App.scss';
+import Loadable from 'react-loadable';
 
+import './App.scss';
 import Graphics from './components/Graphics/Graphics';
 import LandingPage from './containers/LandingPage/LandingPage';
 import BeachDetails from './containers/BeachDetails/BeachDetails';
 import NavDrawer from './components/Navigation/NavDrawer';
+import SpinnerWhenRouting from './components/SpinnerWhenRouting/SpinnerWhenRouting'
 import * as actionsMapArea from './store/actions/mapArea';
 
-const Search = React.lazy(() => import('./containers/Search/Search'));
-const About  = React.lazy(() => import('./containers/About/About'))
+
+const SearchLoadable = Loadable({
+  loader: () => import('./containers/Search/Search'),
+  loading: () => <SpinnerWhenRouting />
+})
+
+const AboutLoadable = Loadable({
+  loader: () => import('./containers/About/About'),
+  loading: () => <SpinnerWhenRouting />
+})
+
+
+
 
 const DefaultContainer = ({onSetMapArea}) => {
   
@@ -20,15 +33,12 @@ const DefaultContainer = ({onSetMapArea}) => {
       <Switch>
         <Route path="/spain-map" component={LandingPage} />
         <Route path="/search" render={() => (
-          <Suspense fallback={<div>...Loading</div>}>
-            <Search />
-          </Suspense>
+          <SearchLoadable />
+        
         )} />
         <Route path="/graphics" component={Graphics} />
         <Route path="/about" render={() => (
-          <Suspense fallback={<div>...Loading</div>}>
-            <About />
-          </Suspense>          
+          <AboutLoadable />      
         )}/>
         <Redirect to="/spain-map" />
       </Switch>
@@ -36,17 +46,11 @@ const DefaultContainer = ({onSetMapArea}) => {
   );
 }
 
-const BeachDetailsContainer = () => (
-  <Switch>
-    <Route path="/details/beach/" component={BeachDetails} />
-  </Switch>
-);
-
 const  App = props => {
   return (
     <div className="App">
       <Switch>
-        <Route path="/details/beach/" component={BeachDetailsContainer} />
+        <Route path="/details/beach/" component={BeachDetails} />
         <Route path="/" render={() => <DefaultContainer {...props}/>} />
       </Switch>
      </div>

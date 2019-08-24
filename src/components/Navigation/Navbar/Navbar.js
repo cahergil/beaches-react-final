@@ -5,6 +5,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { NavLink } from 'react-router-dom';
+import Loadable from 'react-loadable';
+import SpinnerWhenRouting from '../../SpinnerWhenRouting/SpinnerWhenRouting';
+
 
 const useStyles = makeStyles(theme => ({
   white: {
@@ -50,6 +53,18 @@ const useStyles = makeStyles(theme => ({
 )
 
 
+const SearchLoadable = Loadable({
+  loader: () => import('../../../containers/Search/Search'),
+  loading: () => <SpinnerWhenRouting />
+ 
+})
+
+const AboutLoadable = Loadable({
+  loader: () => import('../../../containers/About/About'),
+  loading: () => <SpinnerWhenRouting />
+ 
+})
+
 // https://github.com/ReactTraining/react-router/issues/5376
  const LooseNavLink = props => (
   <NavLink {...props} isActive={(match, location) => location.pathname.startsWith(props.to.pathname)} />
@@ -61,8 +76,14 @@ const Navbar = (props) => {
  
   const handleOnClick = e => {
     onSetMapArea('')
-    
-    
+  }
+  const handleMouseOver = (section) => {
+    if (section === 'search') {
+      SearchLoadable.preload()
+    } 
+    if (section === 'about') {
+      AboutLoadable.preload();
+    }
   }
   const toolbarSections = (
     <nav id="navbar">
@@ -91,6 +112,7 @@ const Navbar = (props) => {
                     classes.marginRight
                     }`}
                   onClick={handleOnClick}
+                  onMouseOver={() => section === 'search' || section === 'about'? handleMouseOver(section): null}
                 >
                   {section.toUpperCase()}
                 </LooseNavLink>
