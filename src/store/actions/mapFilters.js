@@ -1,23 +1,41 @@
-import * as actions from './actionTypes'
+// @flow
+import * as actionsTypes from './actionTypes'
 
+type SetMapResultsSelectAction = {
+  type: typeof actionsTypes.SET_MAP_RESULTS_SELECT,
+  payload: string
+};
+type SetMapResultsInputAction = {
+  type: typeof actionsTypes.SET_MAP_RESULTS_INPUT,
+  payload: string
+};
+type SetReturnFromDetailsAction = {
+  type: typeof actionsTypes.SET_RETURN_FROM_DETAILS,
+  payload: boolean
+};
 
-export const setMapResultsSelect = (value) => {
+export type Action =
+  | SetMapResultsSelectAction
+  | SetMapResultsInputAction
+  | SetReturnFromDetailsAction;
+
+export const setMapResultsSelect = (value: string): SetMapResultsSelectAction => {
   return {
-    type: actions.SET_MAP_RESULTS_SELECT,
+    type: actionsTypes.SET_MAP_RESULTS_SELECT,
     payload: value
   }
 }
 
-export const setMapResultsInput = (value) => {
+export const setMapResultsInput = (value: string): SetMapResultsInputAction => {
   return {
-    type: actions.SET_MAP_RESULTS_INPUT,
+    type: actionsTypes.SET_MAP_RESULTS_INPUT,
     payload: value
   }
 }
 
-export const setReturnFromDetails = (value) => {
+export const setReturnFromDetails = (value: boolean): SetReturnFromDetailsAction  => {
   return {
-    type: actions.SET_RETURN_FROM_DETAILS,
+    type: actionsTypes.SET_RETURN_FROM_DETAILS,
     payload: value
-  }
-}
+  };
+};

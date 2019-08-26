@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+// @flow
+import * as React from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core';
@@ -15,6 +17,7 @@ import Services from './../../components/Details/Service/Services';
 import BeachObject from './../../components/Model/Model';
 import Weather from '../../components/Details/Weather/Weather';
 import { getDistance } from '../../Utils/Utils';
+import type {Beach}  from './../../components/Model/Beach';
 
 const useStyles = makeStyles({
   root: {
@@ -36,7 +39,21 @@ const useStyles = makeStyles({
   }
 });
 
-const BeachDetails = props => {
+// in this case we don't have ownprops
+// https://stackoverflow.com/questions/41198842/what-is-the-use-of-the-ownprops-arg-in-mapstatetoprops-and-mapdispatchtoprops
+type OwnProps = {|
+|}
+
+type Props = {|
+  ...OwnProps,
+  beachesList: Array<Beach>,
+  onSetCountryBeaches: (route: string) => void,
+  onSetReturnFromDetails: (value: boolean) =>void,
+  location: { search:string }
+
+|}
+
+const BeachDetails = (props:Props) => {
   const { beachesList, onSetCountryBeaches, onSetReturnFromDetails } = props;
   const [beach, setBeach] = useState(null);
   const [colorSchema, setColorSchema] = useState({ backgroundColor:'#FABC3D', color:'#000'})
@@ -131,7 +148,6 @@ const BeachDetails = props => {
           <Header
             colorSchema={colorSchema}
             name={beach.nombre}
-            // isBlueFlag={beach.bandera_azul ==='Sí'? true: false}
             isBlueFlag={isBlueFlag}
           />
             
@@ -191,4 +207,4 @@ BeachDetails.propTypes = {
   onSetReturnFromDetails: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BeachDetails);
+export default (connect(mapStateToProps, mapDispatchToProps)(BeachDetails): React.AbstractComponent<OwnProps>);

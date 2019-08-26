@@ -1,11 +1,20 @@
+// @flow
 import * as actionTypes from '../actions/actionTypes';
-const initialState = {
+// Cannot import the type `[type]` as a value. Use `import type` instead
+// https://github.com/facebook/flow/issues/6590
+import type {Action} from '../actions/beaches';
+import type { Beach } from './../../components/Model/Beach';
+
+export type State = {
+  beachesList: Array<Beach>,
+  error: boolean
+}
+const initialState: State = {
   beachesList: [],
-  regionBeachesList: [],
   error: false
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (state: State = initialState, action: Action): State => {
   
   switch (action.type) {
     case actionTypes.SET_COUNTRY_BEACHES_START:
@@ -18,19 +27,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         beachesList: [...action.payload],
-        // beaches: action.payload,
         error: false
       }
     case actionTypes.SET_COUNTRY_BEACHES_FAILED:
       return {
         ...state,
         error: true
-      }
-    case actionTypes.SET_REGION_BEACHES:
-      return {
-        ...state,
-        regionBeachesList: [...action.payload],
-        
       }
     default:
       return state;

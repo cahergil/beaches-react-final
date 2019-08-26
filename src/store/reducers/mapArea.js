@@ -1,14 +1,17 @@
+// @flow
 import * as actions from '../actions/actionTypes';
-
-export const initialState = {
+import type {Action} from '../actions/mapArea';
+export type State = {
+  regionId: string
+}
+export const initialState:State = {
   regionId: ''
 }
 
-const reducer = (state = initialState, action) => {
+const reducer = (state:State = initialState, action: Action) => {
 
   switch (action.type) {
     case actions.SET_MAP_AREA:
-      // console.log('set_map_are reducer:', action.payload)
       return {
         ...state,
         regionId: action.payload
