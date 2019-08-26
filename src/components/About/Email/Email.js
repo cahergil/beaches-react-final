@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { makeStyles, Button } from '@material-ui/core';
 import ContactMail from '@material-ui/icons/ContactMail'
@@ -34,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Email = props => {
+const Email = () => {
   const classes = useStyles();
 
   return (

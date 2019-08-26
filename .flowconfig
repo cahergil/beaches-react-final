@@ -6,6 +6,7 @@
 .*/build/.*
 .*/src/**/__tests__/.*
 .*/src/__mocks__/.*
+.*/flow-typed/.*
 
 [include]
 .*/src/components/**/.js
@@ -18,7 +19,6 @@
 [lints]
 
 [options]
-all=true
 
 
 [strict]

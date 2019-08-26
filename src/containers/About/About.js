@@ -1,3 +1,4 @@
+//@flow
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import scrollIntoView from 'scroll-into-view';
@@ -15,7 +16,7 @@ const useStyle = makeStyles({
   }
 });
 
-const About = props => {
+const About = () => {
   
   const classes = useStyle();
   useEffect(() => {

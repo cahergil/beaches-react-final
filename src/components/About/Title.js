@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 
@@ -28,11 +29,13 @@ const useStyles = makeStyles(theme=>({
   
 }));
 
+type Props = {
+  title: string
+}
 
 
-
-const Title = (props) => {
-    const { title} = props
+const Title = (props: Props) => {
+  const { title} = props
   const classes = useStyles(props);
   return (
     <div className={classes.headingGrid}>
