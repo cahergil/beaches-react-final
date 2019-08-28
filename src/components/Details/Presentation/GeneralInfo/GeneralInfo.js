@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types'
@@ -21,9 +22,23 @@ const useStyles = makeStyles({
     opacity: '0.60'
   }
 })
-
-const GeneralInfo = props => {
-   const { generalInfo } = props;
+type Props = {
+  generalInfo: {
+    termino_municipal: string,
+    provincia: string,
+    comunidad_autonoma: string,
+    longitud: string,
+    anchura: string,
+    grado_ocupacion: string,
+    paseo_maritimo: string,
+    descripcion: string,
+    images: string,
+    nombre_alternativo: string,
+    nombre_alternativo_2: string
+  }
+};
+const GeneralInfo = (props: Props) => {
+  const { generalInfo } = props;
   const classes = useStyles();
 
   return (

@@ -1,3 +1,4 @@
+// @flow
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types'
 import { withStyles, Button, makeStyles } from '@material-ui/core';
@@ -24,7 +25,10 @@ const ColorButton = withStyles(theme => ({
   },
 }))(Button);
 
-const TranslateTextField = React.memo(({text}) => {
+type Props = {
+  text: string
+}
+const TranslateTextField = ({text}: Props) => {
   const classes = useStyles();
   const [translatedText, setTranslatedText] = useState(text);
   const [isTextTranslated, setIsTextTranslated] = useState(false);
@@ -83,10 +87,10 @@ const TranslateTextField = React.memo(({text}) => {
           </ColorButton>
     </React.Fragment>
   );
-});
+};
 
 TranslateTextField.propTypes = {
   text: PropTypes.string.isRequired
 }
 
-export default TranslateTextField;
+export default React.memo<Props>(TranslateTextField);

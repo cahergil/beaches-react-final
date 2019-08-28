@@ -1,12 +1,5 @@
 [ignore]
 .*/node_modules/.*
-.*/src/serviceWorker\.js
-.*/src/index\.js
-.*\test\.js
-.*/build/.*
-.*/src/**/__tests__/.*
-.*/src/__mocks__/.*
-.*/flow-typed/.*
 
 [include]
 .*/src/components/**/.js

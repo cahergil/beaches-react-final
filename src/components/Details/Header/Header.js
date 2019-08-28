@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
@@ -31,7 +32,13 @@ const useStyles = makeStyles({
   }
 })
 
-const Header = (props) => {
+type Props = {
+  colorSchema: {backgroundColor: string, color: string},
+  name: string,
+  isBlueFlag: boolean | null
+}
+
+const Header = (props: Props) => {
   const classes = useStyles(props);
   
   return (
@@ -45,7 +52,6 @@ const Header = (props) => {
       >
         {props.name}
       </Textfit>
-      {/* <div className={classes.beachName}>{props.name}</div> */}
     </section>
   );
 }

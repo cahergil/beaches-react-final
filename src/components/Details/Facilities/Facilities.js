@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
@@ -6,6 +7,7 @@ import * as utils from '../../../Utils/Utils';
 
 import TranslateTextField from './../TranslateTextField';
 import BeachObject from './../../Model/Model';
+import type { Beach } from './../../Model/Beach';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,7 +46,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Facilities = props => {
+type Props =  {
+  beach: Beach
+}
+
+const Facilities = (props: Props) => {
   const { beach } = props;
   const classes = useStyles();
  
@@ -126,7 +132,7 @@ const Facilities = props => {
           <div className={classes.label}>Nearby road:</div>
           <div className={classes.text}>{utils.getYesNo(beach.carretera_mas_proxima)}</div>
           <div className={classes.label}>Bus:</div>
-          <div className={classes.text}>{utils.getYesNo(beach.bus)}</div>
+          <div className={classes.text}>{utils.getYesNo(beach.autobus)}</div>
           <div className={classes.label}>Parking:</div>
           <div className={classes.text}>{utils.getYesNo(beach.aparcamiento)}</div>
          

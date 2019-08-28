@@ -1,23 +1,20 @@
+// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import { makeStyles } from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
+import type { RouterHistory } from 'react-router-dom';
 
 import MyGoogleMap from './GoogleMap/MyGoogleMap';
-import { withRouter } from 'react-router-dom';
+import type { NearbyBeach } from '../../Model/NearbyBeach';
 
-const useStyles = makeStyles({
-  root: {
-
-  }
-})
-
-const Location = props => {
-  const classes = useStyles();
- 
-  const { nearbyBeaches, isBlueFlag, history } = props;
+type Props = {
+  nearbyBeaches: Array<NearbyBeach>,
+  isBlueFlag: boolean,
+  history: RouterHistory
+}
+const Location = ({nearbyBeaches, isBlueFlag, history}: Props) => {
   return (
-    <section className={classes.root}>
+    <section>
       <MyGoogleMap
         nearbyBeaches={nearbyBeaches}
         isBlueFlag={isBlueFlag}

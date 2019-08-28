@@ -18,6 +18,9 @@ import BeachObject from './../../components/Model/Model';
 import Weather from '../../components/Details/Weather/Weather';
 import { getDistance } from '../../Utils/Utils';
 import type {Beach}  from './../../components/Model/Beach';
+import type {NearbyBeach}  from './../../components/Model/NearbyBeach';
+
+
 
 const useStyles = makeStyles({
   root: {
@@ -58,9 +61,9 @@ const BeachDetails = (props:Props) => {
   const [beach, setBeach] = useState(null);
   const [colorSchema, setColorSchema] = useState({ backgroundColor:'#FABC3D', color:'#000'})
   const [generalInfo, setGeneralInfo] = useState(null);
-  const [nearbyBeaches, setNearbyBeaches] = useState(null);
+  const [nearbyBeaches, setNearbyBeaches] = useState([]);
   const [city, setCity] = useState(null);
-  const [isBlueFlag, setIsBlueFlag] = useState(null);
+  const [isBlueFlag, setIsBlueFlag] = useState(false);
   const classes = useStyles();
   
   useEffect(() => {
@@ -84,22 +87,23 @@ const BeachDetails = (props:Props) => {
   useEffect(() => {
     const id = queryString.parse(props.location.search).id;
     const beach = beachesList.find(beach => beach.id === id);
-    const generalInfo = {};
+    
     if (beach) {
       // calculate nearby beaches
-      const nearbyBeaches = [];
-      // const beachLatLng = { lat: undefined, lng: undefined };
+      let nearbyBeaches: Array<NearbyBeach>=[];
+      
+      // https://flow.org/en/docs/types/objects/#toc-unsealed-objects
       const beachLatLng = { };
-      beachLatLng['lat'] = parseFloat(beach.coordenada_y.replace(',', '.'));
-      beachLatLng['lng'] = parseFloat(beach.coordenada_x.replace(',', '.'));
+      beachLatLng.lat = parseFloat(beach.coordenada_y.replace(',', '.'));
+      beachLatLng.lng = parseFloat(beach.coordenada_x.replace(',', '.'));
 
       nearbyBeaches.push({name: beach.nombre, lat: beachLatLng.lat, lng: beachLatLng.lng, id: beach.id})
       
-      beachesList.forEach(element => {
-        // const p1 = {lat: undefined, lng: undefined};
+      beachesList.forEach((element:Beach )=> {
+        // https://flow.org/en/docs/types/objects/#toc-unsealed-objects
         const p1 = {};
-        p1['lat'] = parseFloat(element.coordenada_y.replace(',', '.'));
-        p1['lng'] = parseFloat(element.coordenada_x.replace(',', '.'));
+        p1.lat = parseFloat(element.coordenada_y.replace(',', '.'));
+        p1.lng = parseFloat(element.coordenada_x.replace(',', '.'));
         const distanceInMeters = getDistance(p1, beachLatLng);
         if (distanceInMeters < 15000) {
           // to not duplicate beach
@@ -108,20 +112,20 @@ const BeachDetails = (props:Props) => {
           }
         }
       });
-      
-      
+      // https://flow.org/en/docs/types/objects/#toc-unsealed-objects
+      const generalInfo = {};
       // inform generalInfo fields
-      generalInfo['termino_municipal'] = beach.termino_municipal;
-      generalInfo['provincia'] = beach.provincia;
-      generalInfo['comunidad_autonoma'] = beach.comunidad_autonoma;
-      generalInfo['longitud'] = beach.longitud;
-      generalInfo['anchura'] = beach.anchura;
-      generalInfo['grado_ocupacion'] = beach.grado_ocupacion;
-      generalInfo['paseo_maritimo'] = beach.paseo_maritimo;
-      generalInfo['descripcion'] = beach.descripcion;
-      generalInfo['images'] = beach.images;
-      generalInfo['nombre_alternativo'] = beach.nombre_alternativo;
-      generalInfo['nombre_alternativo_2'] = beach.nombre_alternativo_2;
+      generalInfo.termino_municipal = beach.termino_municipal;
+      generalInfo.provincia = beach.provincia;
+      generalInfo.comunidad_autonoma = beach.comunidad_autonoma;
+      generalInfo.longitud = beach.longitud;
+      generalInfo.anchura = beach.anchura;
+      generalInfo.grado_ocupacion = beach.grado_ocupacion;
+      generalInfo.paseo_maritimo = beach.paseo_maritimo;
+      generalInfo.descripcion = beach.descripcion;
+      generalInfo.images = beach.images;
+      generalInfo.nombre_alternativo = beach.nombre_alternativo;
+      generalInfo.nombre_alternativo_2 = beach.nombre_alternativo_2;
 
       setNearbyBeaches(nearbyBeaches);
       setGeneralInfo(generalInfo);
