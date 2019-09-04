@@ -13,7 +13,7 @@ import Slider from '@material-ui/core/Slider';
 import { logarithmicSlider, logPositionSlider } from '../../Utils/Utils';
 
 
-const useStyles = makeStyles(theme =>({
+const useStyles = makeStyles(theme => ({
   rootMobile: {
     margin: '0 3rem',
     height: '5rem',
@@ -24,12 +24,10 @@ const useStyles = makeStyles(theme =>({
     fontSize: '1.7rem',
     padding: '1rem',
     borderRadius: '5px',
-    backgroundColor: theme.palette.primary.main,
-  
-
+    backgroundColor: theme.palette.primary.main
   },
-  
-   wrapper: {
+
+  wrapper: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -37,7 +35,7 @@ const useStyles = makeStyles(theme =>({
     cursor: 'pointer'
   },
   textStyle: {
-    color: '#fff',
+    color: '#fff'
   },
   drawerRoot: {
     overflowY: 'scroll'
@@ -55,7 +53,6 @@ const useStyles = makeStyles(theme =>({
     backgroundColor: theme.palette.primary.main,
     fontSize: '2rem',
     color: '#fff'
-  
   },
   drawerSubheader: {
     height: '5rem',
@@ -69,12 +66,13 @@ const useStyles = makeStyles(theme =>({
     padding: '1rem',
     backgroundColor: theme.palette.primary.light,
     marginBottom: '1.5rem'
-    
-
   },
   typeOfBeachSlider: {
     width: '25rem',
-    color: '#D4AC16',
+    color: '#D4AC16'
+  },
+  active: {
+    color: '#FABC3D !important'
   },
   sliderThumb: {
     backgroundColor: '#D4AC16',
@@ -82,12 +80,11 @@ const useStyles = makeStyles(theme =>({
       // boxShadow: 'inherit', deletes it
       boxShadow: '#ccc 0px 0px 1px 6px',
       MozBoxShadow: '#ccc 0px 0px 1px 6px'
-      
-    },
+    }
   },
   generalSlider: {
     width: '20rem',
-    color: '#D4AC16',
+    color: '#D4AC16'
   },
   generalSpanKmLeft: {
     display: 'inline-block',
@@ -107,8 +104,10 @@ const useStyles = makeStyles(theme =>({
     '&:hover': {
       opacity: '1'
     }
+  },
+  generalOcuppancyFormControl: {
+    width: '20rem'
   }
-
 }));
 
 
@@ -170,7 +169,6 @@ const SearchFiltersMobile = props => {
 
   const handleBeachLengthChange = (event, newValue) => {
     const value = logarithmicSlider(newValue);
-    console.log(value);
     setBeachLength(value);
     debouncedBeachLength(value);
     // setBeachLength(newValue);
@@ -200,30 +198,22 @@ const SearchFiltersMobile = props => {
     <div>
       <div className={classes.drawerHeader}>
         <div>Filters</div>
-        <div className={classes.doneStyle} onClick={toggleDrawer(false)}>Done</div>
+        <div className={classes.doneStyle} onClick={toggleDrawer(false)}>
+          Done
+        </div>
       </div>
       {/* CONTAIN TEXT ***********************************************************/}
-      <div className={classes.drawerSubheader} >
-          <div>Contain text</div>
+      <div className={classes.drawerSubheader}>
+        <div>Contain text</div>
       </div>
       <div className={classes.wrapper}>
         <FormControl>
           <InputLabel htmlFor="select">Select by</InputLabel>
-          <Select
-            value={filters.selectText}
-            onChange={handleSelectChange}
-          >
-            <MenuItem value="termino_municipal">
-              Locality
-            </MenuItem>
-            <MenuItem value="nombre">
-              Beach
-            </MenuItem>
-            <MenuItem value="comunidad_autonoma">
-              Region
-            </MenuItem>
+          <Select value={filters.selectText} onChange={handleSelectChange}>
+            <MenuItem value="termino_municipal">Locality</MenuItem>
+            <MenuItem value="nombre">Beach</MenuItem>
+            <MenuItem value="comunidad_autonoma">Region</MenuItem>
           </Select>
-
         </FormControl>
         <TextField
           id="my-search"
@@ -231,7 +221,7 @@ const SearchFiltersMobile = props => {
           type="search"
           value={valueContainText}
           InputLabelProps={{
-            className: classes.labelTextFieldStyle,
+            className: classes.labelTextFieldStyle
           }}
           style={{ marginLeft: '2rem' }}
           onChange={handleContainText}
@@ -239,12 +229,10 @@ const SearchFiltersMobile = props => {
         />
       </div>
       {/* TYPE OF BEACH *****************************************************/}
-      <div className={classes.drawerSubheader} style={{marginTop: '1rem'}}>
+      <div className={classes.drawerSubheader} style={{ marginTop: '1rem' }}>
         <div>Type of beach</div>
       </div>
-      <List classes={{
-        root: classes.typeOfBeachListRoot
-      }}>
+      <List>
         <ListItem alignItems="flex-start">
           <FormControlLabel
             className={classes.marginCheckbox}
@@ -278,41 +266,38 @@ const SearchFiltersMobile = props => {
             primary="Beach max length"
             secondary={
               <React.Fragment>
-                
+                <span className={classes.generalSpanKmLeft}>50 m</span>
+                <Slider
+                  classes={{
+                    root: classes.typeOfBeachSlider,
+                    thumb: classes.sliderThumb
+                  }}
+                  defaultValue={beachLength}
+                  value={logPositionSlider(beachLength)}
+                  onChange={handleBeachLengthChange}
+                  min={0}
+                  max={100}
+                  color="secondary"
+                />
+                <span className={classes.generalSpanKmRight}>28k m</span>
 
-                  <span className={classes.generalSpanKmLeft}>50 m</span>
-                  <Slider
-                    classes={{
-                      root: classes.typeOfBeachSlider,
-                      thumb: classes.sliderThumb
-                    }}
-                    defaultValue={beachLength}
-                    value={logPositionSlider(beachLength)}
-                    onChange={handleBeachLengthChange}
-                    min={0}
-                    max={100}
-                    color="secondary"
-                  />
-                  <span className={classes.generalSpanKmRight}>28k m</span>
-               
-                <span style={{ marginLeft: '12rem', display: 'block' }}>{Math.round(beachLength)} meters</span>
+                <span style={{ marginLeft: '12rem', display: 'block' }}>
+                  {Math.round(beachLength)} meters
+                </span>
               </React.Fragment>
             }
-            classes={{
-              primary: classes.generalPrimary,
-              secondary: classes.generalSecondary
-            }}
+            // classes={{
+            //   primary: classes.generalPrimary,
+            //   secondary: classes.generalSecondary
+            // }}
           />
         </ListItem>
-
       </List>
       {/* SERVICES *****************************************************/}
       <div className={classes.drawerSubheader}>
         <div>Services</div>
       </div>
-      <List classes={{
-        root: classes.servicesListRoot
-      }}>
+      <List>
         <ListItem alignItems="flex-start">
           <FormControlLabel
             className={classes.marginCheckbox}
@@ -401,9 +386,7 @@ const SearchFiltersMobile = props => {
       <div className={classes.drawerSubheader}>
         <div>General</div>
       </div>
-      <List classes={{
-        root: classes.generalListRoot
-      }}>
+      <List>
         <ListItem alignItems="flex-start">
           <FormControlLabel
             className={classes.marginCheckbox}
@@ -433,34 +416,22 @@ const SearchFiltersMobile = props => {
         </ListItem>
         <Divider />
         <ListItem alignItems="flex-start">
-          <FormControl classes={{
-            root: classes.generalOcuppancyFormControl
-          }}>
+          <FormControl
+            classes={{
+              root: classes.generalOcuppancyFormControl
+            }}
+          >
             <InputLabel htmlFor="select">Occupancy</InputLabel>
-            <Select
-              value={filters.occupancy}
-              onChange={handleOccupancy} >
+            <Select value={filters.occupancy} onChange={handleOccupancy}>
               <MenuItem value="All">
                 <em>All</em>
               </MenuItem>
-              <MenuItem value="Alto">
-                High
-                    </MenuItem>
-              <MenuItem value="Bajo">
-                Low
-                    </MenuItem>
-              <MenuItem value="Medio">
-                Average
-                    </MenuItem>
-              <MenuItem value="Medio / Alto">
-                Average / High
-                    </MenuItem>
-              <MenuItem value="Medio / Bajo">
-                Average / Low
-                    </MenuItem>
-              <MenuItem value="Muy bajo">
-                Very Low
-                    </MenuItem>
+              <MenuItem value="Alto">High</MenuItem>
+              <MenuItem value="Bajo">Low</MenuItem>
+              <MenuItem value="Medio">Average</MenuItem>
+              <MenuItem value="Medio / Alto">Average / High</MenuItem>
+              <MenuItem value="Medio / Bajo">Average / Low</MenuItem>
+              <MenuItem value="Muy bajo">Very Low</MenuItem>
             </Select>
           </FormControl>
         </ListItem>
@@ -485,17 +456,15 @@ const SearchFiltersMobile = props => {
                   color="secondary"
                 />
                 <span className={classes.generalSpanKmRight}>120 Km</span>
-
               </React.Fragment>
             }
-            classes={{
-              primary: classes.generalPrimary,
-              secondary: classes.generalSecondary
-            }}
+            // classes={{
+            //   primary: classes.generalPrimary,
+            //   secondary: classes.generalSecondary
+            // }}
           />
         </ListItem>
       </List>
-     
     </div>
   );
 

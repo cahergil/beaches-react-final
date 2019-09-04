@@ -52,12 +52,13 @@ type Props = {|
   beachesList: Array<Beach>,
   onSetCountryBeaches: (route: string) => void,
   onSetReturnFromDetails: (value: boolean) =>void,
+  onSetMapArea: (value: string) => void,
   location: { search:string }
 
 |}
 
 const BeachDetails = (props:Props) => {
-  const { beachesList, onSetCountryBeaches, onSetReturnFromDetails } = props;
+  const { beachesList, onSetCountryBeaches, onSetReturnFromDetails, onSetMapArea } = props;
   const [beach, setBeach] = useState(null);
   const [colorSchema, setColorSchema] = useState({ backgroundColor:'#FABC3D', color:'#000'})
   const [generalInfo, setGeneralInfo] = useState(null);
@@ -71,21 +72,23 @@ const BeachDetails = (props:Props) => {
     if (element) {
       element.scrollIntoView();
     }
-  }, []);
+    onSetReturnFromDetails(true);
+  }, [onSetReturnFromDetails]);
   
   useEffect(()=> {
     onSetCountryBeaches('../playas.json');
+    
   }, [onSetCountryBeaches]);
 
   useEffect(() => {
-    return () => {
-   
-      onSetReturnFromDetails(true);
+    
+    const parsedSearch = queryString.parse(props.location.search);
+    const id = parsedSearch.id;
+    let regId: string = '';
+    if (typeof parsedSearch.region ==='string') {
+        regId = parsedSearch.region;
     }
-  }, [onSetReturnFromDetails]);
-
-  useEffect(() => {
-    const id = queryString.parse(props.location.search).id;
+    
     const beach = beachesList.find(beach => beach.id === id);
     
     if (beach) {
@@ -138,11 +141,14 @@ const BeachDetails = (props:Props) => {
         setIsBlueFlag(false);
       }
       setCity(beach.termino_municipal);
+      if (regId) {
+        onSetMapArea(regId);
+      }
     }
     
     
 
-  }, [beachesList, props.location.search]);
+  }, [beachesList, props.location.search, onSetMapArea]);
  
   let content = null;
   if (beach) {
@@ -199,7 +205,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onSetCountryBeaches: (route) => dispatch(actionsBeaches.setCountryBeaches(route)),
-    onSetReturnFromDetails: (value) => dispatch(actionsMapFilters.setReturnFromDetails(value))
+    onSetReturnFromDetails: (value) => dispatch(actionsMapFilters.setReturnFromDetails(value)),
+    onSetMapArea: (value) => dispatch(actionsMapFilters.setMapArea(value))
   }
 };
 
@@ -208,7 +215,8 @@ BeachDetails.propTypes = {
     PropTypes.shape(BeachObject)
   ).isRequired,
   onSetCountryBeaches: PropTypes.func.isRequired,
-  onSetReturnFromDetails: PropTypes.func.isRequired
+  onSetReturnFromDetails: PropTypes.func.isRequired,
+  onSetMapArea: PropTypes.func.isRequired
 }
 
 export default (connect(mapStateToProps, mapDispatchToProps)(BeachDetails): React.AbstractComponent<OwnProps>);

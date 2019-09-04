@@ -4,34 +4,42 @@ import type { Action } from '../actions/mapFilters';
 export type State = {
   select: string,
   input: string,
-  return: boolean
+  return: boolean,
+  regionId: string
 }
 
 const initialState: State = {
   select: 'termino_municipal',
   input: '',
-  return: false
-}
+  return: false,
+  regionId: ''
+};
 
 const reducer = (state: State = initialState, action: Action) => {
-  switch(action.type) {
-    case actions.SET_MAP_RESULTS_SELECT: 
+  switch (action.type) {
+    case actions.SET_MAP_RESULTS_SELECT:
       return {
         ...state,
         select: action.payload,
         input: ''
-      }
+      };
     case actions.SET_MAP_RESULTS_INPUT:
       return {
         ...state,
         input: action.payload
-      }
+      };
     case actions.SET_RETURN_FROM_DETAILS:
       return {
         ...state,
         return: action.payload
-      }
-    default: return state;
+      };
+    case actions.SET_MAP_AREA:
+      return {
+        ...state,
+        regionId: action.payload
+      };
+    default:
+      return state;
   }
 };
 

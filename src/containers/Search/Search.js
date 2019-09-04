@@ -1,6 +1,7 @@
+// @flow
 import React, { useState, useEffect } from 'react';
+import type { Location } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
@@ -11,12 +12,19 @@ import BackgroundVideo  from 'react-background-video-player';
 
 import ResultsContent from '../../components/LandingPageResults/ResultsContent/ResultsContent';
 import SearchFilters from '../../components/SearchFilters/SearchFilters';
-import * as beachesActions from '../../store/actions/beaches';
-import * as searchFiltersActions from '../../store/actions/searchFilters';
-import * as mapsFilterActions from '../../store/actions/mapFilters';
 import * as utils from '../../Utils/Utils';
 import videoMp4 from '../../assets/videos/video_compressed.mp4';
 import videoMp4Width500 from '../../assets/videos/videoMp4Width500.mp4';
+import type { Beach } from '../../components/Model/Beach';
+import * as searchFiltersActionCreators from '../../store/actions/searchFilters';
+import * as beachesActionCreators  from '../../store/actions/beaches';
+import * as mapFiltersActionCreators from '../../store/actions/mapFilters';
+
+// import type { Action as SearchFiltersAction } from '../../store/actions/searchFilters';
+// import type { Action as MapFiltersAction } from '../../store/actions/mapFilters';
+// import type { Action as BeachesAction } from '../../store/actions/beaches';
+import type { State } from '../../store/reducers/'
+
 
 const useStyles = makeStyles(theme =>({
 
@@ -65,8 +73,51 @@ const useStyles = makeStyles(theme =>({
 }));
 
 
-const Search = (props) => {
-  const { beachesList, filters, actions } = props;
+
+type Props = {
+  beachesList: Array<Beach>,
+  location: Location,
+  filters: {
+    nudism: boolean,
+    blueFlag: boolean,
+    surfingArea: boolean,
+    beachBar: boolean,
+    nauticsRental: boolean,
+    divingArea: boolean,
+    sunbedRental: boolean,
+    beachUmbrellaRental: boolean,
+    disabledPersons: boolean,
+    occupancy: string,
+    promenade: boolean,
+    hospitalDistance: number,
+    beachLength: number,
+    selectText: string,
+    searchText: string
+  },
+  actions: {
+    setCountryBeaches: (route: string) => void,
+    setReturnFromDetails: typeof mapFiltersActionCreators.setReturnFromDetails,
+    setNudism:  typeof searchFiltersActionCreators.setNudism,
+    setBlueFlag: typeof searchFiltersActionCreators.setBlueFlag,
+    setSurfingArea: typeof searchFiltersActionCreators.setSurfingArea,
+    setBeachBar:  typeof searchFiltersActionCreators.setBeachBar,
+    setNauticsRental: typeof searchFiltersActionCreators.setNauticsRental,
+    setDivingArea: typeof searchFiltersActionCreators.setDivingArea,
+    setDisabledPersons: typeof searchFiltersActionCreators.setDisabledPersons,
+    setOccupancy: typeof searchFiltersActionCreators.setOccupancy,
+    setPromenade: typeof searchFiltersActionCreators.setPromenade,
+    setHospitalDistance: typeof searchFiltersActionCreators.setHospitalDistance,
+    setBeachLength: typeof searchFiltersActionCreators.setBeachLength,
+    setSearchText: typeof searchFiltersActionCreators.setSearchText,
+    setUmbrellaBeachRental: typeof searchFiltersActionCreators.setUmbrellaBeachRental,
+    setSunbedRental: typeof searchFiltersActionCreators.setSunbedRental,
+    setSelectText: typeof searchFiltersActionCreators.setSelectText,
+    setReset: typeof searchFiltersActionCreators.setReset
+    // }
+  }
+};
+const Search = ({ beachesList, filters, actions, location }: Props) => {
+  // const  = props;
   const classes = useStyles();
   const [filteredBeachesList, setFilteredBeachesList] = useState([]);
   // to avoid props warnings of the video background library. The size is actually  managed in jss
@@ -77,7 +128,7 @@ const Search = (props) => {
   const theme = useTheme();
   const matchesWidth500 = useMediaQuery(theme.breakpoints.down(500));
   useEffect(() => {
-    if (props.location.state && !props.location.state.includes('search')) {
+    if (location.state && !location.state.includes('search')) {
       
       const element = document.getElementById('navbar');
       if (element) {
@@ -85,7 +136,7 @@ const Search = (props) => {
       }
     }
     
-  }, [props.location]);
+  }, [location]);
   // point 4 of https://github.com/reactjs/rfcs/blob/master/text/0068-react-hooks.md#drawbacks
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -106,61 +157,62 @@ const Search = (props) => {
       return;
     }
     setLoading(true);
+    // https://flow.org/en/docs/types/objects/#toc-unsealed-objects
     const filterObject = {};
     if (filters.nudism) {
-      filterObject['nudismo'] = utils.translateYesNoIntoSpanish(filters.nudism);
+      filterObject.nudismo = utils.translateYesNoIntoSpanish(filters.nudism);
     }
     if (filters.blueFlag) {
-      filterObject['bandera_azul'] = utils.translateYesNoIntoSpanish(filters.blueFlag)
+      filterObject.bandera_azul = utils.translateYesNoIntoSpanish(filters.blueFlag)
     }
     if (filters.surfingArea) {
-      filterObject['zona_surf'] = utils.translateYesNoIntoSpanish(filters.surfingArea)
+      filterObject.zona_surf = utils.translateYesNoIntoSpanish(filters.surfingArea)
       
     }
     if (filters.beachBar) {
-      filterObject['establecimiento_comida'] = utils.translateYesNoIntoSpanish(filters.beachBar)
+      filterObject.establecimiento_comida = utils.translateYesNoIntoSpanish(filters.beachBar)
       
     }
     if (filters.nauticsRental) {
-      filterObject['alquiler_nauticos'] = utils.translateYesNoIntoSpanish(filters.nauticsRental)
+      filterObject.alquiler_nauticos = utils.translateYesNoIntoSpanish(filters.nauticsRental)
       
     }
     if (filters.divingArea) {
-      filterObject['submarinismo'] = utils.translateYesNoIntoSpanish(filters.divingArea)
+      filterObject.submarinismo = utils.translateYesNoIntoSpanish(filters.divingArea)
       
     }
     if (filters.sunbedRental) {
-      filterObject['alquiler_hamacas'] = utils.translateYesNoIntoSpanish(filters.sunbedRental)
+      filterObject.alquiler_hamacas = utils.translateYesNoIntoSpanish(filters.sunbedRental)
       
     }
     if (filters.beachUmbrellaRental) {
-      filterObject['alquiler_sombrillas'] = utils.translateYesNoIntoSpanish(filters.beachUmbrellaRental)
+      filterObject.alquiler_sombrillas = utils.translateYesNoIntoSpanish(filters.beachUmbrellaRental)
       
     }
     if (filters.disabledPersons) {
-      filterObject['acceso_discapacitados'] = utils.translateYesNoIntoSpanish(filters.disabledPersons)
+      filterObject.acceso_discapacitados = utils.translateYesNoIntoSpanish(filters.disabledPersons)
       
     }
     if (filters.promenade) {
-      filterObject['paseo_maritimo'] = utils.translateYesNoIntoSpanish(filters.promenade);
+      filterObject.paseo_maritimo = utils.translateYesNoIntoSpanish(filters.promenade);
 
     }
     if (filters.occupancy !== 'All') {
-      filterObject['grado_ocupacion'] = utils.translateOccupancyIntoSpanish(filters.occupancy)
+      filterObject.grado_ocupacion = utils.translateOccupancyIntoSpanish(filters.occupancy)
     }
     if (filters.searchText.trim()) {
       filterObject[`${filters.selectText}`] = filters.searchText; 
     }
     if (filters.hospitalDistance) {
-      filterObject['distancia_hospital'] = filters.hospitalDistance;
+      filterObject.distancia_hospital = filters.hospitalDistance;
     }
     if (filters.beachLength) {
-      filterObject['longitud'] = filters.beachLength;
+      filterObject.longitud = filters.beachLength;
     }
     
     const tempBeaches = beachesList.filter(beach => {
       const keys = Object.keys(filterObject);
-      return keys.every(key => {
+      return keys.every((key: string) => {
         if (key === 'termino_municipal' || key === 'nombre' || key === 'comunidad_autonoma') {
           const regex = new RegExp("" + filterObject[key] + "", "i");
           return beach[key].match(regex)
@@ -246,19 +298,60 @@ const Search = (props) => {
     </section>
   );
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state: State) => {
   return {
     beachesList: state.beaches.beachesList,
     filters: state.searchFilters
   }
 };
-const mapDispatchToProps = dispatch => {
-  // https://stackoverflow.com/questions/35454633/redux-connect-with-multiples-actions-states
+
+
+
+const mapDispatchToProps = (dispatch) => {
+  
   
   return {
-    actions: bindActionCreators(Object.assign({}, beachesActions, searchFiltersActions, mapsFilterActions), dispatch)
-
-  }
+    // https://stackoverflow.com/questions/35454633/redux-connect-with-multiples-actions-states
+    // actions: bindActionCreators(Object.assign({}, beachesActions, searchFiltersActions, mapsFilterActions), dispatch)
+    actions: {
+      setCountryBeaches: (route: string) =>
+        dispatch(beachesActionCreators.setCountryBeaches(route)),
+      setReturnFromDetails: (value: boolean) =>
+        dispatch(mapFiltersActionCreators.setReturnFromDetails(value)),
+      setNudism: (value: boolean) =>
+        dispatch(searchFiltersActionCreators.setNudism(value)),
+      setBlueFlag: (value: boolean) =>
+        dispatch(searchFiltersActionCreators.setBlueFlag(value)),
+      setSurfingArea: (value: boolean) =>
+        dispatch(searchFiltersActionCreators.setSurfingArea(value)),
+      setBeachBar: (value: boolean) =>
+        dispatch(searchFiltersActionCreators.setBeachBar(value)),
+      setNauticsRental: (value: boolean) =>
+        dispatch(searchFiltersActionCreators.setNauticsRental(value)),
+      setDivingArea: (value: boolean) =>
+        dispatch(searchFiltersActionCreators.setDivingArea(value)),
+      setDisabledPersons: (value: boolean) =>
+        dispatch(searchFiltersActionCreators.setDisabledPersons(value)),
+      setOccupancy: (value: string) =>
+        dispatch(searchFiltersActionCreators.setOccupancy(value)),
+      setPromenade: (value: boolean) =>
+        dispatch(searchFiltersActionCreators.setPromenade(value)),
+      setHospitalDistance: (value: number) =>
+        dispatch(searchFiltersActionCreators.setHospitalDistance(value)),
+      setBeachLength: (value: number) =>
+        dispatch(searchFiltersActionCreators.setBeachLength(value)),
+      setSearchText: (value: string) =>
+        dispatch(searchFiltersActionCreators.setSearchText(value)),
+      setUmbrellaBeachRental: (value: boolean) =>
+        dispatch(searchFiltersActionCreators.setUmbrellaBeachRental(value)),
+      setSunbedRental: (value: boolean) =>
+        dispatch(searchFiltersActionCreators.setSunbedRental(value)),
+      setSelectText: (value: string) =>
+        dispatch(searchFiltersActionCreators.setSelectText(value)),
+      setReset: () => dispatch(searchFiltersActionCreators.setReset())
+      // }
+    }
+  };
 }
 
 

@@ -1,10 +1,12 @@
+// @flow
 import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import ResultsContentItem from './ResultsContentItem/ResultsContentItem';
 import scrollIntoView from 'scroll-into-view';
-import BeachObject from './../../Model/Model';
 
+import BeachObject from './../../Model/Model';
+import type { Beach } from '../../Model/Beach'
 
 
 const useStyles = makeStyles({
@@ -14,7 +16,8 @@ const useStyles = makeStyles({
     gridColumn: '5rem',
     justifyItems: 'center',
     justifyContent: 'center',
-    gridRowGap: '2rem'
+    gridRowGap: '2rem',
+    minHeight: '30rem'
     
   },
   loading: {
@@ -31,13 +34,27 @@ const useStyles = makeStyles({
   }
 })
 
-const initialState = {
+type Action =
+   { type: 'CHANGE_OFFSET', payload: number }
+  | { type: 'CHANGE_LOADING', payload: boolean }
+  | { type: 'CHANGE_HAS_MORE_ITEMS', payload: boolean }
+  | { type: 'SET_BEACHES', payload: Array<Beach> };
+
+type State = {
+  offset: number,
+  loading: boolean,
+  hasMoreItems: boolean,
+  beaches: Array<Beach>
+}
+
+
+const initialState: State = {
   offset: 6,
   loading: false,
   hasMoreItems: true,
   beaches: []
 }
-function reducer(state, action) {
+function reducer(state: State, action: Action) {
   switch (action.type) {
     case 'CHANGE_OFFSET':
       return {
@@ -64,13 +81,20 @@ function reducer(state, action) {
 
 
 }
+
+
+type Props = {
+  beachesList: Array<Beach>,
+  regionId?: string
+}
 // React.memo to avoid rerender with all beaches when returning from details
-const ResultsContent = React.memo(({beachesList}) => {
-  const [state, dispatch] = useReducer(reducer, initialState)
+const ResultsContent = ({beachesList, regionId}: Props) => {
+  const [state, dispatch] = useReducer<State, Action>(reducer, initialState)
   const classes = useStyles()
   const step = 12;
   
   useEffect(() => {
+ 
     const hasMoreItems = beachesList.length > step;
     const tempBeaches = beachesList.slice(0, hasMoreItems ? step : beachesList.length);
     dispatch({ type: 'CHANGE_LOADING', payload: false });
@@ -109,15 +133,13 @@ const ResultsContent = React.memo(({beachesList}) => {
       dispatch({ type: 'CHANGE_LOADING', payload: false });
     }
     const handleScroll = (event) => {
+      const viewport: number = window.innerHeight;
+      const rootNode: window.HTMLHtmlElement = document.documentElement;
+      const scrolledFromTop: number = rootNode.scrollTop;
+      const bottom: number = rootNode.offsetHeight;
       // 100 for mobile to work
-      if (
-        window.innerHeight + document.documentElement.scrollTop + 100
-        > document.documentElement.offsetHeight
-        // window.innerHeight + document.documentElement.scrollTop 
-        // === document.documentElement.offsetHeight
-      ) {
+      if (viewport + scrolledFromTop + 100 > bottom) {
         loadItems();
-     
       }
 
     }
@@ -139,23 +161,22 @@ const ResultsContent = React.memo(({beachesList}) => {
             return <ResultsContentItem
               key={index}
               beach={beach}
+              regionId={regionId}
               remainingPhotos={beach.images.split(',').length - 2} />
           })}
-        {/* {state.loading && 
-          <div className={classes.loading}>Loading...</div>
-
-        } */}
       </div>
     
     </React.Fragment>
     
   );
-})
+};
 
 ResultsContent.propTypes = {
   beachesList: PropTypes.arrayOf(
     PropTypes.shape(BeachObject)
-  ).isRequired
+  ).isRequired,
+  // not required in search component
+  regionId: PropTypes.string
 };
 
-export default ResultsContent;
+export default React.memo<Props>(ResultsContent);

@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+// @flow
+import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/styles';
 import AmCharts  from "@amcharts/amcharts3-react";
 
-import {regionMap} from './types';
+import * as utils from '../../Utils/Utils';
 
-
-
-const useStyles = makeStyles({
+const styles = ({
   root: {
     height: '100vh'
   },
@@ -27,137 +26,161 @@ const useStyles = makeStyles({
   }
 });
 
-
-
-const MapSpain = React.memo((props) => {
-  const { onMapClicked, onSetMapArea, preSelectedArea } = props;
-  const [mapObject, setMapObject] = useState(null);
-  const classes = useStyles();
-  const mapComunidades = new Map();
-
-  
-  
-
-  useEffect(() => {
-    
-    mapComunidades.set('ES-AN', regionMap.ANDALUCIA);
-    mapComunidades.set('ES-AS', regionMap.ASTURIAS);
-    mapComunidades.set('ES-CB', regionMap.CANTABRIA);
-    mapComunidades.set('ES-CE', regionMap.CEUTA);
-    mapComunidades.set('ES-CN', regionMap.CANARIAS);
-    mapComunidades.set('ES-CT', regionMap.CATALUÑA);
-    mapComunidades.set('ES-GA', regionMap.GALICIA);
-    mapComunidades.set('ES-IB', regionMap.BALEARES);
-    mapComunidades.set('ES-MC', regionMap.MURCIA);
-    mapComunidades.set('ES-ML', regionMap.MELILLA);
-    mapComunidades.set('ES-PV', regionMap.EUSKADI);
-    mapComunidades.set('ES-VC', regionMap.VALENCIA);
-
-  }, [mapComunidades]);
-  const areaColor = '#BDBDBD';
-  const dataProvider = {
-    map: 'spain2Low',
-    areas: [
-      { id: 'ES-AN', color: areaColor },
-      { id: 'ES-AS', color: areaColor },
-      { id: 'ES-CB', color: areaColor },
-      { id: 'ES-CE', color: areaColor },
-      { id: 'ES-CN', color: areaColor },
-      { id: 'ES-CT', color: areaColor },
-      { id: 'ES-GA', color: areaColor },
-      { id: 'ES-IB', color: areaColor },
-      { id: 'ES-MC', color: areaColor },
-      { id: 'ES-ML', color: areaColor },
-      { id: 'ES-PV', color: areaColor },
-      { id: 'ES-VC', color: areaColor }
-    ]
+type Props = {
+  onMapClicked: (region: string, regionId: string) => void,
+  preSelectedArea: string,
+  classes: {
+    root: {
+      height: string
+    },
+    mapDiv: {
+      width: string,
+      height: string
+    },
+    headerTitle: {
+      fontWeight: string,
+      textAlign: string,
+      fontSize: string,
+      padding: string,
+      color: string
+    },
+    areaColor: {
+      color: string
+    }
+  }
+};
+type State = {
+  mapObject: { 
+    id: string,  
+    showAsSelected: boolean,
+    getObjectById: (area:string) => { showAsSelected: boolean},
+    returnInitialColor: ({showAsSelected: boolean}) => void
+  }
+}
+const stateInitialValue = {
+  id: '',
+  showAsSelected: false,
+  getObjectById: function(area: string) {
+    return { showAsSelected: false };
+  },
+  returnInitialColor: function({showAsSelected: boolean}) {
+    return;
+  }
+};
+class MapSpain extends React.Component<Props, State> {
+  state = {
+    mapObject: stateInitialValue
   };
 
-  // 
-  const handleRegionClick = (e) => {
-    const areaId = e.mapObject.id;
-    const region = mapComunidades.get(areaId);
-    onMapClicked(region);
+  handleRegionClick = e => {
+    const areaId: string = e.mapObject.id;
+    const region: string | void = utils.getRegionFromRegionId(areaId);
     // unselect previous area
-    const area = mapObject.getObjectById(preSelectedArea);
-    if(area) {
-      area.showAsSelected = false;
-      mapObject.returnInitialColor(area)
-
+    const prevArea = this.state.mapObject.getObjectById(
+      this.props.preSelectedArea
+    );
+    if (prevArea) {
+      prevArea.showAsSelected = false;
+      this.state.mapObject.returnInitialColor(prevArea);
     }
-    
-    onSetMapArea(areaId)
-     
-  }
-
-  const handlePreSelect = (e) => {
+    // select current area
+    const currentArea = this.state.mapObject.getObjectById(areaId);
+    if (currentArea) {
+      currentArea.showAsSelected = true;
+    }
+    if(typeof region === 'string') {
+      this.props.onMapClicked(region, areaId);
+    }
+  };
+  getCurrentArea = () => {
+    if (this.state.mapObject) {
+      return this.state.mapObject.getObjectById(this.props.preSelectedArea);
+    }
+    return null;
+  };
+  handlePreSelect = e => {
     const map = e.chart;
     // get map instance to use it in handleRegionClick
-    setMapObject(map);
-    const area = map.getObjectById(preSelectedArea);
-    if(area) {
-      area.showAsSelected = true
-      map.returnInitialColor(area)
-
+    this.setState({ mapObject: map });
+    const area = map.getObjectById(this.props.preSelectedArea);
+    if (area) {
+      area.showAsSelected = true;
+      map.returnInitialColor(area);
     }
-  }
-  return (
-    <section id="map">
-      <div className={classes.headerTitle}>
-        Select a region
-      </div>
-      <div id="mapdiv">
-        <AmCharts.React
-          
-          className={classes.mapDiv}
-          options={{
-            "type": "map",
-            "zoomControl": {
-              "homeButtonEnabled": false,
-              "zoomControlEnabled": false,
-              "panControlEnabled": false,
-            },
-            // "backgroundColor": "#90CAF9",
-            "backgroundAlpha": 1,
-            "dataProvider": dataProvider,
-            "areasSettings": {
-              "outlineColor": '#fff',
-              "outlineAlpha": 1,
-              "outlineThickness": 1,
-              "autoZoom": false,
-              "selectedColor": '#D4AC16',
-              // "selectedColor": '#E91E63',
-              // "selectedOutlineColor": '#33fddd',
-              // "selectedOutlineThickness": 1,
-              "selectable": true,
-              rollOverColor: '#D4AC16'
-              // rollOverColor: '#009ce0'
-              // "rollOverColor": '#fff'
-            },
-            "listeners": [
-              {
-                "event": "clickMapObject",
-                "method": (e) => { handleRegionClick(e) }
+  };
+  render() {
+    const { classes } = this.props;
+    const areaColor = '#BDBDBD';
+    const dataProvider = {
+      map: 'spain2Low',
+      areas: [
+        { id: 'ES-AN', color: areaColor },
+        { id: 'ES-AS', color: areaColor },
+        { id: 'ES-CB', color: areaColor },
+        { id: 'ES-CE', color: areaColor },
+        { id: 'ES-CN', color: areaColor },
+        { id: 'ES-CT', color: areaColor },
+        { id: 'ES-GA', color: areaColor },
+        { id: 'ES-IB', color: areaColor },
+        { id: 'ES-MC', color: areaColor },
+        { id: 'ES-ML', color: areaColor },
+        { id: 'ES-PV', color: areaColor },
+        { id: 'ES-VC', color: areaColor }
+      ]
+    };
+    return (
+      <section id="map">
+        <div className={classes.headerTitle}>Select a region</div>
+        <div id="mapdiv">
+          <AmCharts.React
+            className={classes.mapDiv}
+            options={{
+              type: 'map',
+              zoomControl: {
+                homeButtonEnabled: false,
+                zoomControlEnabled: false,
+                panControlEnabled: false
               },
-              {
-                "event": "init",
-                "method": (e) => { handlePreSelect(e)}
-              }  
-            ]
-            
-          }} // options
-        />
-      </div>
-    </section>
-  )
-}, () => {
-    return true;
-});
+              zoomOnDoubleClick: false,
+              // "backgroundColor": "#90CAF9",
+              backgroundAlpha: 1,
+              dataProvider: dataProvider,
+              areasSettings: {
+                outlineColor: '#fff',
+                outlineAlpha: 1,
+                outlineThickness: 1,
+                autoZoom: false,
+                selectedColor: '#D4AC16',
+                // "selectedColor": '#E91E63',
+                // "selectedOutlineColor": '#33fddd',
+                // "selectedOutlineThickness": 1,
+                selectable: true,
+                rollOverColor: '#D4AC16'
+              },
+              listeners: [
+                {
+                  event: 'clickMapObject',
+                  method: e => {
+                    this.handleRegionClick(e);
+                  }
+                },
+                {
+                  event: 'init',
+                  method: e => {
+                    this.handlePreSelect(e);
+                  }
+                }
+              ]
+            }} // options
+          />
+        </div>
+      </section>
+    );
+  }
+}
 
 MapSpain.propTypes = {
   onMapClicked: PropTypes.func.isRequired,
-  onSetMapArea: PropTypes.func.isRequired,
   preSelectedArea: PropTypes.string.isRequired
 }
-
-export default MapSpain;
+export default withStyles(styles)(MapSpain);

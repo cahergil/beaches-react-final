@@ -1,5 +1,7 @@
+
 // @flow
 import * as actionsTypes from './actionTypes'
+// import type { batch } from 'react-redux';
 
 type SetMapResultsSelectAction = {
   type: typeof actionsTypes.SET_MAP_RESULTS_SELECT,
@@ -9,15 +11,21 @@ type SetMapResultsInputAction = {
   type: typeof actionsTypes.SET_MAP_RESULTS_INPUT,
   payload: string
 };
-type SetReturnFromDetailsAction = {
+export type SetReturnFromDetailsAction = {
   type: typeof actionsTypes.SET_RETURN_FROM_DETAILS,
   payload: boolean
 };
+type SetMapAreaAction = {
+  type: typeof actionsTypes.SET_MAP_AREA,
+  payload: string
+};
+
 
 export type Action =
   | SetMapResultsSelectAction
   | SetMapResultsInputAction
-  | SetReturnFromDetailsAction;
+  | SetReturnFromDetailsAction
+  | SetMapAreaAction;
 
 export const setMapResultsSelect = (value: string): SetMapResultsSelectAction => {
   return {
@@ -39,3 +47,24 @@ export const setReturnFromDetails = (value: boolean): SetReturnFromDetailsAction
     payload: value
   };
 };
+
+export const setMapArea = (regionId: string): SetMapAreaAction => {
+  return {
+    type: actionsTypes.SET_MAP_AREA,
+    payload: regionId
+  };
+};
+
+// type PromiseAction = Promise<Action>;
+// // eslint-disable-next-line no-use-before-define
+// type ThunkAction = (dispatch: Dispatch) => any;
+// type Dispatch = (
+//   action: Action | ThunkAction | PromiseAction | Array<Action>
+// ) => any;
+
+// export const onClickMapThunk = (fromDetails: boolean, regionId: string): ThunkAction => { 
+//   return (dispatch) => {
+//     dispatch(setReturnFromDetails(fromDetails));
+//     dispatch(setMapArea(regionId))
+//   }
+// }
