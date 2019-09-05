@@ -7,8 +7,6 @@ import { withRouter } from 'react-router-dom';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import BackgroundVideo  from 'react-background-video-player';
-// const BackgroundVideo = require('react-background-video-player');
-
 
 import ResultsContent from '../../components/LandingPageResults/ResultsContent/ResultsContent';
 import SearchFilters from '../../components/SearchFilters/SearchFilters';
@@ -19,12 +17,7 @@ import type { Beach } from '../../components/Model/Beach';
 import * as searchFiltersActionCreators from '../../store/actions/searchFilters';
 import * as beachesActionCreators  from '../../store/actions/beaches';
 import * as mapFiltersActionCreators from '../../store/actions/mapFilters';
-
-// import type { Action as SearchFiltersAction } from '../../store/actions/searchFilters';
-// import type { Action as MapFiltersAction } from '../../store/actions/mapFilters';
-// import type { Action as BeachesAction } from '../../store/actions/beaches';
 import type { State } from '../../store/reducers/'
-
 
 const useStyles = makeStyles(theme =>({
 

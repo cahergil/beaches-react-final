@@ -3,7 +3,6 @@ import React, {useState, useCallback} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, InputLabel, List, ListItem, ListItemText, Divider } from '@material-ui/core';
 import KeyBoardArrowDownIcon from '@material-ui/icons/ArrowDropDown';
-// import KeyBoardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import filterIcon from '../../assets/images/filters.png';
@@ -353,7 +352,6 @@ const SearchFilters = (props: Props) => {
 
       {/* TYPE OF BEACH *********************************************************** */}
       <div  
-        
         className={`${classes.wrapper} ${classes.generalPadding}`}>
         <div className={classes.textWrapper}>
           <span onClick={handleClick('typeOfBeach')} className={`${classes.textStyle} ${highlightSpanTypeOfBeach}`}>Type of Beach</span>
