@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
@@ -44,8 +45,10 @@ const useStyles = makeStyles(theme => ({
     }
   },
 }));
-
-const Gallery = props => {
+type Props = {
+  images: string
+}
+const Gallery = (props: Props) => {
   const { images } = props;
   const classes = useStyles();
   const imagesArray = [];
@@ -56,7 +59,7 @@ const Gallery = props => {
   } else if (img.length >= 6) {
     thumbnailClass = classes.thumbnailClassSmall;
   }
-  img.forEach(element => {
+  img.forEach((element: string) => {
     imagesArray.push({ original: element, thumbnail: element, thumbnailClass: thumbnailClass })
   });
 

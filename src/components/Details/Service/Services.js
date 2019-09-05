@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
@@ -21,7 +22,7 @@ import ChildrenAreaImg from '../../../assets/images/services/swing.png'
 import SportAreaImg from '../../../assets/images/services/kick.png'
 import * as utils from '../../../Utils/Utils';
 import BeachObject from './../../Model/Model';
-
+import type { Beach } from '../../Model/Beach'
 const useStyles = makeStyles({
   root: {
     width: '100%',
@@ -52,7 +53,11 @@ const useStyles = makeStyles({
 
 })
 
-const Services = props => {
+type Props = {
+  beach: Beach
+}
+
+const Services = (props: Props) => {
   const { beach } = props;
   const classes = useStyles();
 

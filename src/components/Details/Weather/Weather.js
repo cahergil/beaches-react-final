@@ -1,9 +1,12 @@
-import React from 'react';
+// @flow
+import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import { makeStyles } from '@material-ui/core';
 import ReactWeather from 'react-open-weather';
-// I left the module as an example of convert sass into jss
+// I left the css module as an example of convert sass into jss
 // color palette for secondary color generated with http://mcg.mbitson.com/#!?mcgpalette0=%23fabc3d
 // import  './Weather.module.scss';
+
 const useStyles = makeStyles({
   root: {
     '& .rw-main': {
@@ -125,22 +128,64 @@ const useStyles = makeStyles({
         color: props => props.isBlueFlag ? '#4BC4F7' : '#FABC3D'
       }
     }
+  },
+  alternativeDiv: {
+    margin: '1rem',
+    fontSize: '2rem',
+    fontStyle: 'italic',
+    color: '#000',
+    opacity: '0.6'
+    
   }
 });
 
-const Weather = props => {
+type Props = {
+  city: string | null,
+  isBlueFlag: boolean  
+}
+
+const Weather = (props: Props) => {
   const { city } = props
   const classes = useStyles(props);
-  // classes.root = weatherStyles;
+  const [error, setError] = useState(false);
+  let weatherRef = React.createRef();
+ 
+
+  useEffect(()=>{
+   
+      // give time for ...Loading to dissapear
+      setTimeout(() => {
+        if(weatherRef.current) {
+          let weatherNode = ReactDOM.findDOMNode(weatherRef.current);
+          if (weatherNode instanceof Text || weatherNode instanceof Element) {
+            if (weatherNode.textContent === 'Loading...') {
+              setError(true);
+            } else {
+              setError(false);
+            }
+          }
+        }
+      }, 2000);
+     
+  }, [weatherRef])
+
+ 
   return (
     <div className={classes.root}>
-    {/* // <div className={cl}> */}
-      <ReactWeather
-        forecast="5days"
-        apikey="6cccf08fe6b547f0a6184407192707"
-        type="city"
-        city={city}
-      />
+      {error && (
+        <div className={classes.alternativeDiv}>
+          Could not load weather data for this place
+        </div>
+      )}
+      {!error && (
+        <ReactWeather
+          ref={weatherRef}
+          forecast="5days"
+          apikey="6cccf08fe6b547f0a6184407192707"
+          type="city"
+          city={city}
+        />
+      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+
 import Loadable from 'react-loadable';
 
 import './App.scss';
@@ -9,7 +9,6 @@ import LandingPage from './containers/LandingPage/LandingPage';
 import BeachDetails from './containers/BeachDetails/BeachDetails';
 import NavDrawer from './components/Navigation/NavDrawer';
 import SpinnerWhenRouting from './components/SpinnerWhenRouting/SpinnerWhenRouting'
-import * as actionsMapArea from './store/actions/mapArea';
 
 
 const SearchLoadable = Loadable({
@@ -25,11 +24,11 @@ const AboutLoadable = Loadable({
 
 
 
-const DefaultContainer = ({onSetMapArea}) => {
+const DefaultContainer = () => {
   
   return(
     <React.Fragment>
-      <NavDrawer onSetMapArea={onSetMapArea}/>
+      <NavDrawer/>
       <Switch>
         <Route path="/spain-map" component={LandingPage} />
         <Route path="/search" render={() => (
@@ -56,10 +55,4 @@ const  App = props => {
      </div>
   );
 }
-const mapDispatchToProps = dispatch => {
-  return {
-    onSetMapArea: (value) => dispatch(actionsMapArea.setMapArea(value))
-  }
-}
- export default connect(null, mapDispatchToProps)(App);
-
+export default App;

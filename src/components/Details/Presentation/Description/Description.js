@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles} from '@material-ui/core';
@@ -24,7 +25,12 @@ const useStyles = makeStyles(theme =>({
   },
 }))
 
-const Description = props => {
+type Props = {
+  colorSchema: {backgroundColor: string, color: string},
+  description: string
+}
+
+const Description = (props: Props) => {
   const { description, colorSchema } = props;
   const classes = useStyles();
   return (

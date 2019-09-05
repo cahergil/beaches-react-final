@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+// @flow
+import * as React from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core';
@@ -15,6 +17,10 @@ import Services from './../../components/Details/Service/Services';
 import BeachObject from './../../components/Model/Model';
 import Weather from '../../components/Details/Weather/Weather';
 import { getDistance } from '../../Utils/Utils';
+import type {Beach}  from './../../components/Model/Beach';
+import type {NearbyBeach}  from './../../components/Model/NearbyBeach';
+
+
 
 const useStyles = makeStyles({
   root: {
@@ -36,14 +42,29 @@ const useStyles = makeStyles({
   }
 });
 
-const BeachDetails = props => {
-  const { beachesList, onSetCountryBeaches, onSetReturnFromDetails } = props;
+// in this case we don't have ownprops
+// https://stackoverflow.com/questions/41198842/what-is-the-use-of-the-ownprops-arg-in-mapstatetoprops-and-mapdispatchtoprops
+type OwnProps = {|
+|}
+
+type Props = {|
+  ...OwnProps,
+  beachesList: Array<Beach>,
+  onSetCountryBeaches: (route: string) => void,
+  onSetReturnFromDetails: (value: boolean) =>void,
+  onSetMapArea: (value: string) => void,
+  location: { search:string }
+
+|}
+
+const BeachDetails = (props:Props) => {
+  const { beachesList, onSetCountryBeaches, onSetReturnFromDetails, onSetMapArea } = props;
   const [beach, setBeach] = useState(null);
   const [colorSchema, setColorSchema] = useState({ backgroundColor:'#FABC3D', color:'#000'})
   const [generalInfo, setGeneralInfo] = useState(null);
-  const [nearbyBeaches, setNearbyBeaches] = useState(null);
+  const [nearbyBeaches, setNearbyBeaches] = useState([]);
   const [city, setCity] = useState(null);
-  const [isBlueFlag, setIsBlueFlag] = useState(null);
+  const [isBlueFlag, setIsBlueFlag] = useState(false);
   const classes = useStyles();
   
   useEffect(() => {
@@ -51,38 +72,41 @@ const BeachDetails = props => {
     if (element) {
       element.scrollIntoView();
     }
-  }, []);
+    onSetReturnFromDetails(true);
+  }, [onSetReturnFromDetails]);
   
   useEffect(()=> {
     onSetCountryBeaches('../playas.json');
+    
   }, [onSetCountryBeaches]);
 
   useEffect(() => {
-    return () => {
-   
-      onSetReturnFromDetails(true);
+    
+    const parsedSearch = queryString.parse(props.location.search);
+    const id = parsedSearch.id;
+    let regId: string = '';
+    if (typeof parsedSearch.region ==='string') {
+        regId = parsedSearch.region;
     }
-  }, [onSetReturnFromDetails]);
-
-  useEffect(() => {
-    const id = queryString.parse(props.location.search).id;
+    
     const beach = beachesList.find(beach => beach.id === id);
-    const generalInfo = {};
+    
     if (beach) {
       // calculate nearby beaches
-      const nearbyBeaches = [];
-      // const beachLatLng = { lat: undefined, lng: undefined };
+      let nearbyBeaches: Array<NearbyBeach>=[];
+      
+      // https://flow.org/en/docs/types/objects/#toc-unsealed-objects
       const beachLatLng = { };
-      beachLatLng['lat'] = parseFloat(beach.coordenada_y.replace(',', '.'));
-      beachLatLng['lng'] = parseFloat(beach.coordenada_x.replace(',', '.'));
+      beachLatLng.lat = parseFloat(beach.coordenada_y.replace(',', '.'));
+      beachLatLng.lng = parseFloat(beach.coordenada_x.replace(',', '.'));
 
       nearbyBeaches.push({name: beach.nombre, lat: beachLatLng.lat, lng: beachLatLng.lng, id: beach.id})
       
-      beachesList.forEach(element => {
-        // const p1 = {lat: undefined, lng: undefined};
+      beachesList.forEach((element:Beach )=> {
+        // https://flow.org/en/docs/types/objects/#toc-unsealed-objects
         const p1 = {};
-        p1['lat'] = parseFloat(element.coordenada_y.replace(',', '.'));
-        p1['lng'] = parseFloat(element.coordenada_x.replace(',', '.'));
+        p1.lat = parseFloat(element.coordenada_y.replace(',', '.'));
+        p1.lng = parseFloat(element.coordenada_x.replace(',', '.'));
         const distanceInMeters = getDistance(p1, beachLatLng);
         if (distanceInMeters < 15000) {
           // to not duplicate beach
@@ -91,20 +115,20 @@ const BeachDetails = props => {
           }
         }
       });
-      
-      
+      // https://flow.org/en/docs/types/objects/#toc-unsealed-objects
+      const generalInfo = {};
       // inform generalInfo fields
-      generalInfo['termino_municipal'] = beach.termino_municipal;
-      generalInfo['provincia'] = beach.provincia;
-      generalInfo['comunidad_autonoma'] = beach.comunidad_autonoma;
-      generalInfo['longitud'] = beach.longitud;
-      generalInfo['anchura'] = beach.anchura;
-      generalInfo['grado_ocupacion'] = beach.grado_ocupacion;
-      generalInfo['paseo_maritimo'] = beach.paseo_maritimo;
-      generalInfo['descripcion'] = beach.descripcion;
-      generalInfo['images'] = beach.images;
-      generalInfo['nombre_alternativo'] = beach.nombre_alternativo;
-      generalInfo['nombre_alternativo_2'] = beach.nombre_alternativo_2;
+      generalInfo.termino_municipal = beach.termino_municipal;
+      generalInfo.provincia = beach.provincia;
+      generalInfo.comunidad_autonoma = beach.comunidad_autonoma;
+      generalInfo.longitud = beach.longitud;
+      generalInfo.anchura = beach.anchura;
+      generalInfo.grado_ocupacion = beach.grado_ocupacion;
+      generalInfo.paseo_maritimo = beach.paseo_maritimo;
+      generalInfo.descripcion = beach.descripcion;
+      generalInfo.images = beach.images;
+      generalInfo.nombre_alternativo = beach.nombre_alternativo;
+      generalInfo.nombre_alternativo_2 = beach.nombre_alternativo_2;
 
       setNearbyBeaches(nearbyBeaches);
       setGeneralInfo(generalInfo);
@@ -117,11 +141,14 @@ const BeachDetails = props => {
         setIsBlueFlag(false);
       }
       setCity(beach.termino_municipal);
+      if (regId) {
+        onSetMapArea(regId);
+      }
     }
     
     
 
-  }, [beachesList, props.location.search]);
+  }, [beachesList, props.location.search, onSetMapArea]);
  
   let content = null;
   if (beach) {
@@ -131,7 +158,6 @@ const BeachDetails = props => {
           <Header
             colorSchema={colorSchema}
             name={beach.nombre}
-            // isBlueFlag={beach.bandera_azul ==='Sí'? true: false}
             isBlueFlag={isBlueFlag}
           />
             
@@ -179,7 +205,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onSetCountryBeaches: (route) => dispatch(actionsBeaches.setCountryBeaches(route)),
-    onSetReturnFromDetails: (value) => dispatch(actionsMapFilters.setReturnFromDetails(value))
+    onSetReturnFromDetails: (value) => dispatch(actionsMapFilters.setReturnFromDetails(value)),
+    onSetMapArea: (value) => dispatch(actionsMapFilters.setMapArea(value))
   }
 };
 
@@ -188,7 +215,8 @@ BeachDetails.propTypes = {
     PropTypes.shape(BeachObject)
   ).isRequired,
   onSetCountryBeaches: PropTypes.func.isRequired,
-  onSetReturnFromDetails: PropTypes.func.isRequired
+  onSetReturnFromDetails: PropTypes.func.isRequired,
+  onSetMapArea: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BeachDetails);
+export default (connect(mapStateToProps, mapDispatchToProps)(BeachDetails): React.AbstractComponent<OwnProps>);

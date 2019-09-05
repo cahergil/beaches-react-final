@@ -1,3 +1,4 @@
+// @flow
 import React, {useState, useEffect, useCallback} from 'react';
 import { makeStyles } from '@material-ui/styles';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -8,6 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import _ from 'lodash';
 import PropTypes from 'prop-types'
 
+
+import * as mapFiltersActionCreators from '../../../store/actions/mapFilters';
 
 
 const useStyles = makeStyles({
@@ -44,10 +47,18 @@ const useStyles = makeStyles({
   }
 })
 
+type Props = {
+  count: number,
+  region: string,
+  onSearched: (select: string, value: string) => void,
+  onMapResultsSelectChange: typeof mapFiltersActionCreators.setMapResultsSelect,
+  selectValue: string,
+  inputValue: string,
+  isReturn: boolean
+};
 
-const ResultsFilter = (props) => {
-  
-  const { count, region, onSearched, onMapResultsSelectChange, selectValue, inputValue, isReturn } = props;
+const ResultsFilter = ({ count, region, onSearched, onMapResultsSelectChange, selectValue, inputValue, isReturn }: Props) => {
+    
   // to synchronize the input
   const [inputText, setInputText] = useState(inputValue);
   const { debounce } = _;
@@ -63,7 +74,7 @@ const ResultsFilter = (props) => {
     
     const value = e.target.value;
     setInputText(value);
-    debouncedInput(selectValue, value);
+    debouncedInput(value);
   }
 
   useEffect(() => {
@@ -73,27 +84,27 @@ const ResultsFilter = (props) => {
       onMapResultsSelectChange('termino_municipal');
       
     } else {
-      // onSetReturnFromDetails(false);
-      // https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-onchange-event-in-react-js
-      var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
-      const input = document.getElementById('my-search');
-      // ' ' in order to pass useCallback in debounce
-      nativeInputValueSetter.call(input, input.value + ' ');
-      const event = new Event('input', { bubbles: true });
-      event.simulated = true;
-      input.dispatchEvent(event);
-        
+      // console.log('else');
+      // // see alternative option in notes.txt
+      // let input= document && document.getElementById('my-search');
+      // let select= document && document.getElementById('my-select');
+      // input.value = input.value + ' ';
+      // setInputText(input.value);
+      // debouncedInput(select.value, input.value);
+     
     }
   
   // count has to be here!  
-  }, [count, setInputText, isReturn, onMapResultsSelectChange]);
+  }, [count, setInputText, isReturn, onMapResultsSelectChange,debouncedInput]);
   
   return (
     <section id="filter" className={classes.root}>
       <div className={classes.resultsHeader}>
         <span className={classes.resultsHeaderNumber}>{count}</span>
         <span> beaches in </span>
-        <span data-testid="region" className={classes.resultsHeaderRegion}>{region}</span>
+        <span data-testid="region" className={classes.resultsHeaderRegion}>
+          {region}
+        </span>
       </div>
       <div className={classes.resultsSearch}>
         <div className={classes.resultsSearchTitle}>
@@ -103,21 +114,13 @@ const ResultsFilter = (props) => {
           <FormControl>
             <InputLabel htmlFor="select">Select by</InputLabel>
             <Select
+              id="my-select"
               value={selectValue}
               onChange={handleSelectChange}
             >
-              <MenuItem
-                value="termino_municipal"
-              >
-                Locality
-              </MenuItem>
-              <MenuItem
-                value="nombre"
-              >
-                Beach
-              </MenuItem>
+              <MenuItem value="termino_municipal">Locality</MenuItem>
+              <MenuItem value="nombre">Beach</MenuItem>
             </Select>
-        
           </FormControl>
           <TextField
             id="my-search"

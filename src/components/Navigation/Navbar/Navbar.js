@@ -71,12 +71,10 @@ const AboutLoadable = Loadable({
 )
 
 const Navbar = (props) => {
-  const { sections, burgerClicked, onSetMapArea } = props;
+  const { sections, burgerClicked } = props;
   const classes = useStyles();
  
-  const handleOnClick = e => {
-    onSetMapArea('')
-  }
+
   const handleMouseOver = (section) => {
     if (section === 'search') {
       SearchLoadable.preload()
@@ -107,11 +105,11 @@ const Navbar = (props) => {
                   }}
                   // pressing Link causes a render, we can caputre props.location.hash
                   // with onClick this is not necessary
-                 
+                  target="_self"
                   className={`${classes.linkStyle} ${
                     classes.marginRight
                     }`}
-                  onClick={handleOnClick}
+                  
                   onMouseOver={() => section === 'search' || section === 'about'? handleMouseOver(section): null}
                 >
                   {section.toUpperCase()}

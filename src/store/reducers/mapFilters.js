@@ -1,31 +1,45 @@
+// @flow
 import * as actions from '../actions/actionTypes'
-
-const initialState = {
-  select: 'termino_municipal',
-  input: '',
-  return: false
+import type { Action } from '../actions/mapFilters';
+export type State = {
+  select: string,
+  input: string,
+  return: boolean,
+  regionId: string
 }
 
-const reducer = (state = initialState, action) => {
-  switch(action.type) {
-    case actions.SET_MAP_RESULTS_SELECT: 
-      // console.log(action.payload);
+const initialState: State = {
+  select: 'termino_municipal',
+  input: '',
+  return: false,
+  regionId: ''
+};
+
+const reducer = (state: State = initialState, action: Action) => {
+  switch (action.type) {
+    case actions.SET_MAP_RESULTS_SELECT:
       return {
         ...state,
         select: action.payload,
         input: ''
-      }
+      };
     case actions.SET_MAP_RESULTS_INPUT:
       return {
         ...state,
         input: action.payload
-      }
+      };
     case actions.SET_RETURN_FROM_DETAILS:
       return {
         ...state,
         return: action.payload
-      }
-    default: return state;
+      };
+    case actions.SET_MAP_AREA:
+      return {
+        ...state,
+        regionId: action.payload
+      };
+    default:
+      return state;
   }
 };
 

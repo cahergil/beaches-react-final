@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types'
@@ -32,7 +33,27 @@ const useStyles = makeStyles(theme =>({
   }
 }))
 
-const Presentation = React.memo(({generalInfo, colorSchema}) => {
+type Props = {
+  colorSchema: {
+    backgroundColor: string, 
+    color: string
+  },
+  generalInfo: {
+    termino_municipal: string,
+    provincia: string,
+    comunidad_autonoma: string,
+    longitud: string,
+    anchura: string,
+    grado_ocupacion: string,
+    paseo_maritimo: string,
+    descripcion: string,
+    images: string,
+    nombre_alternativo:string,
+    nombre_alternativo_2: string
+  }
+}
+
+const Presentation = ({generalInfo, colorSchema}: Props) => {
   const classes = useStyles();
   return (
     <section className={classes.root}>
@@ -50,7 +71,7 @@ const Presentation = React.memo(({generalInfo, colorSchema}) => {
       
     </section>
   );
-});
+};
 Presentation.propTypes = {
   colorSchema: PropTypes.shape({
     color: PropTypes.string,
@@ -69,4 +90,4 @@ Presentation.propTypes = {
   }).isRequired
   
 }
-export default Presentation;
+export default React.memo<Props>(Presentation);

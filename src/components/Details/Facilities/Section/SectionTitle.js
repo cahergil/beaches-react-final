@@ -1,4 +1,4 @@
-
+// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
@@ -14,7 +14,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const SectionTitle = (props) => {
+type Props = {
+  name: string
+}
+
+const SectionTitle = (props: Props) => {
   const {  name } = props;
   const classes = useStyles(props);
 

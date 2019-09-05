@@ -1,6 +1,6 @@
+// @flow
 
-
-export const getYesNo = (value) => {
+export const getYesNo = (value: string | typeof undefined) => {
   if (value === 'Sí') {
     return 'Yes';
   } else if (value === 'No') {
@@ -14,7 +14,7 @@ export const getYesNo = (value) => {
   }
 }
 
-export const toRemoveQuotes = value => {
+export const toRemoveQuotes = (value: string) => {
   // const len = value.length;
   let pos = 0;
   if (value.startsWith('"')) {
@@ -26,7 +26,7 @@ export const toRemoveQuotes = value => {
   return value2
 }
 
-export const translateComposition = value => {
+export const translateComposition = (value: string) => {
   if (value === 'Arena') {
     return 'Sand';
   } else if (value === 'Arena / Algas') {
@@ -98,7 +98,7 @@ export const translateComposition = value => {
 
 }
 
-export const translateTypeOfSand = (value) => {
+export const translateTypeOfSand = (value: string) => {
   
   if (value === 'Blanca') {
     return 'White';
@@ -143,7 +143,7 @@ export const translateTypeOfSand = (value) => {
   }
 }
 
-export const translateBathingConditions = value => {
+export const translateBathingConditions = (value: string) => {
   if (value === 'Aguas limpias y tranquilas') {
     return 'Clean and calm waters';
   } else if (value === 'Aguas tranquilas') {
@@ -187,7 +187,7 @@ export const translateBathingConditions = value => {
   }
 }
 
-export const translateOcuppancy = value => {
+export const translateOcuppancy = (value: string) => {
   if (value === 'Alto') {
     return 'High';
   } else if (value === 'Bajo') {
@@ -212,7 +212,7 @@ export const translateOcuppancy = value => {
   }
 }
 
-export const translateMetros = value => {
+export const translateMetros = (value: string) => {
   
   const value1 =  value.replace(/metros/g, 'meters');
   const value2 = value1.replace(/bajamar/g, 'low tide');
@@ -220,7 +220,7 @@ export const translateMetros = value => {
   return value3;
 }
 
-export const translateTypeOfAccess = value => {
+export const translateTypeOfAccess = (value: string | typeof undefined) => {
   if (value === 'A pie') {
     return 'On foot';
   } else if (value === 'A pie / Coche') {
@@ -260,7 +260,7 @@ export const translateTypeOfAccess = value => {
   }
 }
 
-export const translateYesNoIntoSpanish = value => {
+export const translateYesNoIntoSpanish = (value: boolean) => {
   if (value) {
     return 'Sí'
   } else  {
@@ -268,7 +268,7 @@ export const translateYesNoIntoSpanish = value => {
   }
 }
 
-export const translateOccupancyIntoSpanish = value => {
+export const translateOccupancyIntoSpanish = (value: string) => {
   if (value === 'High') {
     return 'Alto'
   } else if (value === 'Low') {
@@ -292,49 +292,50 @@ export const translateOccupancyIntoSpanish = value => {
   }
 }
 
-export const includeDistance = (distance, userDistance) => {
+export const includeDistance = (distance: string, userDistance: number) => {
 
   distance = distance.replace(",", ".");
   // include floating point number
   const regex = /\d+(\.\d+)?/g;
   const matchesArray = distance.match(regex);
-  let dbDistance;
-  if (matchesArray.length === 1) {
-    dbDistance = matchesArray[0];
-  } else if (matchesArray.length === 2) {
-    dbDistance = matchesArray[1];
+  let dbDistance: number = 0;
+  if(matchesArray) {
+    if (matchesArray.length === 1) {
+      dbDistance = parseFloat(matchesArray[0]);
+    } else if (matchesArray.length === 2) {
+      dbDistance = parseFloat(matchesArray[1]);
+    }
+    
+    return dbDistance <= userDistance
   }
-  if (dbDistance <= userDistance) {
-    return true;
-  } else {
-    // console.log(dbDistance + ">" + userDistance);
-    return false;
-  }
-
+  return false;
 }
 
-export const includeLength = (length, userDistance) => {
+export const includeLength = (length: string, userDistance: number) => {
 
   length = length.replace(".", "");
   // include floating point number
   const regex = /\d+(\.\d+)?/g;
   const matchesArray = length.match(regex);
-  let dbDistance;
-  if (matchesArray.length === 1) {
-    dbDistance = matchesArray[0];
-  } else if (matchesArray.length === 2) {
-    dbDistance = matchesArray[1];
-  }
-  if (dbDistance <= userDistance) {
-    return true;
-  } else {
-    // console.log(dbDistance + ">" + userDistance);
-    return false;
-  }
+  let dbDistance: number = 0;
+  if(matchesArray) {
+    if (matchesArray.length === 1) {
+      dbDistance = parseFloat(matchesArray[0]);
+    } else if (matchesArray.length === 2) {
+      dbDistance = parseFloat(matchesArray[1]);
+    }
+    return dbDistance <= userDistance;
 
+    // if (dbDistance <= userDistance) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+  }
+  return false;
 }
 
-export const logarithmicSlider = position => {
+export const logarithmicSlider = (position: number) => {
   const minp = 0;
   const maxp = 100;
 
@@ -345,7 +346,7 @@ export const logarithmicSlider = position => {
   return Math.exp(minv + scale * (position - minp));
 }
 
-export const logPositionSlider = value => {
+export const logPositionSlider = (value: number) => {
   const minp = 0;
   const maxp = 100;
 
@@ -361,7 +362,7 @@ const rad = function (x) {
 };
 
 // distance between two points 
-export const getDistance = (p1, p2) =>{
+export const getDistance = (p1: {lat: number, lng: number}, p2: {lat: number, lng: number}) =>{
   const R = 6378137; // Earth’s mean radius in meter
   const dLat = rad(p2.lat - p1.lat);
   const dLong = rad(p2.lng - p1.lng);
@@ -372,3 +373,35 @@ export const getDistance = (p1, p2) =>{
   const d = R * c;
   return d; // returns the distance in meter
 };
+
+export const regionMap = {
+  ANDALUCIA: 'Andalucía',
+  ASTURIAS: 'Asturias',
+  CANARIAS: 'Canarias',
+  CANTABRIA: 'Cantabria',
+  CATALUÑA: 'Catalunya',
+  CEUTA: 'Ceuta',
+  VALENCIA: 'Comunitat Valenciana',
+  GALICIA: 'Galicia',
+  BALEARES: 'Illes Balears',
+  MELILLA: 'Melilla',
+  MURCIA: 'Murcia',
+  EUSKADI: 'Euskadi'
+};
+const mapComunidades = new Map();
+mapComunidades.set('ES-AN', regionMap.ANDALUCIA);
+mapComunidades.set('ES-AS', regionMap.ASTURIAS);
+mapComunidades.set('ES-CB', regionMap.CANTABRIA);
+mapComunidades.set('ES-CE', regionMap.CEUTA);
+mapComunidades.set('ES-CN', regionMap.CANARIAS);
+mapComunidades.set('ES-CT', regionMap.CATALUÑA);
+mapComunidades.set('ES-GA', regionMap.GALICIA);
+mapComunidades.set('ES-IB', regionMap.BALEARES);
+mapComunidades.set('ES-MC', regionMap.MURCIA);
+mapComunidades.set('ES-ML', regionMap.MELILLA);
+mapComunidades.set('ES-PV', regionMap.EUSKADI);
+mapComunidades.set('ES-VC', regionMap.VALENCIA);
+
+export const getRegionFromRegionId = (regionId: string) => {
+  return mapComunidades.get(regionId);
+}

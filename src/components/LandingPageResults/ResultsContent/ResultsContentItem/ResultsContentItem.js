@@ -9,6 +9,7 @@ import loaderGif from '../../../../assets/images/loader.gif';
 import BeachObject from '../../../Model/Model';
 import FeatureItem from './FeatureItem';
 
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: '35rem',
@@ -85,8 +86,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+
 const ResultsContentItem = (props) => {
-  const { beach, remainingPhotos } = props;
+  const { beach, remainingPhotos, regionId } = props;
   const classes = useStyles(props);
   const imagesArray = beach.images.split(',');
   const image = imagesArray[imagesArray.length - 1];
@@ -108,10 +110,13 @@ const ResultsContentItem = (props) => {
   featureList.push(length, shower, beachBar, lifeGuard, nudism, surf, diving, blueFlag);
 
   const handleButtonClick = (e) => {
-
+    let search = `?id=${beach.id}`
+    if(regionId) {
+      search = search + `&region=${regionId}`
+    }
     props.history.push({
       pathname: '/details/beach',
-      search: `?id=${beach.id}`,
+      search: search,
       state: props.match.path
     });
   }
@@ -146,7 +151,9 @@ const ResultsContentItem = (props) => {
 }
 ResultsContentItem.propTypes = {
   beach: PropTypes.shape(BeachObject).isRequired,
-  remainingPhotos: PropTypes.number.isRequired
+  remainingPhotos: PropTypes.number.isRequired,
+  // not required in search component
+  regionId: PropTypes.string
 }
 
 export default withRouter(ResultsContentItem);

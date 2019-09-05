@@ -6,7 +6,7 @@ import SideDrawer from './SideDrawer/SideDrawer'
 
 
 const NavDrawer = (props) => {
-  const { onSetMapArea } = props;
+ 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const sections = ['spain-map', 'search', 'about']
   const handleBurgerToggle = () => {
@@ -19,14 +19,14 @@ const NavDrawer = (props) => {
       <Navbar
         sections={sections}
         burgerClicked={handleBurgerToggle}
-        onSetMapArea={onSetMapArea}
+      
       />
      
       <SideDrawer
         sections={sections}
         drawerOpen={drawerOpen}
         onClose={handleBurgerToggle}
-        onSetMapArea={onSetMapArea}
+      
 
       />
       

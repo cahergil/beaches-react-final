@@ -1,6 +1,25 @@
+// @flow
 import * as actions from '../actions/actionTypes';
+import type { Action } from '../actions/searchFilters';
 
-const initialState = {
+export type State = {
+  nudism: boolean,
+  blueFlag: boolean,
+  surfingArea: boolean,
+  beachBar: boolean,
+  nauticsRental: boolean,
+  divingArea: boolean,
+  sunbedRental: boolean,
+  beachUmbrellaRental: boolean,
+  disabledPersons: boolean,
+  occupancy: string,
+  promenade: boolean,
+  hospitalDistance: number,
+  beachLength: number,
+  selectText: string,
+  searchText: string
+};
+const initialState: State = {
   nudism: false,
   blueFlag: false,
   surfingArea: false,
@@ -19,7 +38,7 @@ const initialState = {
   
 }
 
-const reducer = (state = initialState, action) => {
+const reducer = (state: State = initialState, action: Action) => {
   switch (action.type) {
     case actions.SET_NUDISM:
       return {

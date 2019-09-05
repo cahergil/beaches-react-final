@@ -1,3 +1,4 @@
+// @flow
 import React, { useState, useCallback } from 'react';
 import { makeStyles, Typography, List, ListItem, ListItemText, Divider, InputLabel } from '@material-ui/core';
 import Drawer from '@material-ui/core/Drawer';
@@ -10,10 +11,12 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import _ from 'lodash';
 import Slider from '@material-ui/core/Slider';
+
 import { logarithmicSlider, logPositionSlider } from '../../Utils/Utils';
+import * as searchFiltersActionCreators from '../../store/actions/searchFilters';
 
 
-const useStyles = makeStyles(theme =>({
+const useStyles = makeStyles(theme => ({
   rootMobile: {
     margin: '0 3rem',
     height: '5rem',
@@ -24,12 +27,10 @@ const useStyles = makeStyles(theme =>({
     fontSize: '1.7rem',
     padding: '1rem',
     borderRadius: '5px',
-    backgroundColor: theme.palette.primary.main,
-  
-
+    backgroundColor: theme.palette.primary.main
   },
-  
-   wrapper: {
+
+  wrapper: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -37,7 +38,7 @@ const useStyles = makeStyles(theme =>({
     cursor: 'pointer'
   },
   textStyle: {
-    color: '#fff',
+    color: '#fff'
   },
   drawerRoot: {
     overflowY: 'scroll'
@@ -55,7 +56,6 @@ const useStyles = makeStyles(theme =>({
     backgroundColor: theme.palette.primary.main,
     fontSize: '2rem',
     color: '#fff'
-  
   },
   drawerSubheader: {
     height: '5rem',
@@ -69,12 +69,13 @@ const useStyles = makeStyles(theme =>({
     padding: '1rem',
     backgroundColor: theme.palette.primary.light,
     marginBottom: '1.5rem'
-    
-
   },
   typeOfBeachSlider: {
     width: '25rem',
-    color: '#D4AC16',
+    color: '#D4AC16'
+  },
+  active: {
+    color: '#FABC3D !important'
   },
   sliderThumb: {
     backgroundColor: '#D4AC16',
@@ -82,12 +83,11 @@ const useStyles = makeStyles(theme =>({
       // boxShadow: 'inherit', deletes it
       boxShadow: '#ccc 0px 0px 1px 6px',
       MozBoxShadow: '#ccc 0px 0px 1px 6px'
-      
-    },
+    }
   },
   generalSlider: {
     width: '20rem',
-    color: '#D4AC16',
+    color: '#D4AC16'
   },
   generalSpanKmLeft: {
     display: 'inline-block',
@@ -107,14 +107,52 @@ const useStyles = makeStyles(theme =>({
     '&:hover': {
       opacity: '1'
     }
+  },
+  generalOcuppancyFormControl: {
+    width: '20rem'
   }
-
 }));
 
+type Props = {
+  filters: {
+    nudism: boolean,
+    blueFlag: boolean,
+    surfingArea: boolean,
+    beachBar: boolean,
+    nauticsRental: boolean,
+    divingArea: boolean,
+    sunbedRental: boolean,
+    beachUmbrellaRental: boolean,
+    disabledPersons: boolean,
+    occupancy: string,
+    promenade: boolean,
+    hospitalDistance: number,
+    beachLength: number,
+    selectText: string,
+    searchText: string
+  },
+  actions: {
+    setNudism: typeof searchFiltersActionCreators.setNudism,
+    setBlueFlag: typeof searchFiltersActionCreators.setBlueFlag,
+    setSurfingArea: typeof searchFiltersActionCreators.setSurfingArea,
+    setBeachBar: typeof searchFiltersActionCreators.setBeachBar,
+    setNauticsRental: typeof searchFiltersActionCreators.setNauticsRental,
+    setDivingArea: typeof searchFiltersActionCreators.setDivingArea,
+    setDisabledPersons: typeof searchFiltersActionCreators.setDisabledPersons,
+    setOccupancy: typeof searchFiltersActionCreators.setOccupancy,
+    setPromenade: typeof searchFiltersActionCreators.setPromenade,
+    setHospitalDistance: typeof searchFiltersActionCreators.setHospitalDistance,
+    setBeachLength: typeof searchFiltersActionCreators.setBeachLength,
+    setSearchText: typeof searchFiltersActionCreators.setSearchText,
+    setUmbrellaBeachRental: typeof searchFiltersActionCreators.setUmbrellaBeachRental,
+    setSunbedRental: typeof searchFiltersActionCreators.setSunbedRental,
+    setSelectText: typeof searchFiltersActionCreators.setSelectText,
+    setReset: typeof searchFiltersActionCreators.setReset
+  }
+};
 
-
-const SearchFiltersMobile = props => {
-  const { filters, actions } = props;
+const SearchFiltersMobile = ({filters, actions}: Props) => {
+  // const { filters, actions } = props;
   const classes = useStyles();
   const { debounce } = _;
   const debouncedhospitalDistance = useCallback(debounce(actions.setHospitalDistance, 500), []);
@@ -128,9 +166,9 @@ const SearchFiltersMobile = props => {
   const handleOnReset = (e) => {
 
     // reset state in Redux
-    actions.onResetFilters();
+    actions.setReset();
   }
-  const checkBoxHandler = name => event => {
+  const checkBoxHandler = (name: string) => (event: {target: {checked: boolean}}) => {
     if (name === 'nudismo') {
 
       actions.setNudism(event.target.checked);
@@ -159,29 +197,28 @@ const SearchFiltersMobile = props => {
     }
   }
 
-  const handleOccupancy = event => {
+  const handleOccupancy = (event: { target: { value: string}}) => {
     actions.setOccupancy(event.target.value);
   }
 
-  const handleHospitalDistanceChange = (event,newValue) => {
+  const handleHospitalDistanceChange = (event,newValue: number) => {
     setHospitalDistance(newValue);
     debouncedhospitalDistance(newValue);
   }
 
-  const handleBeachLengthChange = (event, newValue) => {
+  const handleBeachLengthChange = (event, newValue: number) => {
     const value = logarithmicSlider(newValue);
-    console.log(value);
     setBeachLength(value);
     debouncedBeachLength(value);
     // setBeachLength(newValue);
     // debouncedBeachLength(newValue);
   }
 
-   const handleSelectChange = (e) => {
+   const handleSelectChange = (e: { target: { value: string}}) => {
 
     actions.setSelectText(e.target.value);
   }
-  const handleContainText = (e) => {
+  const handleContainText = (e: {target: { value: string}}) => {
     const value = e.target.value;
     setValueContainText(value);
     debouncedContainText(value);
@@ -189,7 +226,7 @@ const SearchFiltersMobile = props => {
   }
 
 
-  const toggleDrawer = open => event => {
+  const toggleDrawer = open => (event: { type: string, key: string}) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
@@ -200,30 +237,22 @@ const SearchFiltersMobile = props => {
     <div>
       <div className={classes.drawerHeader}>
         <div>Filters</div>
-        <div className={classes.doneStyle} onClick={toggleDrawer(false)}>Done</div>
+        <div className={classes.doneStyle} onClick={toggleDrawer(false)}>
+          Done
+        </div>
       </div>
       {/* CONTAIN TEXT ***********************************************************/}
-      <div className={classes.drawerSubheader} >
-          <div>Contain text</div>
+      <div className={classes.drawerSubheader}>
+        <div>Contain text</div>
       </div>
       <div className={classes.wrapper}>
         <FormControl>
           <InputLabel htmlFor="select">Select by</InputLabel>
-          <Select
-            value={filters.selectText}
-            onChange={handleSelectChange}
-          >
-            <MenuItem value="termino_municipal">
-              Locality
-            </MenuItem>
-            <MenuItem value="nombre">
-              Beach
-            </MenuItem>
-            <MenuItem value="comunidad_autonoma">
-              Region
-            </MenuItem>
+          <Select value={filters.selectText} onChange={handleSelectChange}>
+            <MenuItem value="termino_municipal">Locality</MenuItem>
+            <MenuItem value="nombre">Beach</MenuItem>
+            <MenuItem value="comunidad_autonoma">Region</MenuItem>
           </Select>
-
         </FormControl>
         <TextField
           id="my-search"
@@ -231,7 +260,7 @@ const SearchFiltersMobile = props => {
           type="search"
           value={valueContainText}
           InputLabelProps={{
-            className: classes.labelTextFieldStyle,
+            className: classes.labelTextFieldStyle
           }}
           style={{ marginLeft: '2rem' }}
           onChange={handleContainText}
@@ -239,12 +268,10 @@ const SearchFiltersMobile = props => {
         />
       </div>
       {/* TYPE OF BEACH *****************************************************/}
-      <div className={classes.drawerSubheader} style={{marginTop: '1rem'}}>
+      <div className={classes.drawerSubheader} style={{ marginTop: '1rem' }}>
         <div>Type of beach</div>
       </div>
-      <List classes={{
-        root: classes.typeOfBeachListRoot
-      }}>
+      <List>
         <ListItem alignItems="flex-start">
           <FormControlLabel
             className={classes.marginCheckbox}
@@ -278,41 +305,38 @@ const SearchFiltersMobile = props => {
             primary="Beach max length"
             secondary={
               <React.Fragment>
-                
+                <span className={classes.generalSpanKmLeft}>50 m</span>
+                <Slider
+                  classes={{
+                    root: classes.typeOfBeachSlider,
+                    thumb: classes.sliderThumb
+                  }}
+                  defaultValue={beachLength}
+                  value={logPositionSlider(beachLength)}
+                  onChange={handleBeachLengthChange}
+                  min={0}
+                  max={100}
+                  color="secondary"
+                />
+                <span className={classes.generalSpanKmRight}>28k m</span>
 
-                  <span className={classes.generalSpanKmLeft}>50 m</span>
-                  <Slider
-                    classes={{
-                      root: classes.typeOfBeachSlider,
-                      thumb: classes.sliderThumb
-                    }}
-                    defaultValue={beachLength}
-                    value={logPositionSlider(beachLength)}
-                    onChange={handleBeachLengthChange}
-                    min={0}
-                    max={100}
-                    color="secondary"
-                  />
-                  <span className={classes.generalSpanKmRight}>28k m</span>
-               
-                <span style={{ marginLeft: '12rem', display: 'block' }}>{Math.round(beachLength)} meters</span>
+                <span style={{ marginLeft: '12rem', display: 'block' }}>
+                  {Math.round(beachLength)} meters
+                </span>
               </React.Fragment>
             }
-            classes={{
-              primary: classes.generalPrimary,
-              secondary: classes.generalSecondary
-            }}
+            // classes={{
+            //   primary: classes.generalPrimary,
+            //   secondary: classes.generalSecondary
+            // }}
           />
         </ListItem>
-
       </List>
       {/* SERVICES *****************************************************/}
       <div className={classes.drawerSubheader}>
         <div>Services</div>
       </div>
-      <List classes={{
-        root: classes.servicesListRoot
-      }}>
+      <List>
         <ListItem alignItems="flex-start">
           <FormControlLabel
             className={classes.marginCheckbox}
@@ -401,9 +425,7 @@ const SearchFiltersMobile = props => {
       <div className={classes.drawerSubheader}>
         <div>General</div>
       </div>
-      <List classes={{
-        root: classes.generalListRoot
-      }}>
+      <List>
         <ListItem alignItems="flex-start">
           <FormControlLabel
             className={classes.marginCheckbox}
@@ -433,34 +455,22 @@ const SearchFiltersMobile = props => {
         </ListItem>
         <Divider />
         <ListItem alignItems="flex-start">
-          <FormControl classes={{
-            root: classes.generalOcuppancyFormControl
-          }}>
+          <FormControl
+            classes={{
+              root: classes.generalOcuppancyFormControl
+            }}
+          >
             <InputLabel htmlFor="select">Occupancy</InputLabel>
-            <Select
-              value={filters.occupancy}
-              onChange={handleOccupancy} >
+            <Select value={filters.occupancy} onChange={handleOccupancy}>
               <MenuItem value="All">
                 <em>All</em>
               </MenuItem>
-              <MenuItem value="Alto">
-                High
-                    </MenuItem>
-              <MenuItem value="Bajo">
-                Low
-                    </MenuItem>
-              <MenuItem value="Medio">
-                Average
-                    </MenuItem>
-              <MenuItem value="Medio / Alto">
-                Average / High
-                    </MenuItem>
-              <MenuItem value="Medio / Bajo">
-                Average / Low
-                    </MenuItem>
-              <MenuItem value="Muy bajo">
-                Very Low
-                    </MenuItem>
+              <MenuItem value="Alto">High</MenuItem>
+              <MenuItem value="Bajo">Low</MenuItem>
+              <MenuItem value="Medio">Average</MenuItem>
+              <MenuItem value="Medio / Alto">Average / High</MenuItem>
+              <MenuItem value="Medio / Bajo">Average / Low</MenuItem>
+              <MenuItem value="Muy bajo">Very Low</MenuItem>
             </Select>
           </FormControl>
         </ListItem>
@@ -485,17 +495,15 @@ const SearchFiltersMobile = props => {
                   color="secondary"
                 />
                 <span className={classes.generalSpanKmRight}>120 Km</span>
-
               </React.Fragment>
             }
-            classes={{
-              primary: classes.generalPrimary,
-              secondary: classes.generalSecondary
-            }}
+            // classes={{
+            //   primary: classes.generalPrimary,
+            //   secondary: classes.generalSecondary
+            // }}
           />
         </ListItem>
       </List>
-     
     </div>
   );
 
