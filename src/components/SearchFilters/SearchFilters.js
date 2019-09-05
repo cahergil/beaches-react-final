@@ -1,3 +1,4 @@
+// @flow
 import React, {useState, useCallback} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, InputLabel, List, ListItem, ListItemText, Divider } from '@material-ui/core';
@@ -17,6 +18,7 @@ import _ from 'lodash';
 import SearchFiltersMobile from './SearchFiltersMobile';
 import { logarithmicSlider, logPositionSlider } from './../../Utils/Utils';
 
+import * as searchFiltersActionCreators from '../../store/actions/searchFilters';
 
 
 const useStyles = makeStyles(theme =>({
@@ -179,8 +181,45 @@ const useStyles = makeStyles(theme =>({
 
 }));
 
+type Props = {
+  filters: {
+    nudism: boolean,
+    blueFlag: boolean,
+    surfingArea: boolean,
+    beachBar: boolean,
+    nauticsRental: boolean,
+    divingArea: boolean,
+    sunbedRental: boolean,
+    beachUmbrellaRental: boolean,
+    disabledPersons: boolean,
+    occupancy: string,
+    promenade: boolean,
+    hospitalDistance: number,
+    beachLength: number,
+    selectText: string,
+    searchText: string
+  },
+  actions: {
+    setNudism: typeof searchFiltersActionCreators.setNudism,
+    setBlueFlag: typeof searchFiltersActionCreators.setBlueFlag,
+    setSurfingArea: typeof searchFiltersActionCreators.setSurfingArea,
+    setBeachBar: typeof searchFiltersActionCreators.setBeachBar,
+    setNauticsRental: typeof searchFiltersActionCreators.setNauticsRental,
+    setDivingArea: typeof searchFiltersActionCreators.setDivingArea,
+    setDisabledPersons: typeof searchFiltersActionCreators.setDisabledPersons,
+    setOccupancy: typeof searchFiltersActionCreators.setOccupancy,
+    setPromenade: typeof searchFiltersActionCreators.setPromenade,
+    setHospitalDistance: typeof searchFiltersActionCreators.setHospitalDistance,
+    setBeachLength: typeof searchFiltersActionCreators.setBeachLength,
+    setSearchText: typeof searchFiltersActionCreators.setSearchText,
+    setUmbrellaBeachRental: typeof searchFiltersActionCreators.setUmbrellaBeachRental,
+    setSunbedRental: typeof searchFiltersActionCreators.setSunbedRental,
+    setSelectText: typeof searchFiltersActionCreators.setSelectText,
+    setReset: typeof searchFiltersActionCreators.setReset
+  }
+};
 
-const SearchFilters = props => {
+const SearchFilters = (props: Props) => {
   const { filters, actions } = props;
   const classes = useStyles();
   const { debounce } = _;
@@ -197,7 +236,7 @@ const SearchFilters = props => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down(900));
 
-  const handleClick = name => event => {
+  const handleClick = (name: string) => event => {
     if (name === 'services') {
      
       setStateServices(!stateServices);
@@ -219,9 +258,8 @@ const SearchFilters = props => {
       }
     }
   }
-  const checkBoxHandler = name => event => {
+  const checkBoxHandler = (name: string) => (event: {target: { checked: boolean}}) => {
     if (name === 'nudismo') {
-      
       actions.setNudism(event.target.checked);
     } else if (name === 'bandera_azul') {
       actions.setBlueFlag(event.target.checked);
@@ -236,37 +274,33 @@ const SearchFilters = props => {
     } else if (name === 'alquiler_hamacas') {
       actions.setSunbedRental(event.target.checked);
     } else if (name === 'alquiler_sombrillas') {
-     
       actions.setUmbrellaBeachRental(event.target.checked);
-    
     } else if (name === 'acceso_discapacitados') {
       actions.setDisabledPersons(event.target.checked);
-    
     } else if (name === 'paseo_maritimo') {
-
       actions.setPromenade(event.target.checked);
-    } 
-  }
+    }
+  };
 
-  const handleOccupancy = event => {
+  const handleOccupancy = (event: {target: {value: string}} )=> {
     actions.setOccupancy(event.target.value);
   }
-  const handleHospitalDistanceChange = (event,newValue) => {
+  const handleHospitalDistanceChange = (event,newValue: number) => {
     setHospitalDistance(newValue);
     debouncedhospitalDistance(newValue);
   
 
   }
-  const handleBeachLengthChange = (event, newValue) => {
+  const handleBeachLengthChange = (event, newValue: number) => {
     const value = logarithmicSlider(newValue);
     setBeachLength(value);
     debouncedBeachLength(value);
   }
-  const handleSelectChange = (e) => {
+  const handleSelectChange = (e: {target: { value: string}}) => {
 
     actions.setSelectText(e.target.value);
   }
-  const handleContainText = (e) => {
+  const handleContainText = (e: {target: { value: string}}) => {
     const value = e.target.value;
     setValueContainText(value);
     debouncedContainText(value);
@@ -279,7 +313,7 @@ const SearchFilters = props => {
     setStateGeneral(false);
     setStateTypeOfBeach(false);
     // reset state in Redux
-    actions.onResetFilters();
+    actions.setReset();
   }
   // Active menu customization
   // type of beach

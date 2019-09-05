@@ -117,7 +117,7 @@ type Props = {
   }
 };
 const Search = ({ beachesList, filters, actions, location }: Props) => {
-  // const  = props;
+  
   const classes = useStyles();
   const [filteredBeachesList, setFilteredBeachesList] = useState([]);
   // to avoid props warnings of the video background library. The size is actually  managed in jss

@@ -1,3 +1,4 @@
+// @flow
 import React, { useState, useCallback } from 'react';
 import { makeStyles, Typography, List, ListItem, ListItemText, Divider, InputLabel } from '@material-ui/core';
 import Drawer from '@material-ui/core/Drawer';
@@ -10,7 +11,9 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import _ from 'lodash';
 import Slider from '@material-ui/core/Slider';
+
 import { logarithmicSlider, logPositionSlider } from '../../Utils/Utils';
+import * as searchFiltersActionCreators from '../../store/actions/searchFilters';
 
 
 const useStyles = makeStyles(theme => ({
@@ -110,10 +113,46 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+type Props = {
+  filters: {
+    nudism: boolean,
+    blueFlag: boolean,
+    surfingArea: boolean,
+    beachBar: boolean,
+    nauticsRental: boolean,
+    divingArea: boolean,
+    sunbedRental: boolean,
+    beachUmbrellaRental: boolean,
+    disabledPersons: boolean,
+    occupancy: string,
+    promenade: boolean,
+    hospitalDistance: number,
+    beachLength: number,
+    selectText: string,
+    searchText: string
+  },
+  actions: {
+    setNudism: typeof searchFiltersActionCreators.setNudism,
+    setBlueFlag: typeof searchFiltersActionCreators.setBlueFlag,
+    setSurfingArea: typeof searchFiltersActionCreators.setSurfingArea,
+    setBeachBar: typeof searchFiltersActionCreators.setBeachBar,
+    setNauticsRental: typeof searchFiltersActionCreators.setNauticsRental,
+    setDivingArea: typeof searchFiltersActionCreators.setDivingArea,
+    setDisabledPersons: typeof searchFiltersActionCreators.setDisabledPersons,
+    setOccupancy: typeof searchFiltersActionCreators.setOccupancy,
+    setPromenade: typeof searchFiltersActionCreators.setPromenade,
+    setHospitalDistance: typeof searchFiltersActionCreators.setHospitalDistance,
+    setBeachLength: typeof searchFiltersActionCreators.setBeachLength,
+    setSearchText: typeof searchFiltersActionCreators.setSearchText,
+    setUmbrellaBeachRental: typeof searchFiltersActionCreators.setUmbrellaBeachRental,
+    setSunbedRental: typeof searchFiltersActionCreators.setSunbedRental,
+    setSelectText: typeof searchFiltersActionCreators.setSelectText,
+    setReset: typeof searchFiltersActionCreators.setReset
+  }
+};
 
-
-const SearchFiltersMobile = props => {
-  const { filters, actions } = props;
+const SearchFiltersMobile = ({filters, actions}: Props) => {
+  // const { filters, actions } = props;
   const classes = useStyles();
   const { debounce } = _;
   const debouncedhospitalDistance = useCallback(debounce(actions.setHospitalDistance, 500), []);
@@ -127,9 +166,9 @@ const SearchFiltersMobile = props => {
   const handleOnReset = (e) => {
 
     // reset state in Redux
-    actions.onResetFilters();
+    actions.setReset();
   }
-  const checkBoxHandler = name => event => {
+  const checkBoxHandler = (name: string) => (event: {target: {checked: boolean}}) => {
     if (name === 'nudismo') {
 
       actions.setNudism(event.target.checked);
@@ -158,16 +197,16 @@ const SearchFiltersMobile = props => {
     }
   }
 
-  const handleOccupancy = event => {
+  const handleOccupancy = (event: { target: { value: string}}) => {
     actions.setOccupancy(event.target.value);
   }
 
-  const handleHospitalDistanceChange = (event,newValue) => {
+  const handleHospitalDistanceChange = (event,newValue: number) => {
     setHospitalDistance(newValue);
     debouncedhospitalDistance(newValue);
   }
 
-  const handleBeachLengthChange = (event, newValue) => {
+  const handleBeachLengthChange = (event, newValue: number) => {
     const value = logarithmicSlider(newValue);
     setBeachLength(value);
     debouncedBeachLength(value);
@@ -175,11 +214,11 @@ const SearchFiltersMobile = props => {
     // debouncedBeachLength(newValue);
   }
 
-   const handleSelectChange = (e) => {
+   const handleSelectChange = (e: { target: { value: string}}) => {
 
     actions.setSelectText(e.target.value);
   }
-  const handleContainText = (e) => {
+  const handleContainText = (e: {target: { value: string}}) => {
     const value = e.target.value;
     setValueContainText(value);
     debouncedContainText(value);
@@ -187,7 +226,7 @@ const SearchFiltersMobile = props => {
   }
 
 
-  const toggleDrawer = open => event => {
+  const toggleDrawer = open => (event: { type: string, key: string}) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }

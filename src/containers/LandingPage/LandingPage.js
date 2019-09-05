@@ -48,7 +48,7 @@ const LandingPage = ({onSetReturnFromDetails,onSetMapArea, onClickMapThunk,preSe
   // when clicking in map-spain Link it removes the selected area
   useEffect(()=>{
     if(location.pathname === '/spain-map') {
-      console.log(mapRef.current)
+      
       if(mapRef.current) {
             const area = mapRef.current.getCurrentArea();
         // in the initial load of the map this is null
