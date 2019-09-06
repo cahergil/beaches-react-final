@@ -12,7 +12,7 @@ const circularStyle = {
 const SpinnerWhenRouting = props => {
 
   return (
-    <div style={circularStyle}>
+    <div data-testid="spinner" style={circularStyle}>
       <CircularProgress
         color="primary"
         size={80}

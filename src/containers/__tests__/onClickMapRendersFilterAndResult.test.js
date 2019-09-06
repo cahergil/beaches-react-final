@@ -5,20 +5,19 @@ import thunk from 'redux-thunk';
 import { waitForElement, renderWithReduxAndRouter } from '../../../tests/test-utils';
 import LandingPage from '../LandingPage/LandingPage';
 import mapResultsFilterReducer from '../../store/reducers/mapFilters';
-import mapAreaReducer from '../../store/reducers/mapArea';
 import beachesReducer from '../../store/reducers/beaches';
 
 const initialState = {
-  mapArea: { regionId: '' },
   mapResultsFilters: {
     select: 'termino_municipal',
     input: '',
-    return: false
+    return: false,
+    regionId: '' 
   }
+ 
 };
 
 const rootReducer = combineReducers({
-  mapArea: mapAreaReducer,
   mapResultsFilters: mapResultsFilterReducer,
   beaches: beachesReducer
 });
@@ -29,9 +28,10 @@ const rootReducer = combineReducers({
 test('should render correct region in <ResultsFilters/>', async() => {
     const route = { route: '/spain-map/' }
     const match = { isExact: false, path: "/spain-map", url: "/spain-map" }
+    const location = { pathname: '/spain-map'}
     const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
     const { getByTestId, history } = renderWithReduxAndRouter(
-      <LandingPage match={match} />,
+      <LandingPage match={match} location={location}/>,
       route, 
       store
     );
@@ -47,9 +47,10 @@ test('should render correct region in <ResultsFilters/>', async() => {
 test('should render items in <ResultsContent/>', async() => {
     const route = { route: '/spain-map/' }
     const match = { isExact: false, path: "/spain-map", url: "/spain-map" }
+    const location = { pathname: '/spain-map'}
     const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
     const { getByTestId, history } = renderWithReduxAndRouter(
-      <LandingPage match={match} />,
+      <LandingPage match={match} location={location} />,
       route, 
       store
     );

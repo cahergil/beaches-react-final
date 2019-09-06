@@ -55,7 +55,7 @@ type Dispatch = (
 
 
 export const setCountryBeaches = (route: string): ThunkAction => {
-  return async (dispatch: ReduxDispatch<Action>) => {
+  return  (dispatch: ReduxDispatch<Action>) => {
     dispatch(setCountryBeachesStart());
     let finalRoute;
     if (process.env.NODE_ENV === 'production') {
@@ -64,17 +64,27 @@ export const setCountryBeaches = (route: string): ThunkAction => {
       finalRoute = route;
     }
 
-    try {
-      const response = await axios.get(finalRoute);
-
-      if (response.status === 200) {
-        return dispatch(setCountryBeachesSucceed(response.data));
+    axios.get(finalRoute)
+      .then(response => {
+        dispatch(setCountryBeachesSucceed(response.data))
       }
-      return Promise.reject(response);
-    } catch (err) {
-      return dispatch(setCountryBeachesFailed(true));
-    }
-  };
+      ).catch(err => {
+        dispatch(setCountryBeachesFailed(err))
+        console.log('error accesing the file',err)
+      })
+  }
+  // not working in testing
+  //   try {
+  //     const response = await axios.get(finalRoute);
+
+  //     if (response.status === 200) {
+  //       return dispatch(setCountryBeachesSucceed(response.data));
+  //     }
+  //     return Promise.reject(response);
+  //   } catch (err) {
+  //     return dispatch(setCountryBeachesFailed(true));
+  //   }
+  // };
 }
 
 
