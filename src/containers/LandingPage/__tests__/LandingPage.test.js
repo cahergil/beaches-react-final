@@ -5,14 +5,19 @@ import {  renderWithReduxAndRouter } from '../../../../tests/test-utils'
 
 import LandingPage from '../LandingPage';
 
-import mapAreaReducer from '../../../store/reducers/mapArea';
+import mapFiltersReducer from '../../../store/reducers/mapFilters';
 
 
 const initialState = {
-  mapArea: { regionId: '' }
+ mapResultsFilters: {
+   select: 'termino_municipal',
+  input: '',
+  return: false,
+  regionId: ''
+ }
 };
 const rootReducer = combineReducers({
-  mapArea: mapAreaReducer
+  mapResultsFilters: mapFiltersReducer
  });
 
 
@@ -23,9 +28,10 @@ describe('tests associated with LandingPage', () => {
     // example of passing dynamic param :region
     // const match = { params: {region: ''}, isExact:false, path:"", url:"/spain-map"}
     const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
-    const match = { isExact:false, path:"", url:"/spain-map"}
+    const match = { isExact:true, path:"", url:"/spain-map"}
+    const location = { pathname: '/spain-map'}
     const { container} = renderWithReduxAndRouter(
-      <LandingPage match={match} />,
+      <LandingPage match={match} location={location} />,
       route,
       store
     );
