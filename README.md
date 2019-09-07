@@ -1,6 +1,6 @@
 
 ## Spain beaches react
-![GitHub](https://img.shields.io/github/license/cahergil/spain-beaches-react)
+![GitHub](https://img.shields.io/github/license/cahergil/spain-beaches-react) [![CircleCI](https://circleci.com/gh/cahergil/spain-beaches-react.svg?style=svg)](https://circleci.com/gh/cahergil/spain-beaches-react)
 
 App to discover beaches in Spain built with React
 
