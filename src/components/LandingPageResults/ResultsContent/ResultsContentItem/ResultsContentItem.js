@@ -123,7 +123,7 @@ const ResultsContentItem = (props) => {
 
 
   return (
-    <div className={classes.root} >
+    <div className={classes.root} data-testid="results-item" >
       <div className={classes.imageWrapper} onClick={handleButtonClick}>
       <ReactImageFallback
         src={image}
@@ -134,14 +134,16 @@ const ResultsContentItem = (props) => {
         <div className={classes.remainingImagesCount}>{remainingImages}</div>
       </div>
       <div className={classes.terminoMunicipal}>{beach.termino_municipal}</div>
-      <div className={classes.beachName} onClick={handleButtonClick}>{beach.nombre.concat(' beach')}</div>
+      <div className={classes.beachName} data-testid="beach-name" onClick={handleButtonClick}>       
+        {beach.nombre.concat(' beach')}
+      </div>
       <div className={classes.hr}></div>
       <div className={classes.featureList}>
         {
           featureList.filter(feature => feature !== null)
             .map((feature, i) => {
               return (
-                <FeatureItem key={i} feature={feature} />
+                <FeatureItem  key={i} feature={feature} />
               );
           })
       }

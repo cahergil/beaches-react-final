@@ -22,11 +22,13 @@ const FeatureItem = props => {
   const classes = useStyle();
   let content = feature;
   if (feature === 'blue flag') {
-    content = <FlagIcon className={classes.icon} style={{ fill: '#074c82'}} />
+    content = (
+      <FlagIcon className={classes.icon} style={{ fill: '#074c82'}} />
+    )
   }
   return (
-    <div className={classes.root}>
-      {content}
+    <div className={classes.root} >
+        <span data-testid="feature-item">{content}</span>
     </div>
   );
 }

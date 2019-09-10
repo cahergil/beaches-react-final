@@ -2,7 +2,6 @@ import React from 'react';
 import { Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
 import ThemeProvider from '@material-ui/styles/ThemeProvider'
 import { createMemoryHistory } from 'history'
 
@@ -54,5 +53,6 @@ function renderWithReduxAndRouter(ui, { route = "/" }, store) {
   }
   
   
-export { Simulate, wait, waitForElement, render, cleanup, fireEvent } from '@testing-library/react'
+export { Simulate, wait, waitForElement, waitForDomChange,render, rerender, cleanup, fireEvent, waitForElementToBeRemoved } from '@testing-library/react'
+
 export { renderWithRouter, renderWithRedux, renderWithReduxAndRouter}

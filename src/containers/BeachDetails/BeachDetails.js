@@ -191,7 +191,7 @@ const BeachDetails = (props:Props) => {
     }
   }
   return (
-     <div className={classes.root}> 
+     <div className={classes.root} data-testid="details"> 
       {content}
     </div>
   );

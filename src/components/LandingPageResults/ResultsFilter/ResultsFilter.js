@@ -114,16 +114,19 @@ const ResultsFilter = ({ count, region, onSearched, onMapResultsSelectChange, se
           <FormControl>
             <InputLabel htmlFor="select">Select by</InputLabel>
             <Select
-              id="my-select"
               value={selectValue}
               onChange={handleSelectChange}
+              SelectDisplayProps={{
+                'data-testid': 'inputType'
+              }}
             >
-              <MenuItem value="termino_municipal">Locality</MenuItem>
-              <MenuItem value="nombre">Beach</MenuItem>
+              <MenuItem value="termino_municipal" data-testid="locality">Locality</MenuItem>
+              <MenuItem value="nombre" data-testid="beach">Beach</MenuItem>
             </Select>
           </FormControl>
           <TextField
-            id="my-search"
+            inputProps={{ "data-testid": "input" }}
+            // data-testid="input"
             label="search"
             type="search"
             value={inputText}
