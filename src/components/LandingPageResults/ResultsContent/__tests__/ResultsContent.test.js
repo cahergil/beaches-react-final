@@ -8,6 +8,7 @@ const defaultProps = {
   regionId: 'ES-CB'
 }
 
+//https://www.youtube.com/watch?v=Qf2k9zt3S_A
 test('<ResultsContent/> renders correct beaches number and name', async ()=> {
   const region = 'Cantabria';
   let response;
@@ -33,5 +34,3 @@ test('<ResultsContent/> renders correct beaches number and name', async ()=> {
   expect(fakeBeachesNames).toEqual(beachesNames);
 
 });
-
-//https://www.youtube.com/watch?v=Qf2k9zt3S_A
