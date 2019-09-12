@@ -154,7 +154,7 @@ const ResultsContent = ({beachesList, regionId}: Props) => {
   
   return (
     <React.Fragment>
-      <div className={classes.showing}>Showing {state.beaches.length} beach(es) of <span data-testid="region-beaches-count">{beachesList.length}</span></div>
+      <div className={classes.showing}>Showing <span data-testid="showing-items">{state.beaches.length}</span> beach(es) of <span data-testid="region-beaches-count">{beachesList.length}</span></div>
       <ul id="content" data-testid="content" className={classes.root}>
         {
           state.beaches.map((beach, index) => {

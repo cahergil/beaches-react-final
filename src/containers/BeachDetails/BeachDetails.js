@@ -89,9 +89,9 @@ const BeachDetails = (props:Props) => {
         regId = parsedSearch.region;
     }
     
-    const beach = beachesList.find(beach => beach.id === id);
-    
-    if (beach) {
+    const beach: Beach | typeof undefined = beachesList.find((beach: Beach)=> beach.id === id);
+    // https://flow.org/en/docs/lang/refinements/
+    if (Array.isArray(beach))  {
       // calculate nearby beaches
       let nearbyBeaches: Array<NearbyBeach>=[];
       
