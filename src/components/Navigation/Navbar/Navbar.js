@@ -38,7 +38,10 @@ const useStyles = makeStyles(theme => ({
   },
   sectionsBreakPoint: {
     [theme.breakpoints.down(650)]: {
-      display: 'none'
+       display: 'none',
+       visibility: 'hidden'
+      
+
     }
   },
   iconBreakPoint: {
@@ -89,7 +92,10 @@ const Navbar = (props) => {
         {
           sections.map((section, index) => {
             return (
-              <li key={index} className={classes.liStyle}>
+              <li 
+                key={index} 
+                className={classes.liStyle}
+                data-cy="nav-item">
                 <LooseNavLink
                   // activeClass(NavLink) only works with this form of 'to'
                   exact

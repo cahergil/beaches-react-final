@@ -8,6 +8,23 @@ import { createMemoryHistory } from 'history'
 
 import theme from '../src/theme';
 
+function customRenderWithRouter(ui, { route = '/', ...renderOptions } = {}) {
+  const history = createMemoryHistory({ initialEntries: [route] });
+  const utils = render(
+    <ThemeProvider theme={theme}>
+      <Router history={history}>
+        {ui}
+      </Router>
+    </ThemeProvider>
+    , renderOptions);
+  return {
+    ...utils,
+    history,
+    rerender: (ui, options) => customRenderWithRouter(ui, {container: utils.container, ...options})
+  }
+}
+
+
 function renderWithRouter(ui, { route = '/', ...renderOptions } = {}) {
   const history = createMemoryHistory({ initialEntries: [route] });
   const utils = render(
@@ -55,4 +72,4 @@ function renderWithReduxAndRouter(ui, { route = "/" }, store) {
   
 export { Simulate, wait, waitForElement, waitForDomChange,render, rerender, cleanup, fireEvent, waitForElementToBeRemoved } from '@testing-library/react'
 
-export { renderWithRouter, renderWithRedux, renderWithReduxAndRouter}
+export { renderWithRouter, renderWithRedux, renderWithReduxAndRouter, customRenderWithRouter}
