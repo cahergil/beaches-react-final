@@ -1,8 +1,13 @@
 // so that vsc detects jest globals -> add intellisense to .test files
+// include: intellisense for cypress
 {
   "typeAcquisition": {
     "include": [
       "jest"
     ]
-  }
+  },
+  "include": [
+    "./node_modules/cypress",
+    "cypress/**/*.js"
+  ]
 }
