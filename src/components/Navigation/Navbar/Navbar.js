@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { IconButton } from '@material-ui/core';
@@ -38,8 +39,8 @@ const useStyles = makeStyles(theme => ({
   },
   sectionsBreakPoint: {
     [theme.breakpoints.down(650)]: {
-       display: 'none',
-       visibility: 'hidden'
+       display: 'none'
+  
       
 
     }
@@ -75,6 +76,7 @@ const AboutLoadable = Loadable({
 
 const Navbar = (props) => {
   const { sections, burgerClicked } = props;
+  const matchesMaxWidth650 = useMediaQuery('(max-width: 650px)')
   const classes = useStyles();
  
 
@@ -95,7 +97,9 @@ const Navbar = (props) => {
               <li 
                 key={index} 
                 className={classes.liStyle}
-                data-cy="nav-item">
+                data-cy="nav-item"
+                data-testid="nav-item"
+                >
                 <LooseNavLink
                   // activeClass(NavLink) only works with this form of 'to'
                   exact
@@ -140,7 +144,7 @@ const Navbar = (props) => {
         
         <div className={classes.grow}></div>
         <div className={classes.sectionsBreakPoint}>
-          {toolbarSections}
+          {!matchesMaxWidth650 && toolbarSections}
         </div>
       </Toolbar>
 

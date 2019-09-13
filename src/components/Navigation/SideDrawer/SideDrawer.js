@@ -58,6 +58,7 @@ const SideDrawer = (props) => {
             return (
               <li
                 data-cy="drawer-item"
+                data-testid="drawer-item"
                 key={index}
                 className={classes.liStyle}>
                 <LooseNavLink
