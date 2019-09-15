@@ -89,12 +89,13 @@ const BeachDetails = (props:Props) => {
         regId = parsedSearch.region;
     }
     
-    const beach: Beach | typeof undefined = beachesList.find((beach: Beach)=> beach.id === id);
-    // https://flow.org/en/docs/lang/refinements/
-    if (Array.isArray(beach))  {
+    let beach: Beach | typeof undefined = beachesList.find((beach: Beach)=> beach.id === id);
+    // https://stackoverflow.com/questions/52142198/flow-why-does-instanceof-type-fail
+    if (beach === undefined)  {
+      return;
+    } else { 
       // calculate nearby beaches
       let nearbyBeaches: Array<NearbyBeach>=[];
-      
       // https://flow.org/en/docs/types/objects/#toc-unsealed-objects
       const beachLatLng = { };
       beachLatLng.lat = parseFloat(beach.coordenada_y.replace(',', '.'));
