@@ -9,7 +9,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 import Slider from '@material-ui/core/Slider';
 
 import { logarithmicSlider, logPositionSlider } from '../../Utils/Utils';
@@ -152,9 +152,7 @@ type Props = {
 };
 
 const SearchFiltersMobile = ({filters, actions}: Props) => {
-  // const { filters, actions } = props;
   const classes = useStyles();
-  const { debounce } = _;
   const debouncedhospitalDistance = useCallback(debounce(actions.setHospitalDistance, 500), []);
   const debouncedContainText = useCallback(debounce(actions.setSearchText, 500), []);
   const debouncedBeachLength = useCallback(debounce(actions.setBeachLength, 500), []);

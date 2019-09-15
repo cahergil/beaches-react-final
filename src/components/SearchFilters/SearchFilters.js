@@ -13,7 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Slider from '@material-ui/core/Slider';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 import SearchFiltersMobile from './SearchFiltersMobile';
 import { logarithmicSlider, logPositionSlider } from './../../Utils/Utils';
 
@@ -221,7 +221,6 @@ type Props = {
 const SearchFilters = (props: Props) => {
   const { filters, actions } = props;
   const classes = useStyles();
-  const { debounce } = _;
   const debouncedhospitalDistance = useCallback(debounce(actions.setHospitalDistance, 500), []);
   const debouncedContainText = useCallback(debounce(actions.setSearchText, 500), []);
   const debouncedBeachLength = useCallback(debounce(actions.setBeachLength, 500), []);

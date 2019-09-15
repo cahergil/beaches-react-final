@@ -6,7 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { InputLabel } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types'
 
 
@@ -61,7 +61,7 @@ const ResultsFilter = ({ count, region, onSearched, onMapResultsSelectChange, se
     
   // to synchronize the input
   const [inputText, setInputText] = useState(inputValue);
-  const { debounce } = _;
+  // const { debounce } = _;
   const debouncedInput = useCallback(debounce(onSearched, 1000), []);
 
   const classes = useStyles();
