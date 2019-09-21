@@ -124,7 +124,7 @@ const ResultsContentItem = (props) => {
 
   return (
     <div className={classes.root} data-testid="results-item" >
-      <div className={classes.imageWrapper} onClick={handleButtonClick}>
+      <div className={classes.imageWrapper} data-testid="beach-image"onClick={handleButtonClick}>
       <ReactImageFallback
         src={image}
         fallbackImage={errorImage}
