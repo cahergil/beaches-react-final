@@ -91,7 +91,7 @@ test('<LandingPage/> screen renders ok', async () => {
 test('navigating to search screen is ok', async () => {
   const route = { route: '/map-spain/' }
   // _.debounce = jest.fn((fn) => fn);
-  debounce = jest.fn((fn) => fn);
+  const debounce = jest.fn((fn) => fn);
   // scrollintoView is not a function
   window.HTMLElement.prototype.scrollIntoView = function () { };
   const { getByText, getByTestId} = renderWithReduxAndRouter(<App />, route);
