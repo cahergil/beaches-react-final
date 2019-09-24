@@ -3,8 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import type { RouterHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
-import { GoogleMap, useLoadScript, Marker, InfoWindow} from '@react-google-maps/api'
-
+import { GoogleMap, useLoadScript ,Marker, InfoWindow} from '@react-google-maps/api'
 import type { NearbyBeach } from '../../../Model/NearbyBeach';
 import iconnbf from '../../../../assets/images/nbpin.svg';
 import iconbf from '../../../../assets/images/bfpin.svg';
@@ -116,50 +115,52 @@ const MyGoogleMap = ({ nearbyBeaches, history, isBlueFlag }: Props) => {
         >
           {nearbyBeaches &&
             nearbyBeaches.map((nearbyBeach, index) => (
-              <Marker
-                onLoad={marker => {}}
-                icon={
-                  index === 0 && isBlueFlag
-                    ? iconbf
-                    : index === 0 && !isBlueFlag
-                    ? iconnbf
-                    : null
-                }
-                key={index}
-                position={{ lat: nearbyBeach.lat, lng: nearbyBeach.lng }}
-                onClick={e => {
-                  onToggleOpen(index);
-                }}
-              >
-                {selectedPlace === index && (
-                  <InfoWindow
-                    onLoad={iw => {}}
-                    onCloseClick={onToggleOpen}
-                    position={{ lat: nearbyBeach.lat, lng: nearbyBeach.lng }}
-                    options={{
-                      pixelOffset: new window.google.maps.Size(0, -50)
-                    }}
-                    // anchor={{anchorPoint: }} anchor = new window.google.maps.Point(0, -52);
-                  >
-                    {/* use replace instead of push for being able to come back to map-spain page when clicking back */}
-                    <div
-                      className={classes.infoWindow}
-                      onClick={() =>
-                        history.replace({
-                          pathname: '/details/beach',
-                          search: `?id=${nearbyBeach.id}`
-                        })
-                      }
+              <div data-testid="marker" key={index}>
+                <Marker
+                  onLoad={marker => {}}
+                  icon={
+                    index === 0 && isBlueFlag
+                      ? iconbf
+                      : index === 0 && !isBlueFlag
+                      ? iconnbf
+                      : null
+                  }
+                  // key={index}
+                  position={{ lat: nearbyBeach.lat, lng: nearbyBeach.lng }}
+                  onClick={e => {
+                    onToggleOpen(index);
+                  }}
+                >
+                  {selectedPlace === index && (
+                    <InfoWindow
+                      onLoad={iw => {}}
+                      onCloseClick={onToggleOpen}
+                      position={{ lat: nearbyBeach.lat, lng: nearbyBeach.lng }}
+                      options={{
+                        pixelOffset: new window.google.maps.Size(0, -50)
+                      }}
+                      // anchor={{anchorPoint: }} anchor = new window.google.maps.Point(0, -52);
                     >
-                      <span className={classes.go}>
-                        {' '}
-                        {nearbyBeaches[selectedPlace].name}
-                      </span>{' '}
-                      &nbsp;
-                    </div>
-                  </InfoWindow>
-                )}
-              </Marker>
+                      {/* use replace instead of push for being able to come back to map-spain page when clicking back */}
+                      <div
+                        className={classes.infoWindow}
+                        onClick={() =>
+                          history.replace({
+                            pathname: '/details/beach',
+                            search: `?id=${nearbyBeach.id}`
+                          })
+                        }
+                      >
+                        <span data-testid="infowindow" className={classes.go}>
+                          {' '}
+                          {nearbyBeaches[selectedPlace].name}
+                        </span>{' '}
+                        &nbsp;
+                      </div>
+                    </InfoWindow>
+                  )}
+                </Marker>
+              </div>
             ))}
         </GoogleMap>
       )
@@ -167,7 +168,7 @@ const MyGoogleMap = ({ nearbyBeaches, history, isBlueFlag }: Props) => {
   };
 
   if (loadError) {
-    return <div>Map cannot be loaded right now, sorry.</div>;
+    return <div data-testid="google-map-loading-error">Map cannot be loaded right now, sorry.</div>;
   }
   return renderMap();
   // return isLoaded ? renderMap() : <CircularProgress  color="secondary" size={60} />
