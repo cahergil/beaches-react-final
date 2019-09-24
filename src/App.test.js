@@ -4,9 +4,8 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk';
 import ThemeProvider from '@material-ui/styles/ThemeProvider'
 import { createMemoryHistory } from 'history'
-import { render, fireEvent, cleanup, waitForElement, wait} from '@testing-library/react';
+import { render, fireEvent, cleanup, waitForElement} from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import debounce from 'lodash/debounce';
 
 import App from './App';
 import mapFiltersReducer from './store/reducers/mapFilters';
@@ -90,8 +89,7 @@ test('<LandingPage/> screen renders ok', async () => {
 
 test('navigating to search screen is ok', async () => {
   const route = { route: '/map-spain/' }
-  // _.debounce = jest.fn((fn) => fn);
-  const debounce = jest.fn((fn) => fn);
+  // const debounce = jest.fn((fn) => fn);
   // scrollintoView is not a function
   window.HTMLElement.prototype.scrollIntoView = function () { };
   const { getByText, getByTestId} = renderWithReduxAndRouter(<App />, route);
