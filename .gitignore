@@ -9,7 +9,7 @@ desktop.ini
 react.ico
 # testing
 /coverage
-
+/cypress/videos
 # production
 /build
 
