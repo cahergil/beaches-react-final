@@ -11,7 +11,8 @@ describe('google maps test', () => {
     }
     const id = parseInt(refBeach.id)
     cy.visit(`details/beach?id=${id}&region=ES-CB`);
-    cy.findAllByTestId('infowindow', { timeout: 7000 })
+    cy.wait(2000)
+    cy.findAllByTestId('infowindow', { timeout: 5000 })
       .should('have.length', 1)
   })
 });
