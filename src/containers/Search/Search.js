@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import BackgroundVideo  from 'react-background-video-player';
+import BackgroundVideo from 'react-background-video-player';
 
 import ResultsContent from '../../components/LandingPageResults/ResultsContent/ResultsContent';
 import SearchFilters from '../../components/SearchFilters/SearchFilters';
@@ -15,11 +15,11 @@ import videoMp4 from '../../assets/videos/video_compressed.mp4';
 import videoMp4Width500 from '../../assets/videos/videoMp4Width500.mp4';
 import type { Beach } from '../../components/Model/Beach';
 import * as searchFiltersActionCreators from '../../store/actions/searchFilters';
-import * as beachesActionCreators  from '../../store/actions/beaches';
+import * as beachesActionCreators from '../../store/actions/beaches';
 import * as mapFiltersActionCreators from '../../store/actions/mapFilters';
 import type { State } from '../../store/reducers/'
 
-const useStyles = makeStyles(theme =>({
+const useStyles = makeStyles(theme => ({
 
   root: {
     position: 'relative',
@@ -90,10 +90,10 @@ type Props = {
   actions: {
     setCountryBeaches: (route: string) => void,
     setReturnFromDetails: typeof mapFiltersActionCreators.setReturnFromDetails,
-    setNudism:  typeof searchFiltersActionCreators.setNudism,
+    setNudism: typeof searchFiltersActionCreators.setNudism,
     setBlueFlag: typeof searchFiltersActionCreators.setBlueFlag,
     setSurfingArea: typeof searchFiltersActionCreators.setSurfingArea,
-    setBeachBar:  typeof searchFiltersActionCreators.setBeachBar,
+    setBeachBar: typeof searchFiltersActionCreators.setBeachBar,
     setNauticsRental: typeof searchFiltersActionCreators.setNauticsRental,
     setDivingArea: typeof searchFiltersActionCreators.setDivingArea,
     setDisabledPersons: typeof searchFiltersActionCreators.setDisabledPersons,
@@ -110,7 +110,7 @@ type Props = {
   }
 };
 const Search = ({ beachesList, filters, actions, location }: Props) => {
-  
+
   const classes = useStyles();
   const [filteredBeachesList, setFilteredBeachesList] = useState([]);
   // to avoid props warnings of the video background library. The size is actually  managed in jss
@@ -122,13 +122,13 @@ const Search = ({ beachesList, filters, actions, location }: Props) => {
   const matchesWidth500 = useMediaQuery(theme.breakpoints.down(500));
   useEffect(() => {
     if (location.state && !location.state.includes('search')) {
-      
+
       const element = document.getElementById('navbar');
       if (element) {
         element.scrollIntoView();
       }
     }
-    
+
   }, [location]);
   // point 4 of https://github.com/reactjs/rfcs/blob/master/text/0068-react-hooks.md#drawbacks
   useEffect(() => {
@@ -144,7 +144,7 @@ const Search = ({ beachesList, filters, actions, location }: Props) => {
       actions.setReturnFromDetails(false);
     }
   }, [actions]);
-  
+
   useEffect(() => {
     if (beachesList.length === 0) {
       return;
@@ -160,31 +160,31 @@ const Search = ({ beachesList, filters, actions, location }: Props) => {
     }
     if (filters.surfingArea) {
       filterObject.zona_surf = utils.translateYesNoIntoSpanish(filters.surfingArea)
-      
+
     }
     if (filters.beachBar) {
       filterObject.establecimiento_comida = utils.translateYesNoIntoSpanish(filters.beachBar)
-      
+
     }
     if (filters.nauticsRental) {
       filterObject.alquiler_nauticos = utils.translateYesNoIntoSpanish(filters.nauticsRental)
-      
+
     }
     if (filters.divingArea) {
       filterObject.submarinismo = utils.translateYesNoIntoSpanish(filters.divingArea)
-      
+
     }
     if (filters.sunbedRental) {
       filterObject.alquiler_hamacas = utils.translateYesNoIntoSpanish(filters.sunbedRental)
-      
+
     }
     if (filters.beachUmbrellaRental) {
       filterObject.alquiler_sombrillas = utils.translateYesNoIntoSpanish(filters.beachUmbrellaRental)
-      
+
     }
     if (filters.disabledPersons) {
       filterObject.acceso_discapacitados = utils.translateYesNoIntoSpanish(filters.disabledPersons)
-      
+
     }
     if (filters.promenade) {
       filterObject.paseo_maritimo = utils.translateYesNoIntoSpanish(filters.promenade);
@@ -194,7 +194,7 @@ const Search = ({ beachesList, filters, actions, location }: Props) => {
       filterObject.grado_ocupacion = utils.translateOccupancyIntoSpanish(filters.occupancy)
     }
     if (filters.searchText.trim()) {
-      filterObject[`${filters.selectText}`] = filters.searchText; 
+      filterObject[`${filters.selectText}`] = filters.searchText;
     }
     if (filters.hospitalDistance) {
       filterObject.distancia_hospital = filters.hospitalDistance;
@@ -202,7 +202,7 @@ const Search = ({ beachesList, filters, actions, location }: Props) => {
     if (filters.beachLength) {
       filterObject.longitud = filters.beachLength;
     }
-    
+
     const tempBeaches = beachesList.filter(beach => {
       const keys = Object.keys(filterObject);
       return keys.every((key: string) => {
@@ -232,17 +232,17 @@ const Search = ({ beachesList, filters, actions, location }: Props) => {
         }
         return beach[key] === filterObject[key];
       });
-    
+
     });
     setFilteredBeachesList(tempBeaches);
     setLoading(false);
 
 
-  },[beachesList, filters])
-  
+  }, [beachesList, filters])
+
   const handleResize = e => {
     setVideoContainerWidth(window.innerWidth);
-    setVideoContainerHeight(window.innerHeight*0.31);
+    setVideoContainerHeight(window.innerHeight * 0.31);
   }
 
   let resultContent = <ResultsContent beachesList={filteredBeachesList} />
@@ -254,35 +254,27 @@ const Search = ({ beachesList, filters, actions, location }: Props) => {
       classes={{ root: classes.circleProgressRoot }}
     />;
   }
-  let video = null;
-  if (matchesWidth500) {
-    video = <BackgroundVideo
-      verticalAlign={0.05}
-      src={videoMp4Width500}
-      containerWidth={videoContainerWidth}
-      containerHeight={videoContainerHeight}
-    />
 
-  } else {
-    video = <BackgroundVideo
-      verticalAlign={0.05}
-      src={videoMp4}
-      containerWidth={videoContainerWidth}
-      containerHeight={videoContainerHeight}
-    />
-  }
+  const video = <BackgroundVideo
+    verticalAlign={0.05}
+    src={matchesWidth500 ? videoMp4Width500 : videoMp4}
+    containerWidth={videoContainerWidth}
+    containerHeight={videoContainerHeight}
+  />
+
+
   return (
     <section>
-    
+
       <div className={classes.root}>
-        <div className={classes.video}>
+        <div className={classes.video} data-testid="video">
           {video}
         </div>
         <div className={classes.titleWrapper}>
           <span className={classes.title}>Advanced Search
           </span>
         </div>
-        <SearchFilters 
+        <SearchFilters
           filters={filters}
           actions={actions}
         />
@@ -301,8 +293,8 @@ const mapStateToProps = (state: State) => {
 
 
 const mapDispatchToProps = (dispatch) => {
-  
-  
+
+
   return {
     // https://stackoverflow.com/questions/35454633/redux-connect-with-multiples-actions-states
     // actions: bindActionCreators(Object.assign({}, beachesActions, searchFiltersActions, mapsFilterActions), dispatch)
