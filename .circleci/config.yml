@@ -37,7 +37,9 @@ jobs:
       - run: yarn test
       - run: yarn build
       - run: sudo apt install libgtk-3-0
-      - run: cypress install
+     - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
       - run: yarn test:e2e
       - run: yarn deploy
       
