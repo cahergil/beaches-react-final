@@ -1,5 +1,5 @@
 jobs:
-  build:
+  build_and_rtl:
       docker:
         # specify the version you desire here
         - image: circleci/node:10.16.3
@@ -28,13 +28,8 @@ jobs:
               - node_modules
             key: v1-dependencies-{{ checksum "package.json" }}
         - run: yarn build
-
-  test-rtl:
-      docker:
-        - image: circleci/node:10.16.3
-      steps:
-        - checkout
         - run: yarn test 
+
   test-e2e:
       docker:
         - image: cypress/base:8
@@ -63,18 +58,21 @@ jobs:
         - image: circleci/node:10.16.3
       steps:
         - checkout
+         # Download and cache dependencies
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "package.json" }}
+              # fallback to using the latest cache if no exact match is found
+              - v1-dependencies-
         - run: yarn deploy
 workflows:
   version: 2
   build_test_and_deploy:
     jobs:
-      - build
-      - test-rtl:
-          requires:
-            - build
+      - build_and_rtl
       - test-e2e:
           requires:
-            - test-rtl
+            - build_and_rtl
       - deploy:
           requires:
             - test-e2e
