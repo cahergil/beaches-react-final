@@ -1,69 +1,69 @@
 jobs:
   build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:10.16.3
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
-
-    steps:
-      - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      - run: yarn install
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn build
+      docker:
+        # specify the version you desire here
+        - image: circleci/node:10.16.3
+  
+        # Specify service dependencies here if necessary
+        # CircleCI maintains a library of pre-built images
+        # documented at https://circleci.com/docs/2.0/circleci-images/
+        # - image: circleci/mongo:3.4.4
+  
+      working_directory: ~/repo
+  
+      steps:
+        - checkout
+  
+        # Download and cache dependencies
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "package.json" }}
+              # fallback to using the latest cache if no exact match is found
+              - v1-dependencies-
+  
+        - run: yarn install
+  
+        - save_cache:
+            paths:
+              - node_modules
+            key: v1-dependencies-{{ checksum "package.json" }}
+        - run: yarn build
 
   test-rtl:
-    docker:
-      - image: circleci/node:10.16.3
-    steps:
-      - checkout
-      - run: yarn test 
+      docker:
+        - image: circleci/node:10.16.3
+      steps:
+        - checkout
+        - run: yarn test 
   test-e2e:
-    docker:
-      - image: cypress/base:8
-        environment:
-          ## this enables colors in the output
-          TERM: xterm
-    working_directory: ~/app
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
-            - v1-deps-{{ .Branch }}
-            - v1-deps
-      - run:
-          name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
-          paths:
-            - ~/.cache  ## cache both yarn and Cypress!
-      - run: yarn test:e2e
+      docker:
+        - image: cypress/base:8
+          environment:
+            ## this enables colors in the output
+            TERM: xterm
+      working_directory: ~/app
+      steps:
+        - checkout
+        - restore_cache:
+            keys:
+              - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+              - v1-deps-{{ .Branch }}
+              - v1-deps
+        - run:
+            name: Install Dependencies
+            command: yarn install --frozen-lockfile
+        - save_cache:
+            key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+            paths:
+              - ~/.cache  ## cache both yarn and Cypress!
+        - run: yarn test:e2e
   deploy:
-     docker:
-      # specify the version you desire here
-      - image: circleci/node:10.16.3
-    steps:
-      - checkout
-      - run: yarn deploy
+      docker:
+        # specify the version you desire here
+        - image: circleci/node:10.16.3
+      steps:
+        - checkout
+        - run: yarn deploy
 workflows:
   version: 2
   build_test_and_deploy:
