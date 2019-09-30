@@ -213,7 +213,7 @@ describe('test Search component', () => {
       }
     }
 
-    const { getByTestId, getByText, container, debug } = renderSearch(initialState);
+    const { getByTestId, getByText, container } = renderSearch(initialState);
 
     // 1. checkboxes
     const checkBoxArray = container.querySelectorAll('[data-testid^="checkbox"]');
@@ -224,10 +224,6 @@ describe('test Search component', () => {
 
     // click on them and verify checked = false
     const leftClick = { button: 0 }
-    // for (let i = 0; i < checkBoxArray.length; i++) {
-    //   fireEvent.click(checkBoxArray[i], leftClick);
-    //   await wait(() => { expect(checkBoxArray[i]).toHaveProperty('checked', false) })
-    // }
     for (const item of checkBoxArray) {
       fireEvent.click(item, leftClick);
       await wait(() => {
@@ -241,8 +237,11 @@ describe('test Search component', () => {
     const allOption = getByText(/all/i);
     fireEvent.click(allOption, leftClick);
     expect(selectOccupancy.textContent).toBe('All');
-
-
+    // 3. input contain text
+    const input = getByTestId('input');
+    const newVal = 'santander';
+    fireEvent.change(input, { target: { value: newVal } });
+    expect(input.value).toBe(newVal);
 
   });
 
