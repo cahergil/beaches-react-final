@@ -1,3 +1,4 @@
+version: 2
 jobs:
   build_and_rtl:
       docker:
@@ -19,7 +20,7 @@ jobs:
             keys:
               - v1-dependencies-{{ checksum "package.json" }}
               # fallback to using the latest cache if no exact match is found
-              - v1-dependencies-
+              # - v1-dependencies-
   
         - run: yarn install
   
@@ -41,7 +42,7 @@ jobs:
         - checkout
         - restore_cache:
             keys:
-              - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+              - v1-dependencies-{{ checksum "package.json" }}
               - v1-deps-{{ .Branch }}
               - v1-deps
         - run:
